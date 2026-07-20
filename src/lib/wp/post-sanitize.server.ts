@@ -54,8 +54,8 @@ export function normalizeDashes(s: string | null | undefined): string {
 export function sanitizePostHtml(input: string | null | undefined): string {
   if (!input) return "";
   let html = input;
-  html = html.replace(/<!--\[if[\s\S]*?\[endif\]-->/gi, "");
-  html = html.replace(/<!--[\s\S]*?-->/g, "");
+ html = html.replace(new RegExp("<!" + "--\\[if[\\s\\S]*?\\[endif\\]--" + ">", "gi"), "");
+ html = html.replace(new RegExp("<!" + "--[\\s\\S]*?--" + ">", "g"), "");
   html = stripTagBlock(html, "script");
   html = stripTagBlock(html, "style");
   html = stripTagBlock(html, "audio");
