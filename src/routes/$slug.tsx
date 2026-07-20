@@ -3,6 +3,7 @@ import { SiteChrome } from "@/components/SiteChrome";
 import { ArticleView } from "@/components/ArticleView";
 import { StaticPageView } from "@/components/StaticPageView";
 import { resolveSlugFn } from "@/lib/content.functions";
+import { SITE_URL, siteConfig, canonicalUrl } from "@/lib/site-config";
 
 const RESERVED = new Set([
   "admin", "login", "thank-you", "api",
