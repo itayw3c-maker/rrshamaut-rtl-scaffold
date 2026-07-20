@@ -101,6 +101,9 @@
   --brand-navy-deep: 208 91% 16%;   /* #042D50 */
   --brand-gold: 44 59% 50%;         /* #CBA436 */
   --brand-surface: 219 42% 97%;     /* #F5F7FB */
+  /* Aliases so both var(--gold) and var(--navy) work in ad-hoc components */
+  --gold: 44 59% 50%;
+  --navy: 207 88% 20%;
 
   --sidebar: 219 42% 97%;
   --sidebar-foreground: 225 6% 13%;
