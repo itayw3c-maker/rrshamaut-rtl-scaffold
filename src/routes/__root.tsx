@@ -12,6 +12,25 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteChrome } from "../components/SiteChrome";
+import { SITE_URL, siteConfig } from "../lib/site-config";
+
+const ORG_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: siteConfig.brandName,
+  url: SITE_URL,
+  logo: `${SITE_URL}/favicon.png`,
+  image: `${SITE_URL}/og-image.png`,
+  telephone: siteConfig.phone,
+  email: siteConfig.email,
+  areaServed: "IL",
+  address: siteConfig.branches.map((b) => ({
+    "@type": "PostalAddress",
+    name: b.name,
+    streetAddress: b.addr,
+    addressCountry: "IL",
+  })),
+};
 
 function NotFoundComponent() {
   return (
