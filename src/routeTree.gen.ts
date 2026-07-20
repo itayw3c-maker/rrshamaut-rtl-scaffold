@@ -15,6 +15,9 @@ import { Route as SlugRouteImport } from './routes/$slug'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as SuccessSlugRouteImport } from './routes/success.$slug'
+import { Route as ShortsSlugRouteImport } from './routes/shorts.$slug'
+import { Route as MovieSlugRouteImport } from './routes/movie.$slug'
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
 import { Route as AdminImportRouteImport } from './routes/admin/import'
 
@@ -48,6 +51,21 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const SuccessSlugRoute = SuccessSlugRouteImport.update({
+  id: '/success/$slug',
+  path: '/success/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShortsSlugRoute = ShortsSlugRouteImport.update({
+  id: '/shorts/$slug',
+  path: '/shorts/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MovieSlugRoute = MovieSlugRouteImport.update({
+  id: '/movie/$slug',
+  path: '/movie/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CategorySlugRoute = CategorySlugRouteImport.update({
   id: '/category/$slug',
   path: '/category/$slug',
@@ -67,6 +85,9 @@ export interface FileRoutesByFullPath {
   '/thank-you': typeof ThankYouRoute
   '/admin/import': typeof AdminImportRoute
   '/category/$slug': typeof CategorySlugRoute
+  '/movie/$slug': typeof MovieSlugRoute
+  '/shorts/$slug': typeof ShortsSlugRoute
+  '/success/$slug': typeof SuccessSlugRoute
   '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
@@ -76,6 +97,9 @@ export interface FileRoutesByTo {
   '/thank-you': typeof ThankYouRoute
   '/admin/import': typeof AdminImportRoute
   '/category/$slug': typeof CategorySlugRoute
+  '/movie/$slug': typeof MovieSlugRoute
+  '/shorts/$slug': typeof ShortsSlugRoute
+  '/success/$slug': typeof SuccessSlugRoute
   '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
@@ -87,6 +111,9 @@ export interface FileRoutesById {
   '/thank-you': typeof ThankYouRoute
   '/admin/import': typeof AdminImportRoute
   '/category/$slug': typeof CategorySlugRoute
+  '/movie/$slug': typeof MovieSlugRoute
+  '/shorts/$slug': typeof ShortsSlugRoute
+  '/success/$slug': typeof SuccessSlugRoute
   '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
@@ -99,6 +126,9 @@ export interface FileRouteTypes {
     | '/thank-you'
     | '/admin/import'
     | '/category/$slug'
+    | '/movie/$slug'
+    | '/shorts/$slug'
+    | '/success/$slug'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -108,6 +138,9 @@ export interface FileRouteTypes {
     | '/thank-you'
     | '/admin/import'
     | '/category/$slug'
+    | '/movie/$slug'
+    | '/shorts/$slug'
+    | '/success/$slug'
     | '/admin'
   id:
     | '__root__'
@@ -118,6 +151,9 @@ export interface FileRouteTypes {
     | '/thank-you'
     | '/admin/import'
     | '/category/$slug'
+    | '/movie/$slug'
+    | '/shorts/$slug'
+    | '/success/$slug'
     | '/admin/'
   fileRoutesById: FileRoutesById
 }
@@ -128,6 +164,9 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   ThankYouRoute: typeof ThankYouRoute
   CategorySlugRoute: typeof CategorySlugRoute
+  MovieSlugRoute: typeof MovieSlugRoute
+  ShortsSlugRoute: typeof ShortsSlugRoute
+  SuccessSlugRoute: typeof SuccessSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -174,6 +213,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/success/$slug': {
+      id: '/success/$slug'
+      path: '/success/$slug'
+      fullPath: '/success/$slug'
+      preLoaderRoute: typeof SuccessSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/shorts/$slug': {
+      id: '/shorts/$slug'
+      path: '/shorts/$slug'
+      fullPath: '/shorts/$slug'
+      preLoaderRoute: typeof ShortsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/movie/$slug': {
+      id: '/movie/$slug'
+      path: '/movie/$slug'
+      fullPath: '/movie/$slug'
+      preLoaderRoute: typeof MovieSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/category/$slug': {
       id: '/category/$slug'
       path: '/category/$slug'
@@ -212,6 +272,9 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   ThankYouRoute: ThankYouRoute,
   CategorySlugRoute: CategorySlugRoute,
+  MovieSlugRoute: MovieSlugRoute,
+  ShortsSlugRoute: ShortsSlugRoute,
+  SuccessSlugRoute: SuccessSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -1,4 +1,5 @@
 import type { ResolvedPage } from "@/lib/content.functions";
+import { ArchiveGrid } from "@/components/ArchiveGrid";
 
 function decodeEntities(s: string): string {
   return s
@@ -20,12 +21,17 @@ export function StaticPageView({ page }: { page: ResolvedPage }) {
           </h1>
         </div>
       </header>
-      <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
-        <div
-          className="prose prose-article max-w-none text-right"
-          dangerouslySetInnerHTML={{ __html: page.content }}
-        />
-      </div>
+      {page.content && (
+        <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+          <div
+            className="prose prose-article max-w-none text-right"
+            dangerouslySetInnerHTML={{ __html: page.content }}
+          />
+        </div>
+      )}
+      {page.archive && (
+        <ArchiveGrid items={page.archive.items} type={page.archive.type} />
+      )}
     </article>
   );
 }
