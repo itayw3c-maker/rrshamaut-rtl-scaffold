@@ -77,6 +77,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "theme-color", content: "#056FC4" },
+      { name: "robots", content: "index,follow,max-image-preview:large" },
       { title: "רפאל שמאות רכוש | RR" },
       {
         name: "description",
@@ -91,11 +93,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "רפאל שמאות רכוש - שמאות ביטוח, הערכת נזקי רכוש וייצוג מבוטחים מול חברות הביטוח.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: "/og-image.png" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "/og-image.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", type: "image/png", href: "/favicon.png" },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&display=swap&subset=hebrew,latin",
+      },
     ],
   }),
   shellComponent: RootShell,

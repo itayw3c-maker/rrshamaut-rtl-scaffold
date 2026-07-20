@@ -37,6 +37,17 @@
   --color-ring: hsl(var(--ring));
   --color-ring-offset-background: hsl(var(--background));
 
+  /* Brand palette (semantic aliases) */
+  --color-brand-navy: hsl(var(--brand-navy));
+  --color-brand-navy-alt: hsl(var(--brand-navy-alt));
+  --color-brand-navy-deep: hsl(var(--brand-navy-deep));
+  --color-brand-gold: hsl(var(--brand-gold));
+  --color-brand-surface: hsl(var(--brand-surface));
+
+  --font-heading: var(--font-heading);
+  --font-body: var(--font-body);
+  --font-sans: var(--font-body);
+
   --color-sidebar: hsl(var(--sidebar));
   --color-sidebar-foreground: hsl(var(--sidebar-foreground));
   --color-sidebar-primary: hsl(var(--sidebar-primary));
@@ -50,81 +61,55 @@
 :root {
   --radius: 0.625rem;
 
+  --font-heading: "Assistant", system-ui, -apple-system, "Segoe UI", "Arial Hebrew", sans-serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+
   --background: 0 0% 100%;
-  --foreground: 220 15% 15%;
+  --foreground: 225 6% 13%;
 
   --card: 0 0% 100%;
-  --card-foreground: 220 15% 15%;
+  --card-foreground: 225 6% 13%;
 
   --popover: 0 0% 100%;
-  --popover-foreground: 220 15% 15%;
+  --popover-foreground: 225 6% 13%;
 
-  --primary: 220 40% 25%;
+  /* Primary = brand blue #056FC4 */
+  --primary: 207 95% 40%;
   --primary-foreground: 0 0% 100%;
 
-  --secondary: 220 15% 96%;
-  --secondary-foreground: 220 15% 15%;
+  --secondary: 219 42% 97%;
+  --secondary-foreground: 225 6% 13%;
 
-  --muted: 220 15% 96%;
-  --muted-foreground: 220 10% 45%;
+  /* Muted = light surface #F5F7FB */
+  --muted: 219 42% 97%;
+  --muted-foreground: 220 10% 40%;
 
-  --accent: 220 15% 94%;
-  --accent-foreground: 220 15% 15%;
+  /* Accent = magenta #CC3366 */
+  --accent: 340 60% 50%;
+  --accent-foreground: 0 0% 100%;
 
   --destructive: 0 72% 50%;
   --destructive-foreground: 0 0% 100%;
 
-  --border: 220 15% 90%;
-  --input: 220 15% 90%;
-  --ring: 220 40% 25%;
+  --border: 219 20% 90%;
+  --input: 219 20% 90%;
+  --ring: 207 95% 40%;
 
-  --sidebar: 220 15% 98%;
-  --sidebar-foreground: 220 15% 15%;
-  --sidebar-primary: 220 40% 25%;
+  /* Brand palette */
+  --brand-navy: 207 88% 20%;        /* #063760 */
+  --brand-navy-alt: 207 68% 24%;    /* #144268 */
+  --brand-navy-deep: 208 91% 16%;   /* #042D50 */
+  --brand-gold: 44 59% 50%;         /* #CBA436 */
+  --brand-surface: 219 42% 97%;     /* #F5F7FB */
+
+  --sidebar: 219 42% 97%;
+  --sidebar-foreground: 225 6% 13%;
+  --sidebar-primary: 207 95% 40%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 220 15% 94%;
-  --sidebar-accent-foreground: 220 15% 15%;
-  --sidebar-border: 220 15% 90%;
-  --sidebar-ring: 220 40% 25%;
-}
-
-.dark {
-  --background: 220 20% 10%;
-  --foreground: 0 0% 98%;
-
-  --card: 220 20% 13%;
-  --card-foreground: 0 0% 98%;
-
-  --popover: 220 20% 13%;
-  --popover-foreground: 0 0% 98%;
-
-  --primary: 0 0% 98%;
-  --primary-foreground: 220 20% 10%;
-
-  --secondary: 220 15% 20%;
-  --secondary-foreground: 0 0% 98%;
-
-  --muted: 220 15% 20%;
-  --muted-foreground: 220 10% 65%;
-
-  --accent: 220 15% 22%;
-  --accent-foreground: 0 0% 98%;
-
-  --destructive: 0 65% 55%;
-  --destructive-foreground: 0 0% 98%;
-
-  --border: 220 15% 22%;
-  --input: 220 15% 22%;
-  --ring: 220 10% 65%;
-
-  --sidebar: 220 20% 13%;
-  --sidebar-foreground: 0 0% 98%;
-  --sidebar-primary: 0 0% 98%;
-  --sidebar-primary-foreground: 220 20% 10%;
-  --sidebar-accent: 220 15% 22%;
-  --sidebar-accent-foreground: 0 0% 98%;
-  --sidebar-border: 220 15% 22%;
-  --sidebar-ring: 220 10% 65%;
+  --sidebar-accent: 340 60% 50%;
+  --sidebar-accent-foreground: 0 0% 100%;
+  --sidebar-border: 219 20% 90%;
+  --sidebar-ring: 207 95% 40%;
 }
 
 @layer base {
@@ -135,6 +120,11 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
-    font-family: system-ui, -apple-system, "Segoe UI", "Arial Hebrew", "David", sans-serif;
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
   }
 }
