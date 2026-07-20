@@ -176,7 +176,12 @@ export async function importImagesForPost(slug: string, table: "posts" | "pages"
       let newUrl = ex?.url ?? null;
       if (!newUrl) {
         const dl = await fetchWithTimeout(new URL(src).href, { headers: { "User-Agent": WP_UA, Accept: "image/*" } });
-        if (!dl.ok) { errors.push(`${src}: ${dl.status}`); continue; }
+        if (!dl.ok) {
+          const esc = src.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+          content = content.replace(new RegExp(`<img[^>]*src=["']${esc}["'][^>]*>`, "gi"), "");
+          errors.push(`${src}: ${dl.status} (dead image removed)`);
+          continue;
+        }
         const buf = new Uint8Array(await dl.arrayBuffer());
         const ext = (src.split(/[?#]/)[0].split(".").pop() ?? "bin").toLowerCase().replace(/-\d+x\d+$/, "");
         const ctype = (dl.headers.get("content-type") || "").startsWith("image/") ? dl.headers.get("content-type")! : mimeFromExt(ext);
