@@ -2,6 +2,7 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { SiteChrome } from "@/components/SiteChrome";
 import { CategoryView } from "@/components/CategoryView";
 import { getCategoryFn } from "@/lib/content.functions";
+import { SITE_URL, canonicalUrl } from "@/lib/site-config";
 
 export const Route = createFileRoute("/category/$slug")({
   loader: async ({ params }) => {
