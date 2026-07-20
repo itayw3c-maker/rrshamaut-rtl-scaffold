@@ -54,8 +54,8 @@ export function normalizeDashes(s: string | null | undefined): string {
 export function sanitizePostHtml(input: string | null | undefined): string {
   if (!input) return "";
   let html = input;
-  html = html.replace(/<!--\[if[\s\S]*?\[endif\]-->/gi, "");
-  html = html.replace(/<!--[\s\S]*?-->/g, "");
+ html = html.replace(new RegExp("<!" + "--\\[if[\\s\\S]*?\\[endif\\]--" + ">", "gi"), "");
+ html = html.replace(new RegExp("<!" + "--[\\s\\S]*?--" + ">", "g"), "");
   html = stripTagBlock(html, "script");
   html = stripTagBlock(html, "style");
   html = stripTagBlock(html, "audio");
@@ -71,7 +71,7 @@ export function sanitizePostHtml(input: string | null | undefined): string {
 export function hasGarbage(input: string | null | undefined): boolean {
   if (!input) return false;
   return (
-    /<!--\[if/i.test(input) || /<audio\b/i.test(input) || /<script\b/i.test(input) ||
+    new RegExp("<!" + "--\\[if", "i").test(input) || /<audio\b/i.test(input) || /<script\b/i.test(input) ||
     CHATGPT_ATTR_RE.test(input) || CHATGPT_CLASS_RE.test(input) ||
     /\[(caption|audio|playlist|gallery|embed)\b/i.test(input)
   );
