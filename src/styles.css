@@ -37,6 +37,17 @@
   --color-ring: hsl(var(--ring));
   --color-ring-offset-background: hsl(var(--background));
 
+  /* Brand palette (semantic aliases) */
+  --color-brand-navy: hsl(var(--brand-navy));
+  --color-brand-navy-alt: hsl(var(--brand-navy-alt));
+  --color-brand-navy-deep: hsl(var(--brand-navy-deep));
+  --color-brand-gold: hsl(var(--brand-gold));
+  --color-brand-surface: hsl(var(--brand-surface));
+
+  --font-heading: var(--font-heading);
+  --font-body: var(--font-body);
+  --font-sans: var(--font-body);
+
   --color-sidebar: hsl(var(--sidebar));
   --color-sidebar-foreground: hsl(var(--sidebar-foreground));
   --color-sidebar-primary: hsl(var(--sidebar-primary));
