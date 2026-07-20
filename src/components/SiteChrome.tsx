@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import { SiteHeader } from "./SiteHeader";
 import { SiteFooter } from "./SiteFooter";
+import { WhatsAppFloat } from "./WhatsAppFloat";
+import { AccessibilityWidget } from "./AccessibilityWidget";
 
 export function SiteChrome({ children }: { children: ReactNode }) {
   return (
@@ -8,6 +10,8 @@ export function SiteChrome({ children }: { children: ReactNode }) {
       <SiteHeader />
       <main className="flex-1">{children}</main>
       <SiteFooter />
+      <WhatsAppFloat />
+      <AccessibilityWidget />
     </div>
   );
 }
