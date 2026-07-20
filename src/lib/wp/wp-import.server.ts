@@ -142,19 +142,22 @@ export async function importImagesForPost(slug: string, table: "posts" | "pages"
   for (const src of [...new Set(srcs)]) {
     if (!OLD_ORIGIN_RE.test(src)) continue;
     try {
-      const { data: ex } = await [1]
-      const dl = await fetchWithTimeout(new URL(src).href, { headers: { "User-Agent": WP_UA, Accept: "image/*" } });
-      if (!dl.ok) { errors.push(`${src}: ${dl.status}`); continue; }
-      const buf = new Uint8Array(await dl.arrayBuffer());
-      const ext = (src.split(/[?#]/)[0].split(".").pop() ?? "bin").toLowerCase().replace(/-\d+x\d+$/, "");
-      const ctype = (dl.headers.get("content-type") || "").startsWith("image/") ? dl.headers.get("content-type")! : mimeFromExt(ext);
-      const rawName = (src.split("/").pop() ?? "image").split(/[?#]/)[0].replace(/\.[^.]+$/, "").replace(/-\d+x\d+$/, "");
-      const name = (decodeURIComponent(rawName).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "")) || `img-${row.wp_id ?? "x"}`;
-      const path = `content/${row.wp_id ?? "misc"}/${name}.${ext}`;
-      const up = await supabaseAdmin.storage.from("media").upload(path, buf, { contentType: ctype, upsert: true });
-      if (up.error) { errors.push(`${src}: ${up.error.message}`); continue; }
-      newUrl = supabaseAdmin.storage.from("media").getPublicUrl(path).data.publicUrl;
-      await supabaseAdmin.from("media").insert({ legacy_url: src, url: newUrl, bucket: "media", filename: `${name}.${ext}` });
+      const { data: ex } = await supabaseAdmin.from("media").select("url").eq("legacy_url", src).maybeSingle();
+      let newUrl = ex?.url ?? null;
+      if (!newUrl) {
+        const dl = await fetchWithTimeout(new URL(src).href, { headers: { "User-Agent": WP_UA, Accept: "image/*" } });
+        if (!dl.ok) { errors.push(`${src}: ${dl.status}`); continue; }
+        const buf = new Uint8Array(await dl.arrayBuffer());
+        const ext = (src.split(/[?#]/)[0].split(".").pop() ?? "bin").toLowerCase().replace(/-\d+x\d+$/, "");
+        const ctype = (dl.headers.get("content-type") || "").startsWith("image/") ? dl.headers.get("content-type")! : mimeFromExt(ext);
+        const rawName = (src.split("/").pop() ?? "image").split(/[?#]/)[0].replace(/\.[^.]+$/, "").replace(/-\d+x\d+$/, "");
+        const name = (decodeURIComponent(rawName).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "")) || `img-${row.wp_id ?? "x"}`;
+        const path = `content/${row.wp_id ?? "misc"}/${name}.${ext}`;
+        const up = await supabaseAdmin.storage.from("media").upload(path, buf, { contentType: ctype, upsert: true });
+        if (up.error) { errors.push(`${src}: ${up.error.message}`); continue; }
+        newUrl = supabaseAdmin.storage.from("media").getPublicUrl(path).data.publicUrl;
+        await supabaseAdmin.from("media").insert({ legacy_url: src, url: newUrl, bucket: "media", filename: `${name}.${ext}` });
+      }
       content = content.split(src).join(newUrl);
       rehosted++;
     } catch (e: any) { errors.push(`${src}: ${e?.message ?? e}`); }
