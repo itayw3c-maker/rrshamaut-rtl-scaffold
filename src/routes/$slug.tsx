@@ -19,10 +19,11 @@ export const Route = createFileRoute("/$slug")({
     if (!result) throw notFound();
     return result;
   },
-  head: ({ loaderData }) => {
+  head: ({ loaderData, params }) => {
     if (!loaderData) {
       return { meta: [{ title: "לא נמצא" }, { name: "robots", content: "noindex" }] };
     }
+    const canonical = canonicalUrl(`/${params.slug}`);
     const title = loaderData.meta_title || loaderData.title;
     const desc =
       loaderData.meta_description ||
@@ -32,6 +33,7 @@ export const Route = createFileRoute("/$slug")({
       { title },
       { property: "og:title", content: title },
       { property: "og:type", content: loaderData.kind === "post" ? "article" : "website" },
+      { property: "og:url", content: canonical },
     ];
     if (desc) {
       meta.push({ name: "description", content: desc });
@@ -41,7 +43,51 @@ export const Route = createFileRoute("/$slug")({
       meta.push({ property: "og:image", content: loaderData.cover_url });
       meta.push({ name: "twitter:image", content: loaderData.cover_url });
     }
-    return { meta };
+
+    const scripts: Array<{ type: string; children: string }> = [];
+    if (loaderData.kind === "post") {
+      const article = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: loaderData.title,
+        datePublished: loaderData.published_at ?? undefined,
+        dateModified: loaderData.published_at ?? undefined,
+        author: { "@type": "Person", name: loaderData.author_name || siteConfig.brandName },
+        image: loaderData.cover_url ? [loaderData.cover_url] : undefined,
+        mainEntityOfPage: canonical,
+        publisher: {
+          "@type": "Organization",
+          name: siteConfig.brandName,
+          logo: { "@type": "ImageObject", url: `${SITE_URL}/favicon.png` },
+        },
+      };
+      const crumbs: Array<{ name: string; item: string }> = [{ name: "בית", item: `${SITE_URL}/` }];
+      if (loaderData.primary_category) {
+        crumbs.push({
+          name: loaderData.primary_category.name,
+          item: canonicalUrl(`/category/${loaderData.primary_category.slug}`),
+        });
+      }
+      crumbs.push({ name: loaderData.title, item: canonical });
+      const breadcrumb = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: crumbs.map((c, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: c.name,
+          item: c.item,
+        })),
+      };
+      scripts.push({ type: "application/ld+json", children: JSON.stringify(article) });
+      scripts.push({ type: "application/ld+json", children: JSON.stringify(breadcrumb) });
+    }
+
+    return {
+      meta,
+      links: [{ rel: "canonical", href: canonical }],
+      scripts,
+    };
   },
   errorComponent: ({ error }) => (
     <SiteChrome>
