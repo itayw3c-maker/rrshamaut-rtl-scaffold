@@ -10,21 +10,23 @@ export const Route = createFileRoute("/shorts/$slug")({
     if (!res) throw notFound();
     return res;
   },
-  head: ({ loaderData }) => {
+  head: ({ loaderData, params }) => {
     if (!loaderData) return { meta: [{ title: "לא נמצא" }, { name: "robots", content: "noindex" }] };
+    const canonical = canonicalUrl(`/shorts/${params.slug}`);
     const title = loaderData.meta_title || loaderData.title;
     const desc = loaderData.meta_description || loaderData.excerpt || undefined;
     const meta: Array<Record<string, string>> = [
       { title },
       { property: "og:title", content: title },
       { property: "og:type", content: "video.other" },
+      { property: "og:url", content: canonical },
     ];
     if (desc) {
       meta.push({ name: "description", content: desc });
       meta.push({ property: "og:description", content: desc });
     }
     if (loaderData.cover_url) meta.push({ property: "og:image", content: loaderData.cover_url });
-    return { meta };
+    return { meta, links: [{ rel: "canonical", href: canonical }] };
   },
   errorComponent: ({ error }) => (
     <SiteChrome>

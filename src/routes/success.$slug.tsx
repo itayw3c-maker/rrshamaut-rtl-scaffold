@@ -2,6 +2,7 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { SiteChrome } from "@/components/SiteChrome";
 import { CptItemView } from "@/components/CptItemView";
 import { getCptItemFn } from "@/lib/content.functions";
+import { SITE_URL, siteConfig, canonicalUrl } from "@/lib/site-config";
 
 export const Route = createFileRoute("/success/$slug")({
   loader: async ({ params }) => {
