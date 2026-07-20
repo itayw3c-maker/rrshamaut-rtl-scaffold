@@ -51,13 +51,43 @@ function mimeFromExt(ext: string): string {
 
 export function extractVideoUrl(html: string): string | null {
   if (!html) return null;
-  const ds = html.match(/(?:youtube_url|vimeo_url|video_url)&quot;:&quot;(https:[^&]+)&quot;/i);
+  const ds = html.match(/youtube_url&quot;:&quot;(https[^&]+)&quot;/i)
+    || html.match(/(?:youtube_url|vimeo_url|video_url)&quot;:&quot;(https[^&]+)&quot;/i);
   if (ds) return ds[1].replace(/\\\//g, "/");
-  const yt = html.match(/https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?v=[\w-]+|youtu\.be\/[\w-]+|youtube\.com\/embed\/[\w-]+)/i);
-  if (yt) return yt[0];
+  const yt = html.match(/https?:\/\/(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)[\w-]+|youtu\.be\/[\w-]+)/i);
+  if (yt) return yt[0].replace(/\\\//g, "/");
   const vm = html.match(/https?:\/\/(?:www\.)?vimeo\.com\/\d+/i);
   if (vm) return vm[0];
   return null;
+}
+
+/** Convert any YouTube/Vimeo URL (watch/shorts/youtu.be/embed) to an embeddable URL. */
+export function toEmbedUrl(url: string | null): string | null {
+  if (!url) return null;
+  const u = url.replace(/\\\//g, "/");
+  const m = u.match(/youtube\.com\/shorts\/([\w-]+)/i) || u.match(/youtube\.com\/embed\/([\w-]+)/i)
+    || u.match(/youtube\.com\/watch\?v=([\w-]+)/i) || u.match(/youtu\.be\/([\w-]+)/i);
+  if (m) return `https://www.youtube.com/embed/${m[1]}`;
+  const v = u.match(/vimeo\.com\/(\d+)/i);
+  if (v) return `https://player.vimeo.com/video/${v[1]}`;
+  return null;
+}
+
+/** Build a responsive 16:9 video embed HTML block. */
+export function buildVideoEmbedHtml(url: string | null): string {
+  const embed = toEmbedUrl(url);
+  if (!embed) return "";
+  return `<div class="video-embed" style="position:relative;width:100%;padding-top:56.25%;margin:1.5rem 0;"><iframe src="${embed}" title="video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:12px;"></iframe></div>`;
+}
+
+/** Fetch the rendered public page and pull the video URL from Elementor data-settings. */
+async function fetchRenderedVideoUrl(link: string): Promise<string | null> {
+  try {
+    const res = await fetchWithTimeout(new URL(link).href, { headers: { "User-Agent": WP_UA } });
+    if (!res.ok) return null;
+    const html = await res.text();
+    return extractVideoUrl(html);
+  } catch { return null; }
 }
 
 export async function importMediaItem(wpMediaId: number): Promise<string | null> {
