@@ -119,9 +119,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "רפאל שמאות רכוש - שמאות ביטוח, הערכת נזקי רכוש וייצוג מבוטחים מול חברות הביטוח.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: "/og-image.png" },
+      { property: "og:image", content: `${SITE_URL}/og-image.png` },
+      { property: "og:site_name", content: siteConfig.brandName },
+      { property: "og:locale", content: "he_IL" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: "/og-image.png" },
+      { name: "twitter:image", content: `${SITE_URL}/og-image.png` },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -131,6 +133,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&display=swap&subset=hebrew,latin",
+      },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(ORG_JSON_LD),
       },
     ],
   }),
