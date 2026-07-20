@@ -5,11 +5,9 @@ import { StaticPageView } from "@/components/StaticPageView";
 import { resolveSlugFn } from "@/lib/content.functions";
 
 const RESERVED = new Set([
-  "admin", "login", "thank-you", "sitemap.xml", "sitemap-page",
-  "about", "terms", "privacy", "accessibility",
-  "category", "movie", "shorts", "success", "blog", "api",
+  "admin", "login", "thank-you", "api",
   "favicon.ico", "og-image.png", "favicon.png", "favicon-done.svg", "notify.mp3",
-  "robots.txt",
+  "robots.txt", "sitemap.xml",
 ]);
 
 export const Route = createFileRoute("/$slug")({
