@@ -10,14 +10,23 @@ export const Route = createFileRoute("/category/$slug")({
     if (!res) throw notFound();
     return res;
   },
-  head: ({ loaderData }) => {
+  head: ({ loaderData, params }) => {
     if (!loaderData) {
       return { meta: [{ title: "לא נמצא" }, { name: "robots", content: "noindex" }] };
     }
+    const canonical = canonicalUrl(`/category/${params.slug}`);
     const title = `${loaderData.name} - רפאל שמאות רכוש`;
     const desc =
       (loaderData.description ? loaderData.description.replace(/<[^>]+>/g, "").slice(0, 160) : "") ||
       `כל המאמרים בקטגוריה ${loaderData.name}`;
+    const breadcrumb = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "בית", item: `${SITE_URL}/` },
+        { "@type": "ListItem", position: 2, name: loaderData.name, item: canonical },
+      ],
+    };
     return {
       meta: [
         { title },
@@ -25,7 +34,10 @@ export const Route = createFileRoute("/category/$slug")({
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
         { property: "og:type", content: "website" },
+        { property: "og:url", content: canonical },
       ],
+      links: [{ rel: "canonical", href: canonical }],
+      scripts: [{ type: "application/ld+json", children: JSON.stringify(breadcrumb) }],
     };
   },
   errorComponent: ({ error }) => (
