@@ -3,8 +3,32 @@
  * No DB settings table. Update here to change branding/contact info.
  */
 
+export const SITE_URL = "https://www.rrshamaut.co.il";
+
+/** Build an absolute canonical URL with trailing slash. Accepts decoded-Hebrew paths. */
+export function canonicalUrl(path: string): string {
+  let p = path || "/";
+  if (!p.startsWith("/")) p = "/" + p;
+  // Encode segments (skip already-encoded), preserve slashes.
+  const encoded = p
+    .split("/")
+    .map((seg) => {
+      if (!seg) return seg;
+      try {
+        // Re-encode after decode to normalize.
+        return encodeURIComponent(decodeURIComponent(seg));
+      } catch {
+        return encodeURIComponent(seg);
+      }
+    })
+    .join("/");
+  const withSlash = encoded.endsWith("/") ? encoded : encoded + "/";
+  return SITE_URL + withSlash;
+}
+
 export const siteConfig = {
   brandName: "רפאל שמאות רכוש",
+  siteUrl: SITE_URL,
 
   // Brand assets (rehosted to Supabase Storage `media` bucket).
   logoDarkUrl:

@@ -8,6 +8,7 @@ import {
 import { SiteChrome } from "@/components/SiteChrome";
 import { LeadForm } from "@/components/LeadForm";
 import { getHomeVideosFn, type HomeVideo } from "@/lib/home.functions";
+import { SITE_URL, canonicalUrl } from "@/lib/site-config";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -23,7 +24,9 @@ export const Route = createFileRoute("/")({
         property: "og:description",
         content: "ייצוג מבוטחים מול חברות הביטוח. ייעוץ ראשוני חינם.",
       },
+      { property: "og:url", content: `${SITE_URL}/` },
     ],
+    links: [{ rel: "canonical", href: canonicalUrl("/") }],
   }),
   component: HomePage,
 });

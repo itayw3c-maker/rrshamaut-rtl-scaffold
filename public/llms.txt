@@ -1,0 +1,43 @@
+# רפאל שמאות רכוש (RR Shamaut)
+
+> משרד שמאי רכוש פרטי ובלתי תלוי בישראל, המייצג מבוטחים פרטיים ועסקיים מול חברות הביטוח. אנו לא עובדים עבור חברות ביטוח - רק עבור מבוטחים, על בסיס הצלחה.
+
+Site: https://www.rrshamaut.co.il
+Language: Hebrew (he-IL)
+Coverage: כל הארץ (All of Israel)
+
+## What we do
+
+- ייעוץ וליווי תביעות ביטוח (Insurance claim consulting and representation)
+- שמאות נזקי מים, הצפה ורטיבות (Water damage assessment)
+- שמאות נזקי אש ופיח (Fire and soot damage)
+- שמאות נזקי טבע, שיטפונות וסערה (Natural disaster damage)
+- שמאות נזקי פריצה (Burglary damage)
+- שמאות נזקי שוכרים (Tenant damage)
+- שמאות נזקי התנגשות (Collision damage)
+- שמאות נזקי עבודות קבלניות (Contractor works damage)
+- חוות דעת קבילה משפטית (Court-admissible expert opinions)
+- הערכת שווי רכוש (Property valuation)
+- הערכת רכוש לצורכי הזדכות במס שבח (Property valuation for tax purposes)
+- הערכת שמאות לריהוט עתיק (Antique furniture appraisal)
+
+## Contact
+
+- Phone: 077-805-1266
+- WhatsApp: +972-50-262-9120
+- Email: office@rrshamaut.co.il
+- Hours: Sun-Thu 07:00-21:00, Fri 07:00-16:00, Sat closed
+- Branches:
+  - סניף דרום: הבנאים 5, א.ת אשדוד
+  - סניף צפון: השושנים 1, פוריה - נווה עובד
+
+## Main sections
+
+- [Home](https://www.rrshamaut.co.il/)
+- [About](https://www.rrshamaut.co.il/about/)
+- [Articles](https://www.rrshamaut.co.il/category/מידע-מקצועי/)
+- [Success stories](https://www.rrshamaut.co.il/ההצלחות-שלנו/)
+- [Videos](https://www.rrshamaut.co.il/סרטונים/)
+- [FAQ](https://www.rrshamaut.co.il/שאלות-תשובות/)
+- [Contact](https://www.rrshamaut.co.il/צור-קשר/)
+- [Sitemap](https://www.rrshamaut.co.il/sitemap.xml)

@@ -2,6 +2,7 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { SiteChrome } from "@/components/SiteChrome";
 import { CptItemView } from "@/components/CptItemView";
 import { getCptItemFn } from "@/lib/content.functions";
+import { SITE_URL, siteConfig, canonicalUrl } from "@/lib/site-config";
 
 export const Route = createFileRoute("/success/$slug")({
   loader: async ({ params }) => {
@@ -9,21 +10,41 @@ export const Route = createFileRoute("/success/$slug")({
     if (!res) throw notFound();
     return res;
   },
-  head: ({ loaderData }) => {
+  head: ({ loaderData, params }) => {
     if (!loaderData) return { meta: [{ title: "לא נמצא" }, { name: "robots", content: "noindex" }] };
+    const canonical = canonicalUrl(`/success/${params.slug}`);
     const title = loaderData.meta_title || loaderData.title;
     const desc = loaderData.meta_description || loaderData.excerpt || undefined;
     const meta: Array<Record<string, string>> = [
       { title },
       { property: "og:title", content: title },
       { property: "og:type", content: "article" },
+      { property: "og:url", content: canonical },
     ];
     if (desc) {
       meta.push({ name: "description", content: desc });
       meta.push({ property: "og:description", content: desc });
     }
     if (loaderData.cover_url) meta.push({ property: "og:image", content: loaderData.cover_url });
-    return { meta };
+    const article = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: loaderData.title,
+      datePublished: loaderData.published_at ?? undefined,
+      dateModified: loaderData.published_at ?? undefined,
+      image: loaderData.cover_url ? [loaderData.cover_url] : undefined,
+      mainEntityOfPage: canonical,
+      publisher: {
+        "@type": "Organization",
+        name: siteConfig.brandName,
+        logo: { "@type": "ImageObject", url: `${SITE_URL}/favicon.png` },
+      },
+    };
+    return {
+      meta,
+      links: [{ rel: "canonical", href: canonical }],
+      scripts: [{ type: "application/ld+json", children: JSON.stringify(article) }],
+    };
   },
   errorComponent: ({ error }) => (
     <SiteChrome>
