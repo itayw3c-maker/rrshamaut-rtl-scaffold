@@ -51,13 +51,43 @@ function mimeFromExt(ext: string): string {
 
 export function extractVideoUrl(html: string): string | null {
   if (!html) return null;
-  const ds = html.match(/(?:youtube_url|vimeo_url|video_url)&quot;:&quot;(https:[^&]+)&quot;/i);
+  const ds = html.match(/youtube_url&quot;:&quot;(https[^&]+)&quot;/i)
+    || html.match(/(?:youtube_url|vimeo_url|video_url)&quot;:&quot;(https[^&]+)&quot;/i);
   if (ds) return ds[1].replace(/\\\//g, "/");
-  const yt = html.match(/https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?v=[\w-]+|youtu\.be\/[\w-]+|youtube\.com\/embed\/[\w-]+)/i);
-  if (yt) return yt[0];
+  const yt = html.match(/https?:\/\/(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)[\w-]+|youtu\.be\/[\w-]+)/i);
+  if (yt) return yt[0].replace(/\\\//g, "/");
   const vm = html.match(/https?:\/\/(?:www\.)?vimeo\.com\/\d+/i);
   if (vm) return vm[0];
   return null;
+}
+
+/** Convert any YouTube/Vimeo URL (watch/shorts/youtu.be/embed) to an embeddable URL. */
+export function toEmbedUrl(url: string | null): string | null {
+  if (!url) return null;
+  const u = url.replace(/\\\//g, "/");
+  const m = u.match(/youtube\.com\/shorts\/([\w-]+)/i) || u.match(/youtube\.com\/embed\/([\w-]+)/i)
+    || u.match(/youtube\.com\/watch\?v=([\w-]+)/i) || u.match(/youtu\.be\/([\w-]+)/i);
+  if (m) return `https://www.youtube.com/embed/${m[1]}`;
+  const v = u.match(/vimeo\.com\/(\d+)/i);
+  if (v) return `https://player.vimeo.com/video/${v[1]}`;
+  return null;
+}
+
+/** Build a responsive 16:9 video embed HTML block. */
+export function buildVideoEmbedHtml(url: string | null): string {
+  const embed = toEmbedUrl(url);
+  if (!embed) return "";
+  return `<div class="video-embed" style="position:relative;width:100%;padding-top:56.25%;margin:1.5rem 0;"><iframe src="${embed}" title="video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:12px;"></iframe></div>`;
+}
+
+/** Fetch the rendered public page and pull the video URL from Elementor data-settings. */
+async function fetchRenderedVideoUrl(link: string): Promise<string | null> {
+  try {
+    const res = await fetchWithTimeout(new URL(link).href, { headers: { "User-Agent": WP_UA } });
+    if (!res.ok) return null;
+    const html = await res.text();
+    return extractVideoUrl(html);
+  } catch { return null; }
 }
 
 export async function importMediaItem(wpMediaId: number): Promise<string | null> {
@@ -245,20 +275,42 @@ async function upsertPostRow(p: any, cptType: string | null): Promise<void> {
     ).select("id, wp_id").maybeSingle();
     if (c?.id) catRows.push({ id: c.id, wp_id: c.wp_id });
   }
+
   let coverMediaId: string | null = null;
   if (p.featured_media && p.featured_media !== 0) {
     await importMediaItem(p.featured_media);
     const { data: mid } = await supabaseAdmin.from("media").select("id").eq("wp_id", p.featured_media).maybeSingle();
     coverMediaId = mid?.id ?? null;
   }
-  const rawContent = p.content?.rendered ?? "";
-  const videoUrl = extractVideoUrl(rawContent);
+
+  // Yoast meta (byte-exact SEO parity). yoast_head_json is present in the REST payload.
+  const yoast = p.yoast_head_json ?? {};
+  const metaTitle = yoast.title ? sanitizePostHtml(String(yoast.title)).replace(/<[^>]+>/g, "") : null;
+  const metaDescription = (yoast.description || yoast.og_description)
+    ? sanitizePostHtml(String(yoast.description || yoast.og_description)).replace(/<[^>]+>/g, "") : null;
+
+  // Content + video handling.
+  let rawContent = p.content?.rendered ?? "";
+  let videoUrl: string | null = extractVideoUrl(rawContent);
+
+  if (cptType === "movie" || cptType === "shorts") {
+    // Video lives in the rendered Elementor page, not in REST content.
+    if (!videoUrl && p.link) videoUrl = await fetchRenderedVideoUrl(p.link);
+    // Build a clean body ourselves (avoids Elementor global-section leaks).
+    let intro = rawContent.trim();
+    if (!intro && metaDescription) intro = `<p>${metaDescription}</p>`;
+    const embed = buildVideoEmbedHtml(videoUrl);
+    rawContent = [embed, intro].filter(Boolean).join("\n");
+  }
+
   let content = await rewriteContentMedia(rawContent);
   content = await rewriteInternalLinks(content);
   content = sanitizePostHtml(content);
+
   const author = AUTHOR_MODE === "generic" ? GENERIC_AUTHOR : (p._embedded?.author?.[0]?.name ?? GENERIC_AUTHOR);
   const wpStatus = p.status ?? "publish";
   const status = wpStatus === "future" ? "publish" : (wpStatus === "publish" ? "publish" : wpStatus === "draft" ? "draft" : "publish");
+
   const { data: postRow } = await supabaseAdmin.from("posts").upsert(
     {
       wp_id: p.id, slug,
@@ -269,12 +321,15 @@ async function upsertPostRow(p: any, cptType: string | null): Promise<void> {
       cover_media_id: coverMediaId,
       cpt_type: cptType,
       video_url: videoUrl,
+      meta_title: metaTitle,
+      meta_description: metaDescription,
       status,
       published_at: p.date_gmt ? `${p.date_gmt}Z` : null,
       updated_at: p.modified_gmt ? `${p.modified_gmt}Z` : new Date().toISOString(),
     },
     { onConflict: "wp_id" }
   ).select("id").maybeSingle();
+
   if (postRow?.id) {
     await supabaseAdmin.from("post_categories").delete().eq("post_id", postRow.id);
     const rows = catRows.map((c) => ({ post_id: postRow.id, category_id: c.id, is_primary: c.wp_id === primaryWpCatId }));
