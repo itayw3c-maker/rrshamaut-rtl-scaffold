@@ -263,7 +263,7 @@ export async function importCustomPostType(typeSlug: string, page: number, perPa
 }
 
 async function upsertPostRow(p: any, cptType: string | null): Promise<void> {
-  const slug = normalizeSlug(p.slug);
+  const slug = normalizeSlug(p.slug) || `draft-${p.id}`;
   const terms = (p?._embedded?.["wp:term"]?.[0] ?? []) as any[];
   const allCats = terms.filter((t: any) => t.taxonomy === "category");
   const primaryWpCatId = p.categories?.[0] ?? allCats[0]?.id ?? null;
