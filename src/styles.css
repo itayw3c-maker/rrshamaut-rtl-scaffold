@@ -168,3 +168,46 @@
   max-width: 100%;
   overflow: hidden;
 }
+
+/* ---------- Accessibility widget global effects ---------- */
+:root { --a11y-font-scale: 1; }
+html { font-size: calc(16px * var(--a11y-font-scale)); }
+
+html.a11y-high-contrast {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 0%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 0%;
+  --muted: 0 0% 95%;
+  --muted-foreground: 0 0% 10%;
+  --border: 0 0% 0%;
+  --primary: 220 100% 25%;
+  --primary-foreground: 0 0% 100%;
+  --accent: 340 100% 30%;
+  --accent-foreground: 0 0% 100%;
+}
+html.a11y-high-contrast body,
+html.a11y-high-contrast * { text-shadow: none !important; }
+html.a11y-high-contrast img { filter: contrast(1.15); }
+
+html.a11y-highlight-links a {
+  text-decoration: underline !important;
+  text-underline-offset: 3px !important;
+  outline: 1px dashed currentColor;
+  outline-offset: 2px;
+}
+
+html.a11y-readable-font,
+html.a11y-readable-font * {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+  letter-spacing: 0.02em;
+}
+
+html.a11y-paused *,
+html.a11y-paused *::before,
+html.a11y-paused *::after {
+  animation-duration: 0s !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0s !important;
+  scroll-behavior: auto !important;
+}
