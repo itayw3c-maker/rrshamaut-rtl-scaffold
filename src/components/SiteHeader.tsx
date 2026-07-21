@@ -56,6 +56,7 @@ export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
     if (mobileOpen) document.body.style.overflow = "hidden";
@@ -67,26 +68,42 @@ export function SiteHeader() {
 
   const telHref = `tel:${siteConfig.phone.replace(/[^0-9+]/g, "")}`;
 
+  const isActive = (href?: string) => {
+    if (!href) return false;
+    try {
+      const decoded = decodeURIComponent(pathname);
+      if (href === "/") return decoded === "/" || decoded === "";
+      return decoded === href || decoded === href + "/";
+    } catch {
+      return pathname === href;
+    }
+  };
+
+  const navLinkBase =
+    "inline-flex items-center gap-1 rounded-md px-5 py-[13px] text-[clamp(15px,1.1vw,22px)] font-normal transition-colors hover:text-[#056FC4]";
+
   return (
     <header className="sticky top-0 z-40 w-full border-b border-black/5 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80" dir="rtl">
-      <div className="flex h-20 w-full items-center justify-between gap-4 px-6 lg:px-10">
+      <div className="flex h-20 w-full items-center justify-between gap-4 px-6 lg:h-[117px] lg:px-10">
         {/* Logo (RTL start = right) */}
         <Link to="/" aria-label={`${siteConfig.brandName} - דף הבית`} className="flex shrink-0 items-center">
           <img
             src={siteConfig.logoDarkUrl}
             alt={siteConfig.brandName}
-            className="h-12 w-auto sm:h-14"
-            width={180}
-            height={56}
+            className="h-12 w-auto sm:h-14 lg:h-auto lg:w-[456px]"
+            width={456}
+            height={97}
           />
         </Link>
 
         {/* Desktop nav */}
         <nav aria-label="ניווט ראשי" className="hidden flex-1 items-center justify-center lg:flex">
-          <ul className="flex items-center gap-2 xl:gap-4">
+          <ul className="flex items-center gap-1 xl:gap-2">
             {NAV.map((item) => {
               const hasChildren = !!item.children?.length;
               const isOpen = openMenu === item.label;
+              const active = isActive(item.href);
+              const colorCls = active ? "text-[#056FC4]" : "text-[rgb(31,32,35)]";
               return (
                 <li
                   key={item.label}
@@ -97,7 +114,7 @@ export function SiteHeader() {
                   {item.href ? (
                     <a
                       href={encodeHref(item.href)}
-                      className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-[clamp(15px,1.1vw,22px)] font-semibold text-foreground transition-colors hover:text-primary"
+                      className={`${navLinkBase} ${colorCls}`}
                     >
                       {item.label}
                       {hasChildren && <ChevronDown className="h-4 w-4 opacity-70" />}
@@ -106,7 +123,7 @@ export function SiteHeader() {
                     <button
                       type="button"
                       onClick={() => setOpenMenu(isOpen ? null : item.label)}
-                      className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-[clamp(15px,1.1vw,22px)] font-semibold text-foreground transition-colors hover:text-primary"
+                      className={`${navLinkBase} ${colorCls}`}
                       aria-expanded={isOpen}
                       aria-haspopup="true"
                     >
@@ -122,7 +139,7 @@ export function SiteHeader() {
                           <li key={c.label}>
                             <a
                               href={encodeHref(c.href)}
-                              className="block rounded-md px-3 py-2 text-sm text-foreground transition-colors hover:bg-muted hover:text-primary"
+                              className="block rounded-md px-3 py-2 text-sm text-[rgb(31,32,35)] transition-colors hover:bg-muted hover:text-[#056FC4]"
                             >
                               {c.label}
                             </a>
@@ -136,6 +153,7 @@ export function SiteHeader() {
             })}
           </ul>
         </nav>
+
 
         {/* CTA (RTL end = left) */}
         <div className="hidden lg:flex">
