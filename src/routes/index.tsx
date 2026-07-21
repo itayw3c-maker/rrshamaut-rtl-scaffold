@@ -1,5 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
+import { submitLeadFn } from "@/lib/leads.functions";
 import { useEffect, useRef, useState } from "react";
 import {
   HeartHandshake, Award, Network, TrendingUp, Users,
