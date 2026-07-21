@@ -10,6 +10,13 @@ export type ArchiveItem = {
   cpt_type?: string;
 };
 
+export type PressCard = {
+  href: string;
+  img: string | null;
+  logo: string | null;
+  title: string;
+};
+
 export type ResolvedPage = {
   kind: "page";
   id: string;
@@ -20,6 +27,7 @@ export type ResolvedPage = {
   meta_description: string | null;
   cover_url: string | null;
   archive: null | { type: "movie" | "success" | "video"; items: ArchiveItem[] };
+  press?: PressCard[];
 };
 
 export type ResolvedPost = {
