@@ -1,46 +1,7 @@
-import { useMemo } from "react";
 import { PageHero } from "@/components/PageHero";
+import type { PressCard } from "@/lib/content.functions";
 
-interface PressCard {
-  href: string;
-  img?: string;
-  logo?: string;
-  title: string;
-}
-
-function decodeEntities(s: string): string {
-  return s.replace(/&amp;/g, "&").replace(/&#039;/g, "'").replace(/&quot;/g, '"').replace(/&nbsp;/g, " ");
-}
-
-function parsePress(html: string): PressCard[] {
-  // Find external news links; group with nearest image + title.
-  const cards: PressCard[] = [];
-  const linkRe = /<a[^>]+href="(https?:\/\/(?:www\.)?(?:ynet|maariv|israelhayom|globes|calcalist|mako|walla|n12|kikar|now14|inn)[^"]+)"[^>]*>/g;
-  const seen = new Set<string>();
-  let m: RegExpExecArray | null;
-  while ((m = linkRe.exec(html))) {
-    const href = m[1];
-    if (seen.has(href)) continue;
-    seen.add(href);
-    // window: 3000 chars around match
-    const start = Math.max(0, m.index - 3000);
-    const end = Math.min(html.length, m.index + 3000);
-    const win = html.slice(start, end);
-    const imgs = Array.from(win.matchAll(/<img[^>]+src="([^"]+)"/g)).map((x) => x[1]);
-    // pick screenshot (larger) and logo (smaller). Heuristic: first non-logo, first logo (has "logo")
-    const img = imgs.find((u) => !/logo/i.test(u) && !u.endsWith(".svg")) || imgs[0];
-    const logo = imgs.find((u) => /logo/i.test(u)) || imgs.find((u) => u !== img);
-    const titleMatch = win.match(/<h[23][^>]*>([\s\S]*?)<\/h[23]>/);
-    const title = titleMatch
-      ? decodeEntities(titleMatch[1].replace(/<[^>]+>/g, "").trim())
-      : "לקריאת הכתבה";
-    cards.push({ href, img, logo, title });
-  }
-  return cards;
-}
-
-export function PressArchiveView({ html }: { html: string }) {
-  const cards = useMemo(() => parsePress(html), [html]);
+export function PressArchiveView({ cards }: { cards: PressCard[] }) {
   return (
     <div dir="rtl">
       <PageHero title="כתבו עלינו" />
@@ -61,7 +22,7 @@ export function PressArchiveView({ html }: { html: string }) {
                   {c.img && (
                     <img
                       src={c.img}
-                      alt=""
+                      alt={c.title}
                       loading="lazy"
                       className="h-full w-full object-cover transition group-hover:scale-105"
                     />
