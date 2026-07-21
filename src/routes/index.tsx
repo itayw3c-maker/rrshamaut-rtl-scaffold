@@ -737,9 +737,9 @@ function HomePage() {
           <div className="mx-auto mt-3 h-1 w-[120px] rounded bg-[hsl(var(--gold))]" />
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {GALLERY.map((g) => (
-              <a key={g.title} href={encHref("/גלריית-נזקים")} className="group block text-right">
-                <h3 className="mb-3 text-lg font-bold text-[hsl(var(--primary))]">{g.title}</h3>
-                <div className="overflow-hidden rounded-2xl shadow-md ring-1 ring-black/5">
+              <a key={g.title} href={encHref("/גלריית-נזקים")} className="group block text-center">
+                <h3 className="mb-3 text-[18px] font-bold text-[#056FC4]">{g.title}</h3>
+                <div className="overflow-hidden" style={{ borderBottom: "3px solid rgb(203,164,54)" }}>
                   <img src={g.img} alt={g.title} loading="lazy" className="h-80 w-full object-cover transition duration-500 group-hover:scale-105" />
                 </div>
               </a>
