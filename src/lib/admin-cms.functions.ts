@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { z } from "zod";
-import { normalizeDashes } from "@/lib/wp/post-sanitize.server";
+import { normalizeDashes, sanitizePostHtml } from "@/lib/wp/post-sanitize.server";
 
 async function assertAdmin(ctx: any) {
   const { data, error } = await ctx.supabase.rpc("current_user_is_admin");
