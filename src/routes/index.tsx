@@ -652,28 +652,6 @@ function HomePage() {
       </section>
 
 
-      {/* 7. ABOUT */}
-      <section className="bg-background py-16 sm:py-20">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:px-8">
-          <div className="order-2 text-right lg:order-1">
-            <div className="relative">
-              <div className="pointer-events-none absolute -top-4 right-[-16px] h-24 w-24 rounded-full opacity-30" style={{ backgroundImage: "radial-gradient(circle, hsl(var(--gold)) 1.5px, transparent 2px)", backgroundSize: "12px 12px" }} aria-hidden="true" />
-              <div className="overflow-hidden rounded-[2rem] shadow-xl ring-1 ring-black/5">
-                <img src={IMG_ABOUT} alt="רפאל ריבוח - אודות" className="h-full w-full object-cover" loading="lazy" />
-              </div>
-              <div className="pointer-events-none absolute -bottom-4 left-[-16px] h-24 w-24 rounded-full opacity-30" style={{ backgroundImage: "radial-gradient(circle, hsl(var(--gold)) 1.5px, transparent 2px)", backgroundSize: "12px 12px" }} aria-hidden="true" />
-            </div>
-          </div>
-          <div className="order-1 text-right lg:order-2">
-            <h2 className="text-3xl font-extrabold text-[hsl(var(--gold))] sm:text-4xl">אודות רפאל שמאות רכוש</h2>
-            <div className="mt-5 space-y-4 text-base leading-relaxed text-[#333333] sm:text-lg">
-              {ABOUT_PARAGRAPHS.map((p) => <p key={p.slice(0, 30)}>{p}</p>)}
-            </div>
-            <div className="mt-7"><GoldOutlineBtn href="/about">קראו עוד</GoldOutlineBtn></div>
-          </div>
-        </div>
-      </section>
-
       {/* 8. TEAM */}
       <section className="bg-[hsl(var(--muted))] py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
