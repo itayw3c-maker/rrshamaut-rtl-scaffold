@@ -551,7 +551,7 @@ function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="text-2xl font-extrabold text-[hsl(var(--primary))] sm:text-3xl">לקוחות שבחרו בנו</h2>
-            <div className="mx-auto mt-3 h-1 w-16 rounded bg-[hsl(var(--gold))]" />
+            <div className="mx-auto mt-3 h-1 w-[120px] rounded bg-[hsl(var(--gold))]" />
           </div>
           <div className="mt-10">
             <ClientLogosCarousel />
@@ -596,7 +596,7 @@ function HomePage() {
       <section className="bg-[hsl(var(--muted))] py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-center justify-between gap-4">
-            <h2 className="order-1 text-right text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-4xl">הליך תביעת ביטוח</h2>
+            <h2 className="order-1 text-right text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-[48px]">הליך תביעת ביטוח</h2>
             <div className="order-2"><GoldOutlineBtn href="#contact-band">לייעוץ חינם</GoldOutlineBtn></div>
           </div>
           <div className="mt-12 grid grid-cols-1 gap-x-4 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
@@ -652,42 +652,29 @@ function HomePage() {
       </section>
 
 
-      {/* 7. ABOUT */}
-      <section className="bg-background py-16 sm:py-20">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:px-8">
-          <div className="order-2 text-right lg:order-1">
-            <div className="relative">
-              <div className="pointer-events-none absolute -top-4 right-[-16px] h-24 w-24 rounded-full opacity-30" style={{ backgroundImage: "radial-gradient(circle, hsl(var(--gold)) 1.5px, transparent 2px)", backgroundSize: "12px 12px" }} aria-hidden="true" />
-              <div className="overflow-hidden rounded-[2rem] shadow-xl ring-1 ring-black/5">
-                <img src={IMG_ABOUT} alt="רפאל ריבוח - אודות" className="h-full w-full object-cover" loading="lazy" />
-              </div>
-              <div className="pointer-events-none absolute -bottom-4 left-[-16px] h-24 w-24 rounded-full opacity-30" style={{ backgroundImage: "radial-gradient(circle, hsl(var(--gold)) 1.5px, transparent 2px)", backgroundSize: "12px 12px" }} aria-hidden="true" />
-            </div>
-          </div>
-          <div className="order-1 text-right lg:order-2">
-            <h2 className="text-3xl font-extrabold text-[hsl(var(--gold))] sm:text-4xl">אודות רפאל שמאות רכוש</h2>
-            <div className="mt-5 space-y-4 text-base leading-relaxed text-[#333333] sm:text-lg">
-              {ABOUT_PARAGRAPHS.map((p) => <p key={p.slice(0, 30)}>{p}</p>)}
-            </div>
-            <div className="mt-7"><GoldOutlineBtn href="/about">קראו עוד</GoldOutlineBtn></div>
-          </div>
-        </div>
-      </section>
-
       {/* 8. TEAM */}
       <section className="bg-[hsl(var(--muted))] py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-4xl">צוות החברה</h2>
-          <div className="mx-auto mt-3 h-1 w-16 rounded bg-[hsl(var(--gold))]" />
+          <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-[48px]">צוות החברה</h2>
+          <div className="mx-auto mt-3 h-1 w-[120px] rounded bg-[hsl(var(--gold))]" />
           <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
             {team.map((m) => (
-              <div key={m.name} className="flex flex-col items-center rounded-2xl border-b-4 border-[#063760] bg-card p-8 text-center shadow-md">
-                <img src={m.photo} alt={m.name} loading="lazy" className="h-28 w-28 rounded-full object-cover shadow-md ring-4 ring-white" />
-                <h3 className="mt-5 text-xl font-bold text-[hsl(var(--primary))]">{m.name}</h3>
-                <p className="mt-1 text-sm italic text-muted-foreground">{m.role}</p>
-                <p className="mt-4 text-sm leading-relaxed text-[#4a4d55]">{m.bio}</p>
-                <a href={encHref(m.href)} className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-[#dc2f5a] hover:underline">
-                  עוד <ArrowLeft className="h-3.5 w-3.5" />
+              <div
+                key={m.name}
+                className="flex flex-col items-center bg-card p-8 text-center"
+                style={{
+                  borderRadius: "10px",
+                  border: "1px solid rgb(6,55,96)",
+                  borderBottomWidth: "11px",
+                  boxShadow: "0 0 10px 0 rgba(0,0,0,0.24)",
+                }}
+              >
+                <img src={m.photo} alt={m.name} loading="lazy" className="h-24 w-24 rounded-full object-cover ring-4 ring-white shadow" />
+                <h3 className="mt-5 text-[24px] font-bold text-[#056FC4]">{m.name}</h3>
+                <p className="mt-1 text-base text-[#333333]">{m.role}</p>
+                <p className="mt-4 text-[15px] leading-relaxed text-[#333333]">{m.bio}</p>
+                <a href={encHref(m.href)} className="mt-5 inline-flex items-center gap-1 text-[20px] font-bold text-[rgb(204,51,102)] hover:underline">
+                  עוד <ArrowLeft className="h-4 w-4" />
                 </a>
               </div>
             ))}
@@ -698,8 +685,8 @@ function HomePage() {
       {/* 9. SUCCESSES */}
       <section className="bg-background py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-4xl">ההצלחות שלנו</h2>
-          <div className="mx-auto mt-3 h-1 w-16 rounded bg-[hsl(var(--gold))]" />
+          <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-[48px]">ההצלחות שלנו</h2>
+          <div className="mx-auto mt-3 h-1 w-[120px] rounded bg-[hsl(var(--gold))]" />
           <div className="mt-12">
             <SuccessCarousel items={successes} />
           </div>
@@ -710,7 +697,7 @@ function HomePage() {
       </section>
 
       {/* 10. WHY US — blue band */}
-      <section className="relative overflow-hidden bg-[#1470CE] py-16 text-white sm:py-20">
+      <section className="relative overflow-hidden py-16 text-white sm:py-20" style={{ backgroundColor: "rgb(5,111,196)" }}>
         <div
           className="pointer-events-none absolute inset-0 opacity-10"
           style={{
@@ -720,16 +707,23 @@ function HomePage() {
           aria-hidden="true"
         />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center text-3xl font-extrabold text-white sm:text-4xl">למה לבחור דווקא ברפאל שמאות רכוש</h2>
-          <div className="mx-auto mt-3 h-1 w-16 rounded bg-[hsl(var(--gold))]" />
+          <h2 className="text-center text-3xl font-extrabold text-white sm:text-[48px]">למה לבחור דווקא ברפאל שמאות רכוש</h2>
+          <div className="mx-auto mt-3 h-1 w-[120px] rounded bg-[hsl(var(--gold))]" />
           <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-5">
             {whyUs.map((w) => (
               <div key={w.title} className="text-center">
-                <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[hsl(var(--gold))] text-[#063760] shadow-lg">
-                  <w.Icon className="h-9 w-9" strokeWidth={2} />
+                <div
+                  className="mx-auto flex items-center justify-center rounded-full"
+                  style={{
+                    height: "110px",
+                    width: "110px",
+                    backgroundColor: "#F2DFA7",
+                  }}
+                >
+                  <w.Icon className="h-12 w-12" strokeWidth={1.75} style={{ color: "rgb(163,127,32)" }} />
                 </div>
-                <h3 className="mt-5 text-lg font-bold text-white">{w.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/90">{w.desc}</p>
+                <h3 className="mt-5 text-[20px] font-bold text-white">{w.title}</h3>
+                <p className="mt-2 text-base leading-relaxed text-white/95">{w.desc}</p>
               </div>
             ))}
           </div>
@@ -739,13 +733,13 @@ function HomePage() {
       {/* 11. GALLERY */}
       <section className="bg-background py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-4xl">גלריית הפרויקטים</h2>
-          <div className="mx-auto mt-3 h-1 w-16 rounded bg-[hsl(var(--gold))]" />
+          <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-[48px]">גלריית הפרויקטים</h2>
+          <div className="mx-auto mt-3 h-1 w-[120px] rounded bg-[hsl(var(--gold))]" />
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {GALLERY.map((g) => (
-              <a key={g.title} href={encHref("/גלריית-נזקים")} className="group block text-right">
-                <h3 className="mb-3 text-lg font-bold text-[hsl(var(--primary))]">{g.title}</h3>
-                <div className="overflow-hidden rounded-2xl shadow-md ring-1 ring-black/5">
+              <a key={g.title} href={encHref("/גלריית-נזקים")} className="group block text-center">
+                <h3 className="mb-3 text-[18px] font-bold text-[#056FC4]">{g.title}</h3>
+                <div className="overflow-hidden" style={{ borderBottom: "3px solid rgb(203,164,54)" }}>
                   <img src={g.img} alt={g.title} loading="lazy" className="h-80 w-full object-cover transition duration-500 group-hover:scale-105" />
                 </div>
               </a>
@@ -760,8 +754,8 @@ function HomePage() {
       {/* 12. VIDEOS */}
       <section className="bg-[hsl(var(--muted))] py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-4xl">סרטונים</h2>
-          <div className="mx-auto mt-3 h-1 w-16 rounded bg-[hsl(var(--gold))]" />
+          <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-[48px]">סרטונים</h2>
+          <div className="mx-auto mt-3 h-1 w-[120px] rounded bg-[hsl(var(--gold))]" />
           <div className="mt-12">
             <VideoCarousel items={videos} />
           </div>
@@ -771,8 +765,8 @@ function HomePage() {
       {/* 13. PRESS */}
       <section className="bg-background py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-4xl">כתבו עלינו</h2>
-          <div className="mx-auto mt-3 h-1 w-16 rounded bg-[hsl(var(--gold))]" />
+          <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-[48px]">כתבו עלינו</h2>
+          <div className="mx-auto mt-3 h-1 w-[120px] rounded bg-[hsl(var(--gold))]" />
           <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
             {PRESS.map((p) => (
               <a
@@ -791,7 +785,7 @@ function HomePage() {
                     <img src={p.logo} alt={p.alt} loading="lazy" className="h-10 w-auto object-contain" />
                   </div>
                 </div>
-                <div className="bg-[hsl(var(--gold))] py-3 text-center text-sm font-bold text-white group-hover:brightness-95">
+                <div className="bg-[hsl(var(--gold))] py-3 text-center text-base font-bold text-white group-hover:brightness-95">
                   לקריאת המאמר
                 </div>
               </a>
@@ -806,21 +800,29 @@ function HomePage() {
       {/* 14. ARTICLES */}
       <section className="bg-[hsl(var(--muted))] py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-4xl">מאמרים בנושא שמאות רכוש</h2>
-          <div className="mx-auto mt-3 h-1 w-16 rounded bg-[hsl(var(--gold))]" />
+          <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-[48px]">מאמרים בנושא שמאות רכוש</h2>
+          <div className="mx-auto mt-3 h-1 w-[120px] rounded bg-[hsl(var(--gold))]" />
           <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {articles.map((a) => {
               const excerpt = a.excerpt ? decodeEntities(a.excerpt) : "";
               return (
-                <article key={a.slug} className="flex flex-col rounded-2xl bg-white p-6 text-right shadow-md ring-1 ring-black/5">
-                  <h3 className="text-lg font-bold leading-snug text-[hsl(var(--primary))]">
+                <article
+                  key={a.slug}
+                  className="flex flex-col bg-white p-6 text-right"
+                  style={{
+                    borderRadius: "8px",
+                    border: "1px solid rgb(229,231,235)",
+                    boxShadow: "0 1px 3px 0 rgba(0,0,0,0.06)",
+                  }}
+                >
+                  <h3 className="text-[20px] font-bold leading-snug text-[#056FC4]">
                     <a href={encHref(`/${a.slug}`)} className="hover:underline">{a.title}</a>
                   </h3>
                   {excerpt && (
-                    <p className="mt-3 line-clamp-3 flex-1 text-sm leading-relaxed text-[#4a4d55]">{excerpt}</p>
+                    <p className="mt-3 line-clamp-3 flex-1 text-[15px] leading-relaxed text-[#333333]">{excerpt}</p>
                   )}
                   <div className="mt-5">
-                    <a href={encHref(`/${a.slug}`)} className="inline-flex items-center gap-1 text-sm font-bold text-[hsl(var(--gold))] hover:underline">
+                    <a href={encHref(`/${a.slug}`)} className="inline-flex items-center gap-1 text-base font-bold text-[rgb(203,164,54)] hover:underline">
                       קרא עוד »
                     </a>
                   </div>
@@ -930,14 +932,16 @@ function HelpBand() {
   }
 
   const inputCls =
-    "block w-full min-h-11 rounded-md border border-white/20 bg-[#D6E9FA] px-3 py-2 text-base text-[#0B2B4B] placeholder:text-[#4a5b6d] focus:outline-none focus:ring-2 focus:ring-[hsl(var(--gold))]";
+    "block h-10 w-full rounded-[10px] border-0 px-3 text-[15px] text-[#0B2B4B] placeholder:text-[#4a5b6d] focus:outline-none focus:ring-2 focus:ring-[hsl(var(--gold))]";
 
   return (
     <section id="contact-band" dir="rtl" className="bg-background py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div
-          className="relative overflow-hidden rounded-[2rem] bg-[#1470CE] px-6 py-12 sm:px-12 sm:py-16"
+          className="relative overflow-hidden px-6 py-12 sm:px-12 sm:py-16"
           style={{
+            backgroundColor: "rgb(5,111,196)",
+            borderRadius: "16px 200px 16px 16px",
             backgroundImage:
               "radial-gradient(rgba(203,164,54,0.28) 1.2px, transparent 1.4px)",
             backgroundSize: "18px 18px",
@@ -945,7 +949,7 @@ function HelpBand() {
         >
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-14">
             <div className="text-right text-white">
-              <h2 className="text-4xl font-extrabold leading-tight sm:text-5xl">
+              <h2 className="text-4xl font-extrabold leading-tight sm:text-[48px]">
                 אנו כאן<br />כדי לעזור
               </h2>
               <p className="mt-6 text-lg leading-relaxed text-white/95 sm:text-xl">
@@ -965,6 +969,7 @@ function HelpBand() {
                   onChange={(e) => setName(e.target.value)}
                   aria-invalid={!!errs.name}
                   className={inputCls}
+                  style={{ backgroundColor: "rgb(207,224,242)" }}
                 />
                 {errs.name && <p className="mt-1 text-xs text-white">{errs.name}</p>}
               </div>
@@ -976,6 +981,7 @@ function HelpBand() {
                   onChange={(e) => setPhone(e.target.value)}
                   aria-invalid={!!errs.phone}
                   className={inputCls}
+                  style={{ backgroundColor: "rgb(207,224,242)" }}
                 />
                 {errs.phone && <p className="mt-1 text-xs text-white">{errs.phone}</p>}
               </div>
@@ -987,6 +993,7 @@ function HelpBand() {
                   onChange={(e) => setEmail(e.target.value)}
                   aria-invalid={!!errs.email}
                   className={inputCls}
+                  style={{ backgroundColor: "rgb(207,224,242)" }}
                 />
                 {errs.email && <p className="mt-1 text-xs text-white">{errs.email}</p>}
               </div>
@@ -995,6 +1002,7 @@ function HelpBand() {
                   value={damage}
                   onChange={(e) => setDamage(e.target.value)}
                   className={inputCls}
+                  style={{ backgroundColor: "rgb(207,224,242)" }}
                 >
                   <option value="">באיזה נזק מדובר?</option>
                   {HELP_DAMAGE.map((d) => (
@@ -1019,7 +1027,12 @@ function HelpBand() {
                 <button
                   type="submit"
                   disabled={busy}
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[hsl(var(--gold))] px-8 py-3 text-base font-bold text-white shadow-md transition hover:brightness-95 disabled:opacity-70"
+                  className="inline-flex items-center justify-center gap-2 px-8 text-base font-semibold text-white transition hover:brightness-95 disabled:opacity-70"
+                  style={{
+                    backgroundColor: "rgb(203,164,54)",
+                    borderRadius: "40px",
+                    height: "44px",
+                  }}
                 >
                   {busy ? "שולח…" : "חיזרו אלי!"}
                 </button>
@@ -1053,10 +1066,10 @@ function ReviewsSection() {
   return (
     <section dir="rtl" className="bg-[hsl(var(--muted))] py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-4xl">
+        <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-[48px]">
           מה אומרים עלינו?
         </h2>
-        <div className="mx-auto mt-3 h-1 w-16 rounded bg-[hsl(var(--gold))]" />
+        <div className="mx-auto mt-3 h-1 w-[120px] rounded bg-[hsl(var(--gold))]" />
 
         {/* Google summary */}
         <div className="mt-8 flex flex-col items-center gap-2">
@@ -1131,7 +1144,7 @@ function SeoSections() {
     <section dir="rtl" className="bg-background py-16 sm:py-20">
       <div className="mx-auto max-w-4xl space-y-14 px-4 sm:px-6 lg:px-8">
         <article className="text-right">
-          <h2 className="text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-4xl">
+          <h2 className="text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-[48px]">
             מהי שמאות רכוש?
           </h2>
           <div className="mt-3 h-0 w-24 border-t-2 border-dashed border-[hsl(var(--primary))]/60" aria-hidden="true" />
@@ -1157,7 +1170,7 @@ function SeoSections() {
         </article>
 
         <article className="text-right">
-          <h2 className="text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-4xl">
+          <h2 className="text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-[48px]">
             שירותי שמאי רכוש
           </h2>
           <div className="mt-3 h-0 w-24 border-t-2 border-dashed border-[hsl(var(--primary))]/60" aria-hidden="true" />
