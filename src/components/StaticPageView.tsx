@@ -29,7 +29,9 @@ function stripLeadingHeading(html: string, text: string): string {
   const escaped = text
     .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
     .replace(/ +/g, "(?:\\s|&nbsp;|\\u00a0)+");
-  const re = new RegExp(`^\\s*<(h[1-3])\\b[^>]*>[\\s\\u00a0]*${escaped}[\\s\\u00a0]*</\\1>\\s*`, "i");
+  // Remove the first h1/h2/h3 whose text matches (whitespace-tolerant), wherever
+  // it appears in leading wrapper markup (Elementor sections, etc.).
+  const re = new RegExp(`<(h[1-3])\\b[^>]*>[\\s\\u00a0]*${escaped}[\\s\\u00a0]*</\\1>`, "i");
   return html.replace(re, "");
 }
 
