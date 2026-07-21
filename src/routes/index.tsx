@@ -551,7 +551,7 @@ function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="text-2xl font-extrabold text-[hsl(var(--primary))] sm:text-3xl">לקוחות שבחרו בנו</h2>
-            <div className="mx-auto mt-3 h-1 w-16 rounded bg-[hsl(var(--gold))]" />
+            <div className="mx-auto mt-3 h-1 w-[120px] rounded bg-[hsl(var(--gold))]" />
           </div>
           <div className="mt-10">
             <ClientLogosCarousel />
@@ -596,7 +596,7 @@ function HomePage() {
       <section className="bg-[hsl(var(--muted))] py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-center justify-between gap-4">
-            <h2 className="order-1 text-right text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-4xl">הליך תביעת ביטוח</h2>
+            <h2 className="order-1 text-right text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-[48px]">הליך תביעת ביטוח</h2>
             <div className="order-2"><GoldOutlineBtn href="#contact-band">לייעוץ חינם</GoldOutlineBtn></div>
           </div>
           <div className="mt-12 grid grid-cols-1 gap-x-4 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
@@ -655,8 +655,8 @@ function HomePage() {
       {/* 8. TEAM */}
       <section className="bg-[hsl(var(--muted))] py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-4xl">צוות החברה</h2>
-          <div className="mx-auto mt-3 h-1 w-16 rounded bg-[hsl(var(--gold))]" />
+          <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-[48px]">צוות החברה</h2>
+          <div className="mx-auto mt-3 h-1 w-[120px] rounded bg-[hsl(var(--gold))]" />
           <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
             {team.map((m) => (
               <div key={m.name} className="flex flex-col items-center rounded-2xl border-b-4 border-[#063760] bg-card p-8 text-center shadow-md">
@@ -676,8 +676,8 @@ function HomePage() {
       {/* 9. SUCCESSES */}
       <section className="bg-background py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-4xl">ההצלחות שלנו</h2>
-          <div className="mx-auto mt-3 h-1 w-16 rounded bg-[hsl(var(--gold))]" />
+          <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-[48px]">ההצלחות שלנו</h2>
+          <div className="mx-auto mt-3 h-1 w-[120px] rounded bg-[hsl(var(--gold))]" />
           <div className="mt-12">
             <SuccessCarousel items={successes} />
           </div>
@@ -698,8 +698,8 @@ function HomePage() {
           aria-hidden="true"
         />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center text-3xl font-extrabold text-white sm:text-4xl">למה לבחור דווקא ברפאל שמאות רכוש</h2>
-          <div className="mx-auto mt-3 h-1 w-16 rounded bg-[hsl(var(--gold))]" />
+          <h2 className="text-center text-3xl font-extrabold text-white sm:text-[48px]">למה לבחור דווקא ברפאל שמאות רכוש</h2>
+          <div className="mx-auto mt-3 h-1 w-[120px] rounded bg-[hsl(var(--gold))]" />
           <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-5">
             {whyUs.map((w) => (
               <div key={w.title} className="text-center">
@@ -717,8 +717,8 @@ function HomePage() {
       {/* 11. GALLERY */}
       <section className="bg-background py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-4xl">גלריית הפרויקטים</h2>
-          <div className="mx-auto mt-3 h-1 w-16 rounded bg-[hsl(var(--gold))]" />
+          <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-[48px]">גלריית הפרויקטים</h2>
+          <div className="mx-auto mt-3 h-1 w-[120px] rounded bg-[hsl(var(--gold))]" />
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {GALLERY.map((g) => (
               <a key={g.title} href={encHref("/גלריית-נזקים")} className="group block text-right">
@@ -738,8 +738,8 @@ function HomePage() {
       {/* 12. VIDEOS */}
       <section className="bg-[hsl(var(--muted))] py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-4xl">סרטונים</h2>
-          <div className="mx-auto mt-3 h-1 w-16 rounded bg-[hsl(var(--gold))]" />
+          <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-[48px]">סרטונים</h2>
+          <div className="mx-auto mt-3 h-1 w-[120px] rounded bg-[hsl(var(--gold))]" />
           <div className="mt-12">
             <VideoCarousel items={videos} />
           </div>
@@ -749,8 +749,8 @@ function HomePage() {
       {/* 13. PRESS */}
       <section className="bg-background py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-4xl">כתבו עלינו</h2>
-          <div className="mx-auto mt-3 h-1 w-16 rounded bg-[hsl(var(--gold))]" />
+          <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-[48px]">כתבו עלינו</h2>
+          <div className="mx-auto mt-3 h-1 w-[120px] rounded bg-[hsl(var(--gold))]" />
           <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
             {PRESS.map((p) => (
               <a
@@ -784,8 +784,8 @@ function HomePage() {
       {/* 14. ARTICLES */}
       <section className="bg-[hsl(var(--muted))] py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-4xl">מאמרים בנושא שמאות רכוש</h2>
-          <div className="mx-auto mt-3 h-1 w-16 rounded bg-[hsl(var(--gold))]" />
+          <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-[48px]">מאמרים בנושא שמאות רכוש</h2>
+          <div className="mx-auto mt-3 h-1 w-[120px] rounded bg-[hsl(var(--gold))]" />
           <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {articles.map((a) => {
               const excerpt = a.excerpt ? decodeEntities(a.excerpt) : "";
@@ -1031,10 +1031,10 @@ function ReviewsSection() {
   return (
     <section dir="rtl" className="bg-[hsl(var(--muted))] py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-4xl">
+        <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-[48px]">
           מה אומרים עלינו?
         </h2>
-        <div className="mx-auto mt-3 h-1 w-16 rounded bg-[hsl(var(--gold))]" />
+        <div className="mx-auto mt-3 h-1 w-[120px] rounded bg-[hsl(var(--gold))]" />
 
         {/* Google summary */}
         <div className="mt-8 flex flex-col items-center gap-2">
@@ -1109,7 +1109,7 @@ function SeoSections() {
     <section dir="rtl" className="bg-background py-16 sm:py-20">
       <div className="mx-auto max-w-4xl space-y-14 px-4 sm:px-6 lg:px-8">
         <article className="text-right">
-          <h2 className="text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-4xl">
+          <h2 className="text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-[48px]">
             מהי שמאות רכוש?
           </h2>
           <div className="mt-3 h-0 w-24 border-t-2 border-dashed border-[hsl(var(--primary))]/60" aria-hidden="true" />
@@ -1135,7 +1135,7 @@ function SeoSections() {
         </article>
 
         <article className="text-right">
-          <h2 className="text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-4xl">
+          <h2 className="text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-[48px]">
             שירותי שמאי רכוש
           </h2>
           <div className="mt-3 h-0 w-24 border-t-2 border-dashed border-[hsl(var(--primary))]/60" aria-hidden="true" />
