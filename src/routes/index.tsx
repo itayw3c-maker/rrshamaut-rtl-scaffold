@@ -15,6 +15,7 @@ import {
   getHomeArticlesFn, type HomeArticle,
 } from "@/lib/home.functions";
 import { SITE_URL, canonicalUrl } from "@/lib/site-config";
+import heroBgAsset from "@/assets/hero-bg.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
