@@ -1,4 +1,4 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
 import { SiteChrome } from "@/components/SiteChrome";
 import { ArticleView } from "@/components/ArticleView";
 import { StaticPageView } from "@/components/StaticPageView";
@@ -11,6 +11,10 @@ const BIO_SLUGS = new Set([
   "השמאי-רפאל-ריבוח-מייסד-ובעלים-2",
   "המהנדס-והשמאי-ארז-אריה-מומחה-הנדסי-ו",
 ]);
+
+// URL-parity 301 redirects: legacy root paths that should live elsewhere.
+const HOMEPAGE_SLUG = "רפאל-שמאות-רכוש";
+
 import { resolveSlugFn } from "@/lib/content.functions";
 import { SITE_URL, siteConfig, canonicalUrl } from "@/lib/site-config";
 
@@ -24,6 +28,15 @@ export const Route = createFileRoute("/$slug")({
   loader: async ({ params }) => {
     const raw = params.slug;
     if (!raw || RESERVED.has(raw.toLowerCase())) throw notFound();
+
+    // 301 legacy root URLs to their canonical location.
+    if (BIO_SLUGS.has(raw)) {
+      throw redirect({ href: `/about/${encodeURIComponent(raw)}/`, statusCode: 301 });
+    }
+    if (raw === HOMEPAGE_SLUG) {
+      throw redirect({ href: "/", statusCode: 301 });
+    }
+
     const result = await resolveSlugFn({ data: { slug: raw } });
     if (!result) throw notFound();
     return result;

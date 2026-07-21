@@ -26,6 +26,7 @@ import { Route as AdminUsersRouteImport } from './routes/admin/users'
 import { Route as AdminRedirectsRouteImport } from './routes/admin/redirects'
 import { Route as AdminLeadsRouteImport } from './routes/admin/leads'
 import { Route as AdminImportRouteImport } from './routes/admin/import'
+import { Route as AboutChildRouteImport } from './routes/about.$child'
 import { Route as AdminPostsIndexRouteImport } from './routes/admin/posts/index'
 import { Route as AdminPagesIndexRouteImport } from './routes/admin/pages/index'
 import { Route as AdminPostsIdRouteImport } from './routes/admin/posts/$id'
@@ -116,6 +117,11 @@ const AdminImportRoute = AdminImportRouteImport.update({
   path: '/import',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AboutChildRoute = AboutChildRouteImport.update({
+  id: '/about/$child',
+  path: '/about/$child',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminPostsIndexRoute = AdminPostsIndexRouteImport.update({
   id: '/posts/',
   path: '/posts/',
@@ -145,6 +151,7 @@ export interface FileRoutesByFullPath {
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/thank-you': typeof ThankYouRoute
+  '/about/$child': typeof AboutChildRoute
   '/admin/import': typeof AdminImportRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/redirects': typeof AdminRedirectsRoute
@@ -167,6 +174,7 @@ export interface FileRoutesByTo {
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/thank-you': typeof ThankYouRoute
+  '/about/$child': typeof AboutChildRoute
   '/admin/import': typeof AdminImportRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/redirects': typeof AdminRedirectsRoute
@@ -191,6 +199,7 @@ export interface FileRoutesById {
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/thank-you': typeof ThankYouRoute
+  '/about/$child': typeof AboutChildRoute
   '/admin/import': typeof AdminImportRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/redirects': typeof AdminRedirectsRoute
@@ -216,6 +225,7 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/sitemap.xml'
     | '/thank-you'
+    | '/about/$child'
     | '/admin/import'
     | '/admin/leads'
     | '/admin/redirects'
@@ -238,6 +248,7 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/sitemap.xml'
     | '/thank-you'
+    | '/about/$child'
     | '/admin/import'
     | '/admin/leads'
     | '/admin/redirects'
@@ -261,6 +272,7 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/sitemap.xml'
     | '/thank-you'
+    | '/about/$child'
     | '/admin/import'
     | '/admin/leads'
     | '/admin/redirects'
@@ -285,6 +297,7 @@ export interface RootRouteChildren {
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ThankYouRoute: typeof ThankYouRoute
+  AboutChildRoute: typeof AboutChildRoute
   CategorySlugRoute: typeof CategorySlugRoute
   MovieSlugRoute: typeof MovieSlugRoute
   ShortsSlugRoute: typeof ShortsSlugRoute
@@ -412,6 +425,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminImportRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/about/$child': {
+      id: '/about/$child'
+      path: '/about/$child'
+      fullPath: '/about/$child'
+      preLoaderRoute: typeof AboutChildRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/posts/': {
       id: '/admin/posts/'
       path: '/posts'
@@ -481,6 +501,7 @@ const rootRouteChildren: RootRouteChildren = {
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ThankYouRoute: ThankYouRoute,
+  AboutChildRoute: AboutChildRoute,
   CategorySlugRoute: CategorySlugRoute,
   MovieSlugRoute: MovieSlugRoute,
   ShortsSlugRoute: ShortsSlugRoute,
