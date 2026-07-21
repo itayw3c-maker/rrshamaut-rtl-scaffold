@@ -467,7 +467,7 @@ function HomePage() {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-10 pb-28 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:py-16 lg:pb-40 lg:px-8">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-10 pb-8 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:py-16 lg:pb-10 lg:px-8">
           <div className="order-2 text-right lg:order-2">
             <h1 className="text-3xl font-extrabold leading-tight text-[hsl(var(--primary))] sm:text-4xl lg:text-[42px]">
               שמאי רכוש לנזקי רכוש רפאל ריבוח
@@ -489,15 +489,15 @@ function HomePage() {
             </div>
           </div>
           <div className="order-1 lg:order-1">
-            <div className="relative h-72 w-full overflow-hidden rounded-2xl sm:h-96 lg:h-[520px]">
-              <img src={IMG_HERO} alt="רפאל ריבוח - שמאי רכוש" className="h-full w-full object-cover object-center" loading="eager" />
+            <div className="relative h-80 w-full overflow-hidden rounded-2xl sm:h-[460px] lg:h-[560px]">
+              <img src={IMG_HERO} alt="רפאל ריבוח - שמאי רכוש" className="h-full w-full object-cover object-top" loading="eager" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* 2. STATS — translucent cards straddling hero/white seam */}
-      <section className="relative z-10 -mt-20 sm:-mt-24 lg:-mt-28">
+      {/* 2. STATS — translucent cards floating over photo/white seam */}
+      <section className="relative z-10 -mt-16 sm:-mt-20 lg:-mt-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
             {STATS.map((s) => (

@@ -69,7 +69,7 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-black/5 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80" dir="rtl">
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+      <div className="flex h-20 w-full items-center justify-between gap-4 px-6 lg:px-10">
         {/* Logo (RTL start = right) */}
         <Link to="/" aria-label={`${siteConfig.brandName} - דף הבית`} className="flex shrink-0 items-center">
           <img
