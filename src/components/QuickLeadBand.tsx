@@ -14,7 +14,7 @@ const DAMAGE_OPTIONS = [
 ];
 
 const INPUT =
-  "block w-full min-h-11 rounded-md border border-white/30 bg-white px-3 py-2 text-base text-foreground placeholder:text-[#7a7a7a] focus:outline-none focus:ring-2 focus:ring-[hsl(var(--gold))]";
+  "block w-full h-10 rounded-md border border-white/30 bg-white px-3 text-base text-foreground placeholder:text-[#7a7a7a] focus:outline-none focus:ring-2 focus:ring-[hsl(var(--gold))]";
 
 export function QuickLeadBand() {
   const navigate = useNavigate();
