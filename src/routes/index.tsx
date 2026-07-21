@@ -15,6 +15,7 @@ import {
   getHomeArticlesFn, type HomeArticle,
 } from "@/lib/home.functions";
 import { SITE_URL, canonicalUrl } from "@/lib/site-config";
+import heroBgAsset from "@/assets/hero-bg.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -457,8 +458,16 @@ function HomePage() {
   return (
     <SiteChrome>
       {/* 1. HERO */}
-      <section className="relative overflow-hidden bg-[#F7F8FB]">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-10 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:py-16 lg:px-8">
+      <section
+        className="relative overflow-hidden"
+        style={{
+          backgroundImage: `linear-gradient(180deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.35) 40%, rgba(255,255,255,0.7) 100%), url(${heroBgAsset.url})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-10 pb-28 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:py-16 lg:pb-40 lg:px-8">
           <div className="order-2 text-right lg:order-2">
             <h1 className="text-3xl font-extrabold leading-tight text-[hsl(var(--primary))] sm:text-4xl lg:text-[42px]">
               שמאי רכוש לנזקי רכוש רפאל ריבוח
@@ -487,12 +496,12 @@ function HomePage() {
         </div>
       </section>
 
-      {/* 2. STATS */}
-      <section className="bg-[hsl(var(--muted))] py-12 sm:py-16">
+      {/* 2. STATS — translucent cards straddling hero/white seam */}
+      <section className="relative z-10 -mt-20 sm:-mt-24 lg:-mt-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
             {STATS.map((s) => (
-              <div key={s.label} className="rounded-2xl bg-white p-6 text-center shadow-md ring-1 ring-black/5">
+              <div key={s.label} className="rounded-2xl bg-white/70 p-6 text-center shadow-lg ring-1 ring-white/60 backdrop-blur-md">
                 <div className="text-3xl font-extrabold tabular-nums text-[hsl(var(--primary))] sm:text-4xl lg:text-[40px]">
                   <Counter target={s.value} />
                 </div>
