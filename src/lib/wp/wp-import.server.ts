@@ -290,9 +290,11 @@ async function upsertPostRow(p: any, cptType: string | null): Promise<void> {
 
   // Yoast meta (byte-exact SEO parity). yoast_head_json is present in the REST payload.
   const yoast = p.yoast_head_json ?? {};
-  const metaTitle = yoast.title ? sanitizePostHtml(String(yoast.title)).replace(/<[^>]+>/g, "") : null;
-  const metaDescription = (yoast.description || yoast.og_description)
+  const rawMetaTitle = yoast.title ? sanitizePostHtml(String(yoast.title)).replace(/<[^>]+>/g, "") : null;
+  const metaTitle = rawMetaTitle ? dedupeBrandInTitle(normalizeDashes(decodeEntities(rawMetaTitle))) : null;
+  const rawMetaDesc = (yoast.description || yoast.og_description)
     ? sanitizePostHtml(String(yoast.description || yoast.og_description)).replace(/<[^>]+>/g, "") : null;
+  const metaDescription = rawMetaDesc ? normalizeDashes(decodeEntities(rawMetaDesc)) : null;
 
   // Content + video handling.
   let rawContent = p.content?.rendered ?? "";
