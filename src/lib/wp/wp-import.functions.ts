@@ -165,3 +165,15 @@ export const getImportStatsFn = createServerFn({ method: "GET" })
     if (!data) throw new Error("Forbidden: admin role required");
     return getImportStats();
   });
+
+const wpIdSchema = z.object({ wpId: z.number().int().min(1) });
+
+export const importPageMetaFn = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data) => wpIdSchema.parse(data))
+  .handler(async ({ context, data }) => {
+    const { data: isAdmin, error } = await context.supabase.rpc("current_user_is_admin");
+    if (error) { console.error("current_user_is_admin failed:", error); throw new Error("Forbidden: admin role required"); }
+    if (!isAdmin) throw new Error("Forbidden: admin role required");
+    return importPageMeta(data.wpId);
+  });
