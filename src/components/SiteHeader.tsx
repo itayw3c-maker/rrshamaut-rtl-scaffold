@@ -83,7 +83,7 @@ export function SiteHeader() {
 
         {/* Desktop nav */}
         <nav aria-label="ניווט ראשי" className="hidden flex-1 items-center justify-center lg:flex">
-          <ul className="flex items-center gap-1 xl:gap-2">
+          <ul className="flex items-center gap-2 xl:gap-4">
             {NAV.map((item) => {
               const hasChildren = !!item.children?.length;
               const isOpen = openMenu === item.label;
@@ -97,7 +97,7 @@ export function SiteHeader() {
                   {item.href ? (
                     <a
                       href={encodeHref(item.href)}
-                      className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-[0.95rem] font-semibold text-foreground transition-colors hover:text-primary"
+                      className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-[clamp(15px,1.1vw,22px)] font-semibold text-foreground transition-colors hover:text-primary"
                     >
                       {item.label}
                       {hasChildren && <ChevronDown className="h-4 w-4 opacity-70" />}
@@ -106,7 +106,7 @@ export function SiteHeader() {
                     <button
                       type="button"
                       onClick={() => setOpenMenu(isOpen ? null : item.label)}
-                      className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-[0.95rem] font-semibold text-foreground transition-colors hover:text-primary"
+                      className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-[clamp(15px,1.1vw,22px)] font-semibold text-foreground transition-colors hover:text-primary"
                       aria-expanded={isOpen}
                       aria-haspopup="true"
                     >

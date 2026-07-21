@@ -16,6 +16,7 @@ import {
 } from "@/lib/home.functions";
 import { SITE_URL, canonicalUrl } from "@/lib/site-config";
 import heroBgAsset from "@/assets/hero-bg.png.asset.json";
+import heroPortraitAsset from "@/assets/hero-portrait.webp.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -468,7 +469,7 @@ function HomePage() {
         }}
       >
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-10 pb-8 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:py-16 lg:pb-10 lg:px-8">
-          <div className="order-2 text-right lg:order-2">
+          <div className="order-2 text-right lg:order-1">
             <h1 className="text-3xl font-extrabold leading-tight text-[hsl(var(--primary))] sm:text-4xl lg:text-[42px]">
               שמאי רכוש לנזקי רכוש רפאל ריבוח
             </h1>
@@ -488,10 +489,15 @@ function HomePage() {
               </a>
             </div>
           </div>
-          <div className="order-1 lg:order-1">
-            <div className="relative h-80 w-full overflow-hidden rounded-2xl sm:h-[460px] lg:h-[560px]">
-              <img src={IMG_HERO} alt="רפאל ריבוח - שמאי רכוש" className="h-full w-full object-cover object-top" loading="eager" />
-            </div>
+          <div className="order-1 lg:order-2 flex justify-center lg:justify-start">
+            <img
+              src={heroPortraitAsset.url}
+              alt="רפאל ריבוח - שמאי רכוש"
+              width={682}
+              height={1024}
+              className="h-auto w-full max-w-md lg:max-w-lg"
+              loading="eager"
+            />
           </div>
         </div>
       </section>
