@@ -753,18 +753,347 @@ function HomePage() {
         </div>
       </section>
 
-      {/* 15. CTA */}
-      <section className="bg-gradient-to-bl from-[#042D50] via-[#063760] to-[#144268] py-16 text-white sm:py-20">
-        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-extrabold leading-tight sm:text-3xl">
-            מוזמנים להתקשר או להשאיר פרטים ליצירת קשר · ונשוב אליכם בהקדם!
-          </h2>
-          <p className="mt-3 text-lg text-[hsl(var(--gold))]">הייעוץ עלינו!</p>
-          <div className="mt-8 rounded-2xl bg-white p-6 text-foreground shadow-2xl sm:p-8">
-            <LeadForm variant="cta" submitLabel="חיזרו אלי!" />
+      {/* 15. HELP BAND (blue) + reviews + SEO sections */}
+      <HelpBand />
+      <ReviewsSection />
+      <SeoSections />
+    </SiteChrome>
+  );
+}
+
+/* ============ NEW SECTIONS ============ */
+
+const REVIEW_SCREENSHOTS: string[] = [
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2383/2025-04-09-172128.png",
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2384/2025-04-09-172200.png",
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2385/2025-04-09-172208.png",
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2386/2025-04-09-172214.png",
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2387/2025-04-09-172237.png",
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2388/2025-04-09-172246.png",
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2389/2025-04-09-172252.png",
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2390/2025-04-09-172307.png",
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2391/2025-04-09-172316.png",
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2392/2025-04-09-172323.png",
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2393/2025-04-09-172340.png",
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2394/2025-04-09-172352.png",
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2396/2025-04-09-172407.png",
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2397/2025-04-09-172413.png",
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2398/2025-04-09-172418.png",
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2399/2025-04-09-172425.png",
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2400/2025-04-09-172437.png",
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2401/2025-04-09-172444.png",
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2402/2025-04-09-172505.png",
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2403/2025-04-09-172511.png",
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2404/2025-04-09-172521.png",
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2405/2025-04-09-172542.png",
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2406/2025-04-09-172609.png",
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2407/2025-04-09-172616.png",
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2408/2025-04-09-172622.png",
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2409/2025-04-09-172640.png",
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2410/2025-04-09-172649.png",
+];
+
+const MIDRAG_IMG =
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2382/whatsapp-2025-03-11-18-16-20-cf0b428d.jpg";
+
+const HELP_DAMAGE = [
+  "נזק מים",
+  "נזק אש",
+  "נזק טבע",
+  "נזקי רכוש",
+  "דחיית תביעה",
+  "הערכת שווי רכוש",
+  "אחר",
+];
+
+function HelpBand() {
+  const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [damage, setDamage] = useState("");
+  const [agreed, setAgreed] = useState(false);
+  const [errs, setErrs] = useState<{ name?: string; phone?: string; email?: string; consent?: string; submit?: string }>({});
+  const [busy, setBusy] = useState(false);
+
+  async function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const next: typeof errs = {};
+    if (!name.trim()) next.name = "יש להזין שם";
+    if (!phone.trim()) next.phone = "יש להזין טלפון";
+    if (email.trim() && !/^\S+@\S+\.\S+$/.test(email.trim())) next.email = "אימייל לא תקין";
+    if (!agreed) next.consent = "יש לאשר את מדיניות הפרטיות";
+    setErrs(next);
+    if (Object.keys(next).length) return;
+    setBusy(true);
+    try {
+      await submitLeadFn({
+        data: {
+          name: name.trim(),
+          phone: phone.trim(),
+          email: email.trim() || undefined,
+          damageType: damage || undefined,
+          sourceUrl: typeof window !== "undefined" ? window.location.pathname : "/",
+          sourceVariant: "cta",
+          agreed: true,
+        },
+      });
+      navigate({ to: "/thank-you" });
+    } catch (err) {
+      setErrs({ submit: err instanceof Error ? err.message : "אירעה שגיאה, נסו שוב" });
+      setBusy(false);
+    }
+  }
+
+  const inputCls =
+    "block w-full min-h-11 rounded-md border border-white/20 bg-[#D6E9FA] px-3 py-2 text-base text-[#0B2B4B] placeholder:text-[#4a5b6d] focus:outline-none focus:ring-2 focus:ring-[hsl(var(--gold))]";
+
+  return (
+    <section id="contact-band" dir="rtl" className="bg-background py-16 sm:py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div
+          className="relative overflow-hidden rounded-[2rem] bg-[#1470CE] px-6 py-12 sm:px-12 sm:py-16"
+          style={{
+            backgroundImage:
+              "radial-gradient(rgba(203,164,54,0.28) 1.2px, transparent 1.4px)",
+            backgroundSize: "18px 18px",
+          }}
+        >
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-14">
+            <div className="text-right text-white">
+              <h2 className="text-4xl font-extrabold leading-tight sm:text-5xl">
+                אנו כאן<br />כדי לעזור
+              </h2>
+              <p className="mt-6 text-lg leading-relaxed text-white/95 sm:text-xl">
+                מוזמנים להתקשר או להשאיר פרטים ליצירת קשר ונשוב אליכם בהקדם!
+              </p>
+              <p className="mt-3 text-xl font-extrabold text-white sm:text-2xl">
+                הייעוץ עלינו!
+              </p>
+            </div>
+
+            <form onSubmit={onSubmit} noValidate className="flex flex-col gap-3 text-right">
+              <div>
+                <input
+                  type="text"
+                  placeholder="שם מלא"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  aria-invalid={!!errs.name}
+                  className={inputCls}
+                />
+                {errs.name && <p className="mt-1 text-xs text-white">{errs.name}</p>}
+              </div>
+              <div>
+                <input
+                  type="tel"
+                  placeholder="טלפון"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  aria-invalid={!!errs.phone}
+                  className={inputCls}
+                />
+                {errs.phone && <p className="mt-1 text-xs text-white">{errs.phone}</p>}
+              </div>
+              <div>
+                <input
+                  type="email"
+                  placeholder="אימייל"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  aria-invalid={!!errs.email}
+                  className={inputCls}
+                />
+                {errs.email && <p className="mt-1 text-xs text-white">{errs.email}</p>}
+              </div>
+              <div>
+                <select
+                  value={damage}
+                  onChange={(e) => setDamage(e.target.value)}
+                  className={inputCls}
+                >
+                  <option value="">באיזה נזק מדובר?</option>
+                  {HELP_DAMAGE.map((d) => (
+                    <option key={d} value={d}>{d}</option>
+                  ))}
+                </select>
+              </div>
+              <label className="mt-1 flex cursor-pointer items-start gap-2 text-sm text-white">
+                <input
+                  type="checkbox"
+                  checked={agreed}
+                  onChange={(e) => setAgreed(e.target.checked)}
+                  className="mt-1 h-4 w-4 shrink-0 accent-[hsl(var(--gold))]"
+                />
+                <span>
+                  אני מאשר/ת כי קראתי את מדיניות הפרטיות ואני מסכימ/ה לשמירת הפרטים לצורך יצירת קשר.
+                </span>
+              </label>
+              {errs.consent && <p className="text-sm font-semibold text-[#FFD6D6]">{errs.consent}</p>}
+              {errs.submit && <p className="text-sm font-semibold text-[#FFD6D6]">{errs.submit}</p>}
+              <div className="mt-2">
+                <button
+                  type="submit"
+                  disabled={busy}
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[hsl(var(--gold))] px-8 py-3 text-base font-bold text-white shadow-md transition hover:brightness-95 disabled:opacity-70"
+                >
+                  {busy ? "שולח…" : "חיזרו אלי!"}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
-      </section>
-    </SiteChrome>
+      </div>
+    </section>
+  );
+}
+
+function GoogleG({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 48 48" className={className} aria-hidden="true">
+      <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+      <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+      <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+      <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+    </svg>
+  );
+}
+
+function ReviewsSection() {
+  const { idx, setIdx, perView, maxIdx } = useCarousel(REVIEW_SCREENSHOTS, {
+    mobile: 1,
+    tablet: 2,
+    desktop: 3,
+  });
+
+  return (
+    <section dir="rtl" className="bg-[hsl(var(--muted))] py-16 sm:py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-4xl">
+          מה אומרים עלינו?
+        </h2>
+        <div className="mx-auto mt-3 h-1 w-16 rounded bg-[hsl(var(--gold))]" />
+
+        {/* Google summary */}
+        <div className="mt-8 flex flex-col items-center gap-2">
+          <div className="text-2xl font-extrabold text-[#0B2B4B]">מְעוּלֶה</div>
+          <div className="flex items-center gap-1" aria-label="5 מתוך 5 כוכבים">
+            {[0, 1, 2, 3, 4].map((i) => (
+              <svg key={i} viewBox="0 0 24 24" className="h-6 w-6 fill-[hsl(var(--gold))]" aria-hidden="true">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+            ))}
+          </div>
+          <div className="text-sm text-[#4a4d55]">
+            מבוסס על <strong>513 ביקורות</strong>
+          </div>
+          <div className="mt-1 flex items-center gap-2">
+            <GoogleG className="h-6 w-6" />
+            <span className="text-lg font-bold text-[#4a4d55]">Google</span>
+          </div>
+        </div>
+
+        {/* Screenshots carousel */}
+        <div className="relative mt-10">
+          <button
+            type="button"
+            onClick={() => setIdx((i) => (i <= 0 ? maxIdx : i - 1))}
+            className="absolute right-0 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white p-2 text-[hsl(var(--primary))] shadow ring-1 ring-black/5 hover:bg-white sm:-right-3"
+            aria-label="הקודם"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+          <button
+            type="button"
+            onClick={() => setIdx((i) => (i >= maxIdx ? 0 : i + 1))}
+            className="absolute left-0 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white p-2 text-[hsl(var(--primary))] shadow ring-1 ring-black/5 hover:bg-white sm:-left-3"
+            aria-label="הבא"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          <div className="overflow-hidden px-8">
+            <div
+              className="flex transition-transform duration-500 ease-out"
+              style={{ transform: `translateX(${(idx * 100) / perView}%)` }}
+            >
+              {REVIEW_SCREENSHOTS.map((src, i) => (
+                <div key={src} className="shrink-0 px-3" style={{ width: `${100 / perView}%` }}>
+                  <div className="flex h-72 items-center justify-center rounded-2xl bg-white p-3 shadow-md ring-1 ring-black/5">
+                    <img
+                      src={src}
+                      alt={`ביקורת לקוח ${i + 1}`}
+                      loading="lazy"
+                      className="h-64 w-auto max-w-full object-contain"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Midrag block */}
+        <div className="mt-12 flex flex-col items-center gap-3">
+          <img src={MIDRAG_IMG} alt="הדירוג שלי במידרג" loading="lazy" className="h-16 w-auto" />
+          <p className="text-sm font-semibold text-[#4a4d55]">הדירוג שלי במידרג</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function SeoSections() {
+  return (
+    <section dir="rtl" className="bg-background py-16 sm:py-20">
+      <div className="mx-auto max-w-4xl space-y-14 px-4 sm:px-6 lg:px-8">
+        <article className="text-right">
+          <h2 className="text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-4xl">
+            מהי שמאות רכוש?
+          </h2>
+          <div className="mt-3 h-0 w-24 border-t-2 border-dashed border-[hsl(var(--primary))]/60" aria-hidden="true" />
+          <div className="prose-article mt-6 space-y-4 text-base leading-relaxed text-[#333333] sm:text-lg [&_a]:font-bold [&_a]:text-[#dc2f5a] [&_a:hover]:underline [&_strong>a]:text-[hsl(var(--gold))]">
+            <p>
+              שמאות רכוש היא הערכה מקצועית של רכוש קיים או הערכת נזקים לרכוש הנגרמים כתוצאה מאירועים ביטוחיים שונים. תחום השמאות כולל קטגוריות מגוונות:{" "}
+              שמאות רכוש כללית, <strong><a href="/נזקי-אש-ופיח">שמאות נזקי אש</a></strong>,{" "}
+              <strong><a href="/נזקי-מים-הצפה-ורטיבות">נזקי מים</a></strong>, נזקי ביוב, הצפות, נזקי מזג אוויר קשה ו
+              <strong><a href="/הערכת-שווי-רכוש">אובדן רכוש</a></strong>.
+            </p>
+            <p>
+              תפקידו של שמאי הרכוש הוא ביצוע הערכה מדויקת של הנזק שנגרם, הכנת חוות דעת מפורטת וסיוע למבוטח במימוש זכויות הפיצוי מול חברות הביטוח, בהתאם ל
+              <strong>
+                <a href="https://main.knesset.gov.il/activity/legislation/laws/pages/lawprimary.aspx?t=lawlaws&st=lawlaws&lawitemid=2000653" target="_blank" rel="noopener noreferrer">חוק חוזה הביטוח</a>
+              </strong>
+              , ולפיקוח{" "}
+              <strong>
+                <a href="https://www.gov.il/he/departments/capital_market_authority/govil-landing-page" target="_blank" rel="noopener noreferrer">רשות שוק ההון, ביטוח וחיסכון</a>
+              </strong>
+              . שמאות רכוש מבוצעת עבור מבוטחים פרטיים, עסקים, חברות ביטוח וגופים מוסדיים נוספים.
+            </p>
+          </div>
+        </article>
+
+        <article className="text-right">
+          <h2 className="text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-4xl">
+            שירותי שמאי רכוש
+          </h2>
+          <div className="mt-3 h-0 w-24 border-t-2 border-dashed border-[hsl(var(--primary))]/60" aria-hidden="true" />
+          <div className="prose-article mt-6 space-y-4 text-base leading-relaxed text-[#333333] sm:text-lg [&_a]:font-bold [&_a]:text-[#dc2f5a] [&_a:hover]:underline [&_strong>a]:text-[hsl(var(--gold))]">
+            <p>
+              שירותי שמאי רכוש פרטי כפי שמספקת חברתנו הינם חיוניים לכל מי שחווה נזק לרכושו ומבקש לקבל פיצוי הוגן. למעשה, שמאי רכוש הוא בעל מקצוע מוסמך המעריך את היקף הפגיעה / הנזק ברכושם, בין אם מדובר בנזקים אשר נגרמו כתוצאה מכוח עליון לבין רשלנות או צד ג'.
+            </p>
+            <p>
+              חברתנו מתמחה באבחון נזקים ייחודיים לכל מקרה, עם מתן חוות דעת מקצועית, יש יכולת השפעה ישירה על סכום הפיצוי שיקבל הנפגע.
+            </p>
+            <p>
+              שירותי הערכת נזקי רכוש מסופקים על ידינו עבור לקוחות מן הסקטור הפרטי והעסקי כאחד, והם מסייעים להבין את הנזקים, ההוצאות והמצב הכלכלי לאחר אירוע נזק.{" "}
+              <b>הערכת שמאי רכוש מוגשת בחוות דעת מפורטת שמתארת ומעריכה את היקף עלויות הנזקים. חו"ד שמאי רכוש הינה מרכיב חיוני בניהול תביעות ביטוח ובחתירה להשגת פיצוי הולם.</b>
+            </p>
+            <p>
+              אז אם אתם סובלים מנזקים ורוצים לתבוע את הביטוח, אל תוותרו על שירותיו של שמאי רכוש פרטי, חברתנו – <strong>רפאל שמאות רכוש | RR</strong>, מספקת שירותי שמאות רכוש והערכת נזקים מדויקת ומקצועית המוכרת על ידי כלל חברות הביטוח בישראל, וכן בבתי המשפט ובפני כל גורם רשמי רלוונטי אחר.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
   );
 }
