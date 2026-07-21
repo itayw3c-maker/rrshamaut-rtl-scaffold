@@ -90,7 +90,7 @@ export function SiteHeader() {
           <img
             src={siteConfig.logoDarkUrl}
             alt={siteConfig.brandName}
-            className="h-12 w-auto sm:h-14 lg:h-16 xl:h-auto xl:w-[456px]"
+            className="h-12 w-auto sm:h-14 lg:h-16 2xl:h-auto 2xl:w-[456px]"
             width={456}
             height={97}
           />
