@@ -1,4 +1,5 @@
-import { LeadForm } from "@/components/LeadForm";
+import { PageHero } from "@/components/PageHero";
+import { SidebarPhoneCard, SidebarLeadForm } from "@/components/SidebarCards";
 import { linkSlug } from "@/lib/slug";
 import { toYouTubeEmbed, youTubeThumb } from "@/lib/video";
 import type { CptItem } from "@/lib/content.functions";
@@ -13,16 +14,12 @@ export function CptItemView({ item }: { item: CptItem }) {
   const isVideo = item.cpt_type === "movie" || item.cpt_type === "shorts";
   const relBase =
     item.cpt_type === "movie" ? "/movie/" : item.cpt_type === "shorts" ? "/shorts/" : "/success/";
+  const crumbLabel = isVideo ? "סרטונים" : "ההצלחות שלנו";
+  const crumbTo = isVideo ? "/סרטונים" : "/ההצלחות-שלנו";
 
   return (
     <article dir="rtl">
-      <header className="border-b border-border bg-[hsl(var(--muted))]">
-        <div className="mx-auto max-w-7xl px-4 py-8 text-right sm:px-6 sm:py-12 lg:px-8">
-          <h1 className="text-3xl font-extrabold leading-tight text-foreground sm:text-4xl">
-            {title}
-          </h1>
-        </div>
-      </header>
+      <PageHero title={title} crumbs={[{ label: crumbLabel, to: crumbTo }]} />
 
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
@@ -39,14 +36,7 @@ export function CptItemView({ item }: { item: CptItem }) {
                 />
               </div>
             )}
-            {isVideo && !embed && item.cover_url && (
-              <img
-                src={item.cover_url}
-                alt=""
-                className="mb-8 w-full rounded-xl border border-border object-cover"
-              />
-            )}
-            {!isVideo && item.cover_url && (
+            {!embed && item.cover_url && (
               <img
                 src={item.cover_url}
                 alt=""
@@ -63,7 +53,9 @@ export function CptItemView({ item }: { item: CptItem }) {
           </div>
 
           <aside className="lg:col-span-4">
-            <div className="space-y-8 lg:sticky lg:top-24">
+            <div className="space-y-6 lg:sticky lg:top-24">
+              <SidebarPhoneCard />
+              <SidebarLeadForm />
               {item.related.length > 0 && (
                 <section className="rounded-2xl border border-border bg-card p-5">
                   <h2 className="text-lg font-bold text-[hsl(var(--primary))]">
@@ -95,14 +87,6 @@ export function CptItemView({ item }: { item: CptItem }) {
                   </ul>
                 </section>
               )}
-
-              <section className="rounded-2xl border border-border bg-card p-5">
-                <h2 className="text-lg font-bold text-[hsl(var(--primary))]">צריכים ייעוץ?</h2>
-                <p className="mt-1 text-sm text-muted-foreground">השאירו פרטים ונחזור אליכם</p>
-                <div className="mt-4">
-                  <LeadForm variant="sidebar" submitLabel="חיזרו אלי!" />
-                </div>
-              </section>
             </div>
           </aside>
         </div>

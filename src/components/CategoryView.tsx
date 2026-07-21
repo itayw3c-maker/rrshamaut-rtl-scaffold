@@ -1,3 +1,4 @@
+import { PageHero } from "@/components/PageHero";
 import { linkSlug } from "@/lib/slug";
 import type { CategoryPayload } from "@/lib/content.functions";
 
@@ -8,14 +9,7 @@ function decodeEntities(s: string): string {
 export function CategoryView({ category }: { category: CategoryPayload }) {
   return (
     <div dir="rtl">
-      <header className="border-b border-border bg-[hsl(var(--muted))]">
-        <div className="mx-auto max-w-7xl px-4 py-10 text-right sm:px-6 sm:py-14 lg:px-8">
-          <p className="text-sm font-semibold text-[hsl(var(--primary))]">קטגוריה</p>
-          <h1 className="mt-2 text-3xl font-extrabold leading-tight text-foreground sm:text-4xl">
-            {decodeEntities(category.name)}
-          </h1>
-        </div>
-      </header>
+      <PageHero title={decodeEntities(category.name)} crumbs={[{ label: "קטגוריות" }]} />
 
       {category.description && (
         <section className="border-b border-border bg-card">
