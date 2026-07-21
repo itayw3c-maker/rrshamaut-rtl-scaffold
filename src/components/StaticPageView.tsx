@@ -65,7 +65,7 @@ export function StaticPageView({ page }: { page: ResolvedPage }) {
   if (slug === "שאלות-תשובות") return <FaqView html={page.content} />;
   if (slug === "צור-קשר") return <ContactView />;
   if (slug === "גלריית-נזקי-מים-אש-ומלחמה") return <GalleryView html={page.content} />;
-  if (slug === "כתבו-עלינו") return <PressArchiveView html={page.content} />;
+  if (slug === "כתבו-עלינו") return <PressArchiveView cards={page.press ?? []} />;
 
   // Archive pages: videos / successes (page copy + grid)
   if (slug === "סרטונים" && page.archive?.type === "video") {
@@ -85,17 +85,10 @@ export function StaticPageView({ page }: { page: ResolvedPage }) {
     );
   }
   if (slug === "ההצלחות-שלנו" && page.archive?.type === "success") {
+    // Skip page.content to avoid duplicating the H2 + card grid that ships in the imported HTML.
     return (
       <div dir="rtl">
         <PageHero title={title} />
-        {page.content && (
-          <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
-            <div
-              className="prose prose-article max-w-none text-right"
-              dangerouslySetInnerHTML={{ __html: page.content }}
-            />
-          </div>
-        )}
         <SuccessArchiveGrid items={page.archive.items} />
       </div>
     );
