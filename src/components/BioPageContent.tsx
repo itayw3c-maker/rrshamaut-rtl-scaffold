@@ -66,7 +66,7 @@ export function BioPageContent({ page }: { page: PageRow }) {
 
   return (
     <>
-      <PageHero title={page.title} />
+      <PageHero title={decodeEntities(page.title)} />
       <section dir="rtl" className="bg-white py-12 sm:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-[minmax(0,300px)_1fr] md:gap-12 lg:gap-16">
