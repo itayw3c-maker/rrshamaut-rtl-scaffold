@@ -15,8 +15,9 @@ export const Route = createFileRoute("/category/$slug")({
       return { meta: [{ title: "לא נמצא" }, { name: "robots", content: "noindex" }] };
     }
     const canonical = canonicalUrl(`/category/${params.slug}`);
-    const title = `${loaderData.name} - רפאל שמאות רכוש`;
+    const title = loaderData.meta_title || `${loaderData.name} - רפאל שמאות רכוש`;
     const desc =
+      loaderData.meta_description ||
       (loaderData.description ? loaderData.description.replace(/<[^>]+>/g, "").slice(0, 160) : "") ||
       `כל המאמרים בקטגוריה ${loaderData.name}`;
     const breadcrumb = {
