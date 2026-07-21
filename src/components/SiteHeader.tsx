@@ -84,13 +84,13 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-black/5 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80" dir="rtl">
-      <div className="flex h-20 w-full items-center justify-between gap-4 px-6 lg:h-[117px] lg:px-10">
+      <div className="flex h-20 w-full items-center justify-between gap-4 px-6 lg:h-24 lg:px-8 xl:h-[117px] xl:px-10">
         {/* Logo (RTL start = right) */}
         <Link to="/" aria-label={`${siteConfig.brandName} - דף הבית`} className="flex shrink-0 items-center">
           <img
             src={siteConfig.logoDarkUrl}
             alt={siteConfig.brandName}
-            className="h-12 w-auto sm:h-14 lg:h-auto lg:w-[456px]"
+            className="h-12 w-auto sm:h-14 lg:h-16 xl:h-auto xl:w-[456px]"
             width={456}
             height={97}
           />
