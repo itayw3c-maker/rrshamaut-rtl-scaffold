@@ -74,7 +74,7 @@ export const Route = createFileRoute("/sitemap.xml")({
         add("/", null);
         for (const p of posts.data ?? []) add(`/${enc((p as any).slug)}/`, (p as any).updated_at);
         for (const p of pages.data ?? []) add(`/${enc((p as any).slug)}/`, (p as any).updated_at);
-        for (const c of activeCats) add(`/category/${enc((c as any).slug)}/`, (c as any).updated_at);
+        for (const c of activeCats) add(`/category/${enc((c as any).slug)}/`, null);
         for (const m of movies.data ?? []) add(`/movie/${enc((m as any).slug)}/`, (m as any).updated_at);
         for (const s of shorts.data ?? []) add(`/shorts/${enc((s as any).slug)}/`, (s as any).updated_at);
         for (const s of successes.data ?? []) add(`/success/${enc((s as any).slug)}/`, (s as any).updated_at);
