@@ -4,18 +4,18 @@ import { Menu, X, ChevronDown, Phone } from "lucide-react";
 import { siteConfig } from "@/lib/site-config";
 
 type NavChild = { label: string; href: string };
-type NavItem = { label: string; href?: string; children?: NavChild[] };
+type NavItem = { label: string; href?: string; children?: NavChild[]; mobileOnly?: boolean };
 
 const SERVICES: NavChild[] = [
   { label: "ייעוץ וליווי תביעות ביטוח", href: "/ייעוץ-וליווי-תביעות-ביטוח" },
-  { label: "נזקי מים הצפה ורטיבות", href: "/נזקי-מים-הצפה-ורטיבות" },
-  { label: "נזקי אש ופיח", href: "/נזקי-אש-ופיח" },
-  { label: "נזקי טבע שיטפונות וסערה", href: "/נזקי-טבע-שיטפונות-וסערה" },
+  { label: "שמאי נזקי מים הצפה ורטיבות", href: "/נזקי-מים-הצפה-ורטיבות" },
+  { label: "שמאי נזקי אש ופיח", href: "/נזקי-אש-ופיח" },
+  { label: "שמאי נזקי טבע שיטפונות וסערה", href: "/נזקי-טבע-שיטפונות-וסערה" },
   { label: "נזקי שוכרים", href: "/נזקי-שוכרים" },
-  { label: "נזקי פריצה", href: "/נזקי-פריצה" },
-  { label: "נזקי התנגשות", href: "/נזקי-התנגשות" },
-  { label: "נזקי עבודות קבלניות", href: "/נזקי-עבודות-קבלניות" },
-  { label: "חו״ד קבילה משפטית", href: "/חוד-קבילה-משפטית" },
+  { label: "נזקי פריצה", href: "/שמאי-נזקי-פריצה" },
+  { label: "נזקי התנגשות", href: "/שמאי-נזקי-התנגשות" },
+  { label: "נזקי עבודות קבלניות", href: "/שמאי-נזקי-עבודות-קבלניות" },
+  { label: "חו\"ד קבילה משפטית", href: "/חווד-קבילה-משפטית" },
   { label: "הערכת שווי רכוש", href: "/הערכת-שווי-רכוש" },
   { label: "הערכת שמאות לריהוט עתיק", href: "/הערכת-שמאות-לריהוט-עתיק" },
   { label: "הערכת רכוש לצורכי הזדכות במס שבח", href: "/הערכת-רכוש-לצורכי-הזדכות-במס-שבח" },
@@ -23,14 +23,14 @@ const SERVICES: NavChild[] = [
 
 const ABOUT_CHILDREN: NavChild[] = [
   { label: "רפאל ריבוח", href: "/about/השמאי-רפאל-ריבוח-מייסד-ובעלים-2" },
-  { label: "אינג׳ ארז אריה", href: "/about/המהנדס-והשמאי-ארז-אריה-מומחה-הנדסי-ו" },
+  { label: "אינג', ארז אריה", href: "/about/המהנדס-והשמאי-ארז-אריה-מומחה-הנדסי-ו" },
   { label: "עו\"ד קובי ליבוביץ'", href: "/about/השמאי-רפאל-ריבוח-מייסד-ובעלים" },
 ];
 
 const MEDIA_CHILDREN: NavChild[] = [
   { label: "כתבו עלינו", href: "/כתבו-עלינו" },
   { label: "סרטונים", href: "/סרטונים" },
-  { label: "גלריית נזקים", href: "/גלריית-נזקים" },
+  { label: "גלריית נזקים", href: "/גלריית-נזקי-מים-אש-ומלחמה" },
 ];
 
 const NAV: NavItem[] = [
@@ -40,6 +40,7 @@ const NAV: NavItem[] = [
   { label: "שאלות תשובות", href: "/שאלות-תשובות" },
   { label: "ההצלחות שלנו", href: "/ההצלחות-שלנו" },
   { label: "מדיה", children: MEDIA_CHILDREN },
+  { label: "הסמכות", href: "/תעודות", mobileOnly: true },
   { label: "מאמרים", href: "/category/מידע-מקצועי" },
   { label: "צור קשר", href: "/צור-קשר" },
 ];
