@@ -1,73 +1,26 @@
 /**
  * Custom template for /damage-assessments-loss-adjusting/.
- * Replaces the flat Elementor dump with a proper 10-section layout.
- * Extracts intro + 3 service blocks from page.content, reuses shared
- * homepage sections and existing FAQ parser for the rest.
+ * Structured props are extracted server-side (see custom-pages.server.ts)
+ * so the giant raw Elementor `content` is not shipped to the client.
  */
 import { PageHero } from "@/components/PageHero";
 import { QuickLeadBand } from "@/components/QuickLeadBand";
 import {
   TeamSection, WhyUsSection, SuccessesSection, HelpBand, ReviewsSection,
 } from "@/components/home-sections";
-import { parseFaq } from "@/components/special/FaqView";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import type { ServicePageData, ServiceBlock } from "@/lib/custom-pages.server";
 
 type PageRow = {
   id: string;
   title: string;
   slug: string;
   content: string | null;
+  service?: ServicePageData;
 };
 
-const H2_ANCHORS = {
-  intro: "איך אנחנו יכולים לעזור",
-  water: "שמאי נזקי מים",
-  fire: "שמאי נזקי אש שריפה ופיח",
-  property: "שמאי נזקי רכוש ומבנה",
-  why: "למה לבחור בנו",
-  faq: "שאלות ותשובות על שמאות פרטית",
-} as const;
-
-function sliceBetween(html: string, start: string, end: string): string {
-  const i = html.indexOf(start);
-  if (i < 0) return "";
-  const j = end ? html.indexOf(end, i + start.length) : -1;
-  return j < 0 ? html.slice(i) : html.slice(i, j);
-}
-
-function extractTextEditors(seg: string): string {
-  const re = /widget-text-editor[\s\S]*?<div class="elementor-widget-container">([\s\S]*?)<\/div>/g;
-  const parts: string[] = [];
-  let m: RegExpExecArray | null;
-  while ((m = re.exec(seg)) !== null) parts.push(m[1]);
-  const combined = parts.join(" ");
-  // Strip tags, collapse whitespace
-  return combined.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
-}
-
-function extractFirstImg(seg: string): { src: string; alt: string } | null {
-  const m = seg.match(/<img[^>]+src="([^"]+)"[^>]*?(?:alt="([^"]*)")?[^>]*>/);
-  if (!m) return null;
-  return { src: m[1], alt: m[2] || "" };
-}
-
-type Block = { heading: string; text: string; img: { src: string; alt: string } | null };
-
-function extractBlocks(html: string) {
-  const intro = extractTextEditors(sliceBetween(html, H2_ANCHORS.intro, H2_ANCHORS.water));
-  const mkBlock = (start: string, end: string, heading: string): Block => {
-    const seg = sliceBetween(html, start, end);
-    return { heading, text: extractTextEditors(seg), img: extractFirstImg(seg) };
-  };
-  const water = mkBlock(H2_ANCHORS.water, H2_ANCHORS.fire, "שמאי נזקי מים");
-  const fire = mkBlock(H2_ANCHORS.fire, H2_ANCHORS.property, "שמאי נזקי אש שריפה ופיח");
-  const property = mkBlock(H2_ANCHORS.property, H2_ANCHORS.why, "שמאי נזקי רכוש ומבנה");
-  const faqSeg = sliceBetween(html, H2_ANCHORS.faq, "");
-  return { intro, blocks: [water, fire, property], faqSeg };
-}
-
-function ServiceRow({ block, reverse }: { block: Block; reverse: boolean }) {
+function ServiceRow({ block, reverse }: { block: ServiceBlock; reverse: boolean }) {
   return (
     <div
       dir="rtl"
@@ -98,8 +51,7 @@ function ServiceRow({ block, reverse }: { block: Block; reverse: boolean }) {
   );
 }
 
-function FaqBlock({ html }: { html: string }) {
-  const { items } = parseFaq(html);
+function FaqBlock({ items }: { items: Array<{ q: string; a: string }> }) {
   const [open, setOpen] = useState<number>(0);
   if (items.length === 0) return null;
   return (
@@ -136,8 +88,8 @@ function FaqBlock({ html }: { html: string }) {
 }
 
 export function ServicePageContent({ page }: { page: PageRow }) {
-  const html = page.content || "";
-  const { intro, blocks, faqSeg } = extractBlocks(html);
+  const data = page.service ?? { intro: "", blocks: [], faq: [] };
+  const { intro, blocks, faq } = data;
 
   return (
     <div dir="rtl">
@@ -169,7 +121,7 @@ export function ServicePageContent({ page }: { page: PageRow }) {
 
       <WhyUsSection />
 
-      <FaqBlock html={faqSeg} />
+      <FaqBlock items={faq} />
 
       <TeamSection />
 

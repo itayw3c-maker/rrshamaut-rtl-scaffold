@@ -1,11 +1,17 @@
 /**
  * Custom template for founder/staff bio pages.
- * 2-column layout: person photo beside bio text (stacked on mobile).
- * Extracts photo + subtitle + bio paragraphs from Elementor content.
+ * Structured props are extracted server-side (see custom-pages.server.ts).
  */
 import { PageHero } from "@/components/PageHero";
+import type { BioPageData } from "@/lib/custom-pages.server";
 
-type PageRow = { id: string; title: string; slug: string; content: string | null };
+type PageRow = {
+  id: string;
+  title: string;
+  slug: string;
+  content: string | null;
+  bio?: BioPageData;
+};
 
 function decodeEntities(s: string): string {
   return s
@@ -17,52 +23,8 @@ function decodeEntities(s: string): string {
     .replace(/&gt;/g, ">");
 }
 
-function extractFirstImg(html: string): { src: string; alt: string } | null {
-  const m = html.match(/<img[^>]*?src="([^"]+)"[^>]*?(?:alt="([^"]*)")?[^>]*>/i);
-  if (!m) return null;
-  return { src: m[1], alt: decodeEntities(m[2] || "") };
-}
-
-/** Subtitle = the first non-breadcrumb <p> inside a heading widget. */
-function extractSubtitle(html: string): string {
-  const re = /widget-heading[\s\S]*?<div class="elementor-widget-container">[\s\S]*?<p[^>]*>([\s\S]*?)<\/p>/g;
-  let m: RegExpExecArray | null;
-  while ((m = re.exec(html)) !== null) {
-    const txt = decodeEntities(m[1].replace(/<[^>]+>/g, "")).trim();
-    if (!txt) continue;
-    if (/דף\s*הבית/.test(txt)) continue;
-    return txt;
-  }
-  return "";
-}
-
-/** Bio paragraphs = <p>...</p> inside text-editor widgets. Preserves <br />. */
-function extractBioParagraphs(html: string): string[] {
-  const paras: string[] = [];
-  const editorRe = /widget-text-editor[\s\S]*?<div class="elementor-widget-container">([\s\S]*?)<\/div>/g;
-  let m: RegExpExecArray | null;
-  while ((m = editorRe.exec(html)) !== null) {
-    const inner = m[1];
-    const pRe = /<p[^>]*>([\s\S]*?)<\/p>/g;
-    let pm: RegExpExecArray | null;
-    while ((pm = pRe.exec(inner)) !== null) {
-      const raw = pm[1].trim();
-      if (!raw) continue;
-      // Convert <br> to newline; strip other tags.
-      const withBreaks = raw.replace(/<br\s*\/?>/gi, "\n");
-      const txt = decodeEntities(withBreaks.replace(/<[^>]+>/g, "")).trim();
-      if (txt) paras.push(txt);
-    }
-  }
-  // Dedupe consecutive identical paragraphs.
-  return paras.filter((p, i) => i === 0 || p !== paras[i - 1]);
-}
-
 export function BioPageContent({ page }: { page: PageRow }) {
-  const html = page.content || "";
-  const img = extractFirstImg(html);
-  const subtitle = extractSubtitle(html);
-  const paras = extractBioParagraphs(html);
+  const { img = null, subtitle = "", paragraphs = [] } = page.bio ?? {};
 
   return (
     <>
@@ -89,7 +51,7 @@ export function BioPageContent({ page }: { page: PageRow }) {
                 </p>
               )}
               <div className="space-y-5 text-base leading-8 text-foreground sm:text-lg">
-                {paras.map((p, i) => (
+                {paragraphs.map((p, i) => (
                   <p key={i} className="whitespace-pre-line">{p}</p>
                 ))}
               </div>
