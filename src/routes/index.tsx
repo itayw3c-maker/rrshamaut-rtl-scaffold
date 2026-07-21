@@ -550,7 +550,7 @@ function HomePage() {
       <section className="bg-background py-14 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h2 className="text-2xl font-extrabold text-[hsl(var(--primary))] sm:text-3xl">לקוחות שבחרו בנו</h2>
+            <h2 className="text-3xl font-extrabold text-[#056FC4] sm:text-[48px]">לקוחות שבחרו בנו</h2>
             <div className="mx-auto mt-3 h-1 w-[120px] rounded bg-[hsl(var(--gold))]" />
           </div>
           <div className="mt-10">
