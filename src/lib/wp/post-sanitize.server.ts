@@ -51,6 +51,74 @@ export function normalizeDashes(s: string | null | undefined): string {
     .replace(/&#8212;/g, "-").replace(/&#8211;/g, "-");
 }
 
+/** Remove a <tag ...> ... </tag> block whose opening tag attributes match `attrRe`.
+ *  Handles nested same-tag elements via a depth scan. */
+function stripBlockByOpenAttrs(html: string, tag: string, attrRe: RegExp): string {
+  const openRe = new RegExp(`<${tag}\\b([^>]*)>`, "gi");
+  const anyOpenRe = new RegExp(`<${tag}\\b[^>]*>`, "gi");
+  const closeRe = new RegExp(`</${tag}\\s*>`, "gi");
+  let out = html;
+  let safety = 50;
+  while (safety-- > 0) {
+    openRe.lastIndex = 0;
+    let m: RegExpExecArray | null = null;
+    let found: { start: number; attrs: string } | null = null;
+    while ((m = openRe.exec(out)) !== null) {
+      if (attrRe.test(m[1])) { found = { start: m.index, attrs: m[1] }; break; }
+    }
+    if (!found) break;
+    // Find matching close accounting for nesting
+    let depth = 1;
+    let idx = found.start + `<${tag}`.length;
+    while (depth > 0) {
+      anyOpenRe.lastIndex = idx;
+      closeRe.lastIndex = idx;
+      const nextOpen = anyOpenRe.exec(out);
+      const nextClose = closeRe.exec(out);
+      if (!nextClose) { // unbalanced - strip to end
+        out = out.slice(0, found.start);
+        depth = 0;
+        break;
+      }
+      if (nextOpen && nextOpen.index < nextClose.index) {
+        depth++;
+        idx = nextOpen.index + nextOpen[0].length;
+      } else {
+        depth--;
+        idx = nextClose.index + nextClose[0].length;
+      }
+    }
+    if (depth === 0) out = out.slice(0, found.start) + out.slice(idx);
+  }
+  return out;
+}
+
+function stripSuperPicture(html: string): string {
+  let out = html;
+  // Remove wrapping divs by id or class starting with super-picture
+  out = stripBlockByOpenAttrs(out, "div", /\b(id|class)\s*=\s*["'][^"']*\bsuper-picture[\w-]*/i);
+  // Remove standalone img placeholders (super-picture-img-loading / -error)
+  out = out.replace(/<img\b[^>]*\bclass\s*=\s*["'][^"']*\bsuper-picture-img-(?:loading|error)[^"']*["'][^>]*\/?>/gi, "");
+  return out;
+}
+
+function stripSrclessImgs(html: string): string {
+  let out = html;
+  // <img ... src="" ...>
+  out = out.replace(/<img\b[^>]*\bsrc\s*=\s*(["'])\s*\1[^>]*\/?>/gi, "");
+  // <img ...> with NO src attribute at all
+  out = out.replace(/<img\b([^>]*)\/?>/gi, (full, attrs: string) =>
+    /\bsrc\s*=/i.test(attrs) ? full : ""
+  );
+  return out;
+}
+
+function downgradeH1(html: string): string {
+  return html
+    .replace(/<h1\b([^>]*)>/gi, "<h2$1>")
+    .replace(/<\/h1\s*>/gi, "</h2>");
+}
+
 export function sanitizePostHtml(input: string | null | undefined): string {
   if (!input) return "";
   let html = input;
@@ -63,6 +131,10 @@ export function sanitizePostHtml(input: string | null | undefined): string {
   html = html.replace(/^\s*https?:\/\/\S+\.(?:mp3|wav|m4a|ogg)\s*/i, "");
   html = unwrapChatGptDivs(html);
   html = stripShortcodes(html);
+  // New self-heal rules (run BEFORE dash-normalize):
+  html = stripSuperPicture(html);
+  html = stripSrclessImgs(html);
+  html = downgradeH1(html);
   html = collapseEmpties(html);
   html = normalizeDashes(html);
   return html;

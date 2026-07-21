@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { z } from "zod";
-import { normalizeDashes } from "@/lib/wp/post-sanitize.server";
+import { normalizeDashes, sanitizePostHtml } from "@/lib/wp/post-sanitize.server";
 
 async function assertAdmin(ctx: any) {
   const { data, error } = await ctx.supabase.rpc("current_user_is_admin");
@@ -109,7 +109,7 @@ export const saveAdminPostFn = createServerFn({ method: "POST" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const patch: any = {
       title: normalizeDashes(data.title),
-      content: normalizeDashes(data.content),
+      content: sanitizePostHtml(normalizeDashes(data.content)),
       excerpt: data.excerpt ? normalizeDashes(data.excerpt) : null,
       status: data.status,
       published_at: data.published_at || null,
@@ -237,7 +237,7 @@ export const saveAdminPageFn = createServerFn({ method: "POST" })
       .from("pages")
       .update({
         title: normalizeDashes(data.title),
-        content: normalizeDashes(data.content),
+        content: sanitizePostHtml(normalizeDashes(data.content)),
         status: data.status,
         meta_title: data.meta_title ? normalizeDashes(data.meta_title) : null,
         meta_description: data.meta_description ? normalizeDashes(data.meta_description) : null,
