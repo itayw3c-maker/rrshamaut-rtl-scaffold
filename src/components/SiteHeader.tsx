@@ -83,7 +83,7 @@ export function SiteHeader() {
 
         {/* Desktop nav */}
         <nav aria-label="ניווט ראשי" className="hidden flex-1 items-center justify-center lg:flex">
-          <ul className="flex items-center gap-1 xl:gap-2">
+          <ul className="flex items-center gap-2 xl:gap-4">
             {NAV.map((item) => {
               const hasChildren = !!item.children?.length;
               const isOpen = openMenu === item.label;
