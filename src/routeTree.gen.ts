@@ -22,6 +22,10 @@ import { Route as ShortsSlugRouteImport } from './routes/shorts.$slug'
 import { Route as MovieSlugRouteImport } from './routes/movie.$slug'
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
 import { Route as AdminImportRouteImport } from './routes/admin/import'
+import { Route as AdminPostsIndexRouteImport } from './routes/admin/posts/index'
+import { Route as AdminPagesIndexRouteImport } from './routes/admin/pages/index'
+import { Route as AdminPostsIdRouteImport } from './routes/admin/posts/$id'
+import { Route as AdminPagesIdRouteImport } from './routes/admin/pages/$id'
 
 const ThankYouRoute = ThankYouRouteImport.update({
   id: '/thank-you',
@@ -88,6 +92,26 @@ const AdminImportRoute = AdminImportRouteImport.update({
   path: '/import',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminPostsIndexRoute = AdminPostsIndexRouteImport.update({
+  id: '/posts/',
+  path: '/posts/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminPagesIndexRoute = AdminPagesIndexRouteImport.update({
+  id: '/pages/',
+  path: '/pages/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminPostsIdRoute = AdminPostsIdRouteImport.update({
+  id: '/posts/$id',
+  path: '/posts/$id',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminPagesIdRoute = AdminPagesIdRouteImport.update({
+  id: '/pages/$id',
+  path: '/pages/$id',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -103,6 +127,10 @@ export interface FileRoutesByFullPath {
   '/shorts/$slug': typeof ShortsSlugRoute
   '/success/$slug': typeof SuccessSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/admin/pages/$id': typeof AdminPagesIdRoute
+  '/admin/posts/$id': typeof AdminPostsIdRoute
+  '/admin/pages/': typeof AdminPagesIndexRoute
+  '/admin/posts/': typeof AdminPostsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -117,6 +145,10 @@ export interface FileRoutesByTo {
   '/shorts/$slug': typeof ShortsSlugRoute
   '/success/$slug': typeof SuccessSlugRoute
   '/admin': typeof AdminIndexRoute
+  '/admin/pages/$id': typeof AdminPagesIdRoute
+  '/admin/posts/$id': typeof AdminPostsIdRoute
+  '/admin/pages': typeof AdminPagesIndexRoute
+  '/admin/posts': typeof AdminPostsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -133,6 +165,10 @@ export interface FileRoutesById {
   '/shorts/$slug': typeof ShortsSlugRoute
   '/success/$slug': typeof SuccessSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/admin/pages/$id': typeof AdminPagesIdRoute
+  '/admin/posts/$id': typeof AdminPostsIdRoute
+  '/admin/pages/': typeof AdminPagesIndexRoute
+  '/admin/posts/': typeof AdminPostsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -150,6 +186,10 @@ export interface FileRouteTypes {
     | '/shorts/$slug'
     | '/success/$slug'
     | '/admin/'
+    | '/admin/pages/$id'
+    | '/admin/posts/$id'
+    | '/admin/pages/'
+    | '/admin/posts/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -164,6 +204,10 @@ export interface FileRouteTypes {
     | '/shorts/$slug'
     | '/success/$slug'
     | '/admin'
+    | '/admin/pages/$id'
+    | '/admin/posts/$id'
+    | '/admin/pages'
+    | '/admin/posts'
   id:
     | '__root__'
     | '/'
@@ -179,6 +223,10 @@ export interface FileRouteTypes {
     | '/shorts/$slug'
     | '/success/$slug'
     | '/admin/'
+    | '/admin/pages/$id'
+    | '/admin/posts/$id'
+    | '/admin/pages/'
+    | '/admin/posts/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -288,17 +336,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminImportRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/posts/': {
+      id: '/admin/posts/'
+      path: '/posts'
+      fullPath: '/admin/posts/'
+      preLoaderRoute: typeof AdminPostsIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/pages/': {
+      id: '/admin/pages/'
+      path: '/pages'
+      fullPath: '/admin/pages/'
+      preLoaderRoute: typeof AdminPagesIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/posts/$id': {
+      id: '/admin/posts/$id'
+      path: '/posts/$id'
+      fullPath: '/admin/posts/$id'
+      preLoaderRoute: typeof AdminPostsIdRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/pages/$id': {
+      id: '/admin/pages/$id'
+      path: '/pages/$id'
+      fullPath: '/admin/pages/$id'
+      preLoaderRoute: typeof AdminPagesIdRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
   }
 }
 
 interface AdminRouteRouteChildren {
   AdminImportRoute: typeof AdminImportRoute
   AdminIndexRoute: typeof AdminIndexRoute
+  AdminPagesIdRoute: typeof AdminPagesIdRoute
+  AdminPostsIdRoute: typeof AdminPostsIdRoute
+  AdminPagesIndexRoute: typeof AdminPagesIndexRoute
+  AdminPostsIndexRoute: typeof AdminPostsIndexRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminImportRoute: AdminImportRoute,
   AdminIndexRoute: AdminIndexRoute,
+  AdminPagesIdRoute: AdminPagesIdRoute,
+  AdminPostsIdRoute: AdminPostsIdRoute,
+  AdminPagesIndexRoute: AdminPagesIndexRoute,
+  AdminPostsIndexRoute: AdminPostsIndexRoute,
 }
 
 const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
