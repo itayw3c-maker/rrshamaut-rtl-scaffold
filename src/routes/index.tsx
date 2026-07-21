@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { SiteChrome } from "@/components/SiteChrome";
 import { QuickLeadBand } from "@/components/QuickLeadBand";
-import { LeadForm } from "@/components/LeadForm";
+
 import {
   getHomeVideosFn, type HomeVideo,
   getHomeSuccessesFn, type HomeSuccess,
