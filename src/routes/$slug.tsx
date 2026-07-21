@@ -3,6 +3,14 @@ import { SiteChrome } from "@/components/SiteChrome";
 import { ArticleView } from "@/components/ArticleView";
 import { StaticPageView } from "@/components/StaticPageView";
 import { ServicePageContent } from "@/components/ServicePageContent";
+import { CertificatesContent } from "@/components/CertificatesContent";
+import { BioPageContent } from "@/components/BioPageContent";
+
+const BIO_SLUGS = new Set([
+  "השמאי-רפאל-ריבוח-מייסד-ובעלים",
+  "השמאי-רפאל-ריבוח-מייסד-ובעלים-2",
+  "המהנדס-והשמאי-ארז-אריה-מומחה-הנדסי-ו",
+]);
 import { resolveSlugFn } from "@/lib/content.functions";
 import { SITE_URL, siteConfig, canonicalUrl } from "@/lib/site-config";
 
