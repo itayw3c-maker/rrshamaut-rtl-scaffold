@@ -26,7 +26,9 @@ const HERO_TITLE_OVERRIDES: Record<string, string> = {
 };
 
 function stripLeadingHeading(html: string, text: string): string {
-  const escaped = text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const escaped = text
+    .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+    .replace(/ +/g, "(?:\\s|&nbsp;)+");
   const re = new RegExp(`^\\s*<(h[1-3])\\b[^>]*>\\s*${escaped}\\s*</\\1>\\s*`, "i");
   return html.replace(re, "");
 }
