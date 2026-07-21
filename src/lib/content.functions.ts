@@ -241,6 +241,8 @@ export type CategoryPayload = {
   slug: string;
   name: string;
   description: string | null;
+  meta_title: string | null;
+  meta_description: string | null;
   posts: Array<{
     slug: string;
     title: string;
