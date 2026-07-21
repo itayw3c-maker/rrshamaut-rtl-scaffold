@@ -398,3 +398,23 @@ export async function getImportStats() {
     categories: cats.count ?? 0, tags: tags.count ?? 0, postsMissingCover: missingCover.count ?? 0,
   };
 }
+
+/** Fetch Yoast meta for a single WP page id and update the pages row. Returns which fields were set. */
+export async function importPageMeta(wpId: number): Promise<{ wp_id: number; title_set: boolean; desc_set: boolean; skipped?: string }> {
+  const res = await wpFetch(`pages/${wpId}?_fields=yoast_head_json`);
+  if (!res.ok) return { wp_id: wpId, title_set: false, desc_set: false, skipped: `HTTP ${res.status}` };
+  const body = await res.json();
+  const yoast = body?.yoast_head_json ?? {};
+  const rawT = yoast.title ? sanitizePostHtml(String(yoast.title)).replace(/<[^>]+>/g, "") : null;
+  const rawD = (yoast.description || yoast.og_description)
+    ? sanitizePostHtml(String(yoast.description || yoast.og_description)).replace(/<[^>]+>/g, "") : null;
+  const metaTitle = rawT ? dedupeBrandInTitle(normalizeDashes(decodeEntities(rawT))) : null;
+  const metaDescription = rawD ? normalizeDashes(decodeEntities(rawD)) : null;
+  const patch: Record<string, string> = {};
+  if (metaTitle) patch.meta_title = metaTitle;
+  if (metaDescription) patch.meta_description = metaDescription;
+  if (Object.keys(patch).length === 0) return { wp_id: wpId, title_set: false, desc_set: false, skipped: "no yoast" };
+  const { error } = await supabaseAdmin.from("pages").update(patch).eq("wp_id", wpId);
+  if (error) return { wp_id: wpId, title_set: false, desc_set: false, skipped: error.message };
+  return { wp_id: wpId, title_set: !!metaTitle, desc_set: !!metaDescription };
+}
