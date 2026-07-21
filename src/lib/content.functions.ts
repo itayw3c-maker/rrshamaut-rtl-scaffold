@@ -241,6 +241,8 @@ export type CategoryPayload = {
   slug: string;
   name: string;
   description: string | null;
+  meta_title: string | null;
+  meta_description: string | null;
   posts: Array<{
     slug: string;
     title: string;
@@ -258,7 +260,7 @@ export const getCategoryFn = createServerFn({ method: "GET" })
 
     const catRes = await supabaseAdmin
       .from("categories")
-      .select("id, slug, name, description")
+      .select("id, slug, name, description, meta_title, meta_description")
       .in("slug", cands)
       .limit(1)
       .maybeSingle();
@@ -290,6 +292,8 @@ export const getCategoryFn = createServerFn({ method: "GET" })
       slug: cat.slug,
       name: cat.name,
       description: cat.description ?? null,
+      meta_title: cat.meta_title ?? null,
+      meta_description: cat.meta_description ?? null,
       posts,
     };
   });

@@ -22,8 +22,9 @@ const SERVICES: NavChild[] = [
 ];
 
 const ABOUT_CHILDREN: NavChild[] = [
-  { label: "רפאל ריבוח", href: "/about/השמאי-רפאל-ריבוח-מייסד-ובעלים" },
+  { label: "רפאל ריבוח", href: "/about/השמאי-רפאל-ריבוח-מייסד-ובעלים-2" },
   { label: "אינג׳ ארז אריה", href: "/about/המהנדס-והשמאי-ארז-אריה-מומחה-הנדסי-ו" },
+  { label: "עו\"ד קובי ליבוביץ'", href: "/about/השמאי-רפאל-ריבוח-מייסד-ובעלים" },
 ];
 
 const MEDIA_CHILDREN: NavChild[] = [

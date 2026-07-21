@@ -19,6 +19,8 @@ export type Database = {
           description: string | null
           id: string
           is_spam: boolean
+          meta_description: string | null
+          meta_title: string | null
           name: string
           slug: string
           wp_id: number | null
@@ -27,6 +29,8 @@ export type Database = {
           description?: string | null
           id?: string
           is_spam?: boolean
+          meta_description?: string | null
+          meta_title?: string | null
           name: string
           slug: string
           wp_id?: number | null
@@ -35,6 +39,8 @@ export type Database = {
           description?: string | null
           id?: string
           is_spam?: boolean
+          meta_description?: string | null
+          meta_title?: string | null
           name?: string
           slug?: string
           wp_id?: number | null
