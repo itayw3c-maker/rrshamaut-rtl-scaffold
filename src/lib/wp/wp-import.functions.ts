@@ -13,6 +13,7 @@ import {
   backfillCoverForPost,
   getImportStats,
   importPageMeta,
+  importCategoryMeta,
 } from "./wp-import.server";
 
 const pageSchema = z.object({
