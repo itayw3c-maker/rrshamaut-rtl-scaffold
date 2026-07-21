@@ -697,7 +697,7 @@ function HomePage() {
       </section>
 
       {/* 10. WHY US — blue band */}
-      <section className="relative overflow-hidden bg-[#1470CE] py-16 text-white sm:py-20">
+      <section className="relative overflow-hidden py-16 text-white sm:py-20" style={{ backgroundColor: "rgb(5,111,196)" }}>
         <div
           className="pointer-events-none absolute inset-0 opacity-10"
           style={{
@@ -712,11 +712,18 @@ function HomePage() {
           <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-5">
             {whyUs.map((w) => (
               <div key={w.title} className="text-center">
-                <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[hsl(var(--gold))] text-[#063760] shadow-lg">
-                  <w.Icon className="h-9 w-9" strokeWidth={2} />
+                <div
+                  className="mx-auto flex items-center justify-center rounded-full"
+                  style={{
+                    height: "110px",
+                    width: "110px",
+                    backgroundColor: "#F2DFA7",
+                  }}
+                >
+                  <w.Icon className="h-12 w-12" strokeWidth={1.75} style={{ color: "rgb(163,127,32)" }} />
                 </div>
-                <h3 className="mt-5 text-lg font-bold text-white">{w.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/90">{w.desc}</p>
+                <h3 className="mt-5 text-[20px] font-bold text-white">{w.title}</h3>
+                <p className="mt-2 text-base leading-relaxed text-white/95">{w.desc}</p>
               </div>
             ))}
           </div>
