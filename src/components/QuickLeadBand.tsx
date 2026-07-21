@@ -14,7 +14,7 @@ const DAMAGE_OPTIONS = [
 ];
 
 const INPUT =
-  "block w-full min-h-11 rounded-md border border-white/30 bg-white px-3 py-2 text-base text-foreground placeholder:text-[#7a7a7a] focus:outline-none focus:ring-2 focus:ring-[hsl(var(--gold))]";
+  "block w-full h-10 rounded-md border border-white/30 bg-white px-3 text-base text-foreground placeholder:text-[#7a7a7a] focus:outline-none focus:ring-2 focus:ring-[hsl(var(--gold))]";
 
 export function QuickLeadBand() {
   const navigate = useNavigate();
@@ -56,7 +56,7 @@ export function QuickLeadBand() {
   return (
     <section
       dir="rtl"
-      className="relative overflow-hidden bg-[#1470CE] py-10 sm:py-12"
+      className="relative overflow-hidden bg-[#056FC4] py-10 sm:py-12"
       style={{
         backgroundImage:
           "radial-gradient(rgba(203,164,54,0.28) 1.2px, transparent 1.4px)",
@@ -107,7 +107,7 @@ export function QuickLeadBand() {
             <button
               type="submit"
               disabled={submitting}
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-[hsl(var(--gold))] px-6 py-2.5 text-base font-bold text-white shadow-sm transition hover:brightness-95 disabled:opacity-70"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-[rgb(203,164,54)] px-6 text-base font-semibold text-white shadow-sm transition hover:brightness-95 disabled:opacity-70"
             >
               {submitting && <Loader2 className="h-4 w-4 animate-spin" />}
               חיזרו אלי!
