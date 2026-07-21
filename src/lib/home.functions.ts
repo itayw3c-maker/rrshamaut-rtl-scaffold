@@ -80,3 +80,22 @@ export const getHomeArticlesFn = createServerFn({ method: "GET" }).handler(
     }));
   },
 );
+
+export type FooterArticle = { slug: string; title: string };
+
+export const getFooterArticlesFn = createServerFn({ method: "GET" }).handler(
+  async (): Promise<FooterArticle[]> => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const nowIso = new Date().toISOString();
+    const { data, error } = await supabaseAdmin
+      .from("posts")
+      .select("slug, title")
+      .is("cpt_type", null)
+      .eq("status", "publish")
+      .lte("published_at", nowIso)
+      .order("published_at", { ascending: false, nullsFirst: false })
+      .limit(8);
+    if (error) throw new Error(error.message);
+    return (data ?? []).map((row: any) => ({ slug: row.slug, title: row.title }));
+  },
+);

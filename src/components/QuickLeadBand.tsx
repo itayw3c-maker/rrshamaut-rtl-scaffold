@@ -56,7 +56,6 @@ export function QuickLeadBand() {
   return (
     <section
       dir="rtl"
-      id="contact-band"
       className="relative overflow-hidden bg-[#1470CE] py-10 sm:py-12"
       style={{
         backgroundImage:
