@@ -56,7 +56,7 @@ export function QuickLeadBand() {
   return (
     <section
       dir="rtl"
-      className="relative overflow-hidden bg-[#1470CE] py-10 sm:py-12"
+      className="relative overflow-hidden bg-[#056FC4] py-10 sm:py-12"
       style={{
         backgroundImage:
           "radial-gradient(rgba(203,164,54,0.28) 1.2px, transparent 1.4px)",
