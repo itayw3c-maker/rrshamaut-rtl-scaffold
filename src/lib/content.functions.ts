@@ -96,16 +96,47 @@ export const resolveSlugFn = createServerFn({ method: "GET" })
       const archive = archiveType
         ? { type: archiveType, items: await fetchArchive(archiveType) }
         : null;
+
+      let content: string = p.content ?? "";
+      let press: PressCard[] | undefined;
+
+      // Rehost gallery images so they don't point at the old origin.
+      if (p.slug === "גלריית-נזקי-מים-אש-ומלחמה") {
+        const { resolveMany } = await import("@/lib/media/resolve.server");
+        const urls = Array.from(
+          new Set([
+            ...Array.from(content.matchAll(/data-thumbnail="([^"]+)"/g)).map((m) => m[1]),
+            ...Array.from(content.matchAll(/<img[^>]+src="([^"]+)"/g)).map((m) => m[1]),
+          ]),
+        ).filter((u) => /rrshamaut\.co\.il\/wp-content\//i.test(u));
+        const map = await resolveMany(urls);
+        for (const [from, to] of Object.entries(map)) {
+          content = content.split(from).join(to);
+        }
+      }
+
+      // Press cards: use verified source list, resolve images through media/rehost.
+      if (p.slug === "כתבו-עלינו") {
+        const { resolveMany } = await import("@/lib/media/resolve.server");
+        const raw = PRESS_CARDS_RAW;
+        const map = await resolveMany(raw.map((c) => c.img).filter(Boolean) as string[]);
+        press = raw.map((c) => ({
+          ...c,
+          img: c.img ? (map[c.img] ?? c.img) : null,
+        }));
+      }
+
       return {
         kind: "page",
         id: p.id,
         slug: p.slug,
         title: p.title,
-        content: p.content ?? "",
+        content,
         meta_title: p.meta_title,
         meta_description: p.meta_description,
         cover_url: p.cover?.url ?? null,
         archive,
+        press,
       };
     }
 
