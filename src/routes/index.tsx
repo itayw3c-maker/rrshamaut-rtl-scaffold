@@ -569,16 +569,21 @@ function HomePage() {
       <section className="bg-background py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-center justify-between gap-4">
-            <h2 className="order-1 text-right text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-4xl">הנושאים בהם משרדנו עוסק</h2>
+            <h2 className="order-1 text-right text-3xl font-medium text-[hsl(var(--primary))] sm:text-[32px]">הנושאים בהם משרדנו עוסק</h2>
             <div className="order-2"><GoldOutlineBtn href="#contact-band">לייעוץ חינם</GoldOutlineBtn></div>
           </div>
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {services.map((s) => (
-              <a key={s.title} href={encHref(s.href)} className="group overflow-hidden rounded-xl bg-card shadow-sm ring-1 ring-black/5 transition hover:-translate-y-1 hover:shadow-xl">
-                <div className="relative h-56 w-full overflow-hidden">
+              <a
+                key={s.title}
+                href={encHref(s.href)}
+                className="group block overflow-hidden bg-card transition hover:-translate-y-1"
+                style={{ boxShadow: "0 0 10px 0 rgba(0,0,0,0.16)", borderRadius: 0 }}
+              >
+                <div className="relative w-full overflow-hidden" style={{ aspectRatio: "363 / 260" }}>
                   <img src={s.img} alt={s.title} loading="lazy" className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
-                  <div className="absolute inset-x-0 bottom-0 bg-[hsl(var(--primary))]/95 px-4 py-3 text-center">
-                    <h3 className="text-base font-bold text-white sm:text-lg">{s.title}</h3>
+                  <div className="absolute inset-x-0 bottom-0 flex h-9 items-center justify-center bg-[#056FC4] px-4">
+                    <h3 className="text-base font-semibold text-white">{s.title}</h3>
                   </div>
                 </div>
               </a>
@@ -601,7 +606,7 @@ function HomePage() {
               return (
                 <div key={num} className="relative text-right">
                   <div className="text-[44px] font-extrabold leading-none text-[hsl(var(--gold))]">{num}</div>
-                  <h3 className="mt-3 text-lg font-bold leading-snug text-[hsl(var(--primary))]">{title}</h3>
+                  <h3 className="mt-3 text-xl font-semibold leading-snug text-[#056FC4]">{title}</h3>
                   {!isLastCol && (
                     <div className="pointer-events-none absolute left-[-8px] top-6 hidden h-0 w-6 border-t-2 border-dashed border-[hsl(var(--gold))]/60 lg:block" aria-hidden="true" />
                   )}
@@ -611,6 +616,41 @@ function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* 7. ABOUT */}
+      <section className="bg-background py-16 sm:py-20">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:px-8">
+          <div className="order-2 text-right lg:order-1">
+            <div className="relative">
+              <div className="pointer-events-none absolute -top-4 right-[-16px] h-24 w-24 rounded-full opacity-30" style={{ backgroundImage: "radial-gradient(circle, hsl(var(--gold)) 1.5px, transparent 2px)", backgroundSize: "12px 12px" }} aria-hidden="true" />
+              <div className="overflow-hidden shadow-xl ring-1 ring-black/5" style={{ borderRadius: "8px 100px 8px 8px" }}>
+                <img src={IMG_ABOUT} alt="רפאל ריבוח - אודות" className="h-full w-full object-cover" loading="lazy" />
+              </div>
+              <div className="pointer-events-none absolute -bottom-4 left-[-16px] h-24 w-24 rounded-full opacity-30" style={{ backgroundImage: "radial-gradient(circle, hsl(var(--gold)) 1.5px, transparent 2px)", backgroundSize: "12px 12px" }} aria-hidden="true" />
+            </div>
+          </div>
+          <div className="order-1 text-right lg:order-2">
+            <h2 className="text-4xl font-extrabold text-[hsl(var(--gold))] sm:text-[40px]">אודות רפאל שמאות רכוש</h2>
+            <div className="mt-5 space-y-4 text-base leading-relaxed text-[#333333]">
+              {ABOUT_PARAGRAPHS.map((p) => <p key={p.slice(0, 30)}>{p}</p>)}
+            </div>
+            <div className="mt-7">
+              <a
+                href="/about"
+                className="inline-flex items-center justify-center px-6 py-3 text-[20px] font-bold transition hover:brightness-95"
+                style={{
+                  backgroundColor: "rgb(239,241,241)",
+                  color: "rgb(203,164,54)",
+                  borderRadius: "40px",
+                }}
+              >
+                קראו עוד
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
 
       {/* 7. ABOUT */}
       <section className="bg-background py-16 sm:py-20">
