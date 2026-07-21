@@ -785,7 +785,7 @@ function HomePage() {
                     <img src={p.logo} alt={p.alt} loading="lazy" className="h-10 w-auto object-contain" />
                   </div>
                 </div>
-                <div className="bg-[hsl(var(--gold))] py-3 text-center text-sm font-bold text-white group-hover:brightness-95">
+                <div className="bg-[hsl(var(--gold))] py-3 text-center text-base font-bold text-white group-hover:brightness-95">
                   לקריאת המאמר
                 </div>
               </a>
