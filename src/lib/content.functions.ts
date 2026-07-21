@@ -28,6 +28,8 @@ export type ResolvedPage = {
   cover_url: string | null;
   archive: null | { type: "movie" | "success" | "video"; items: ArchiveItem[] };
   press?: PressCard[];
+  service?: import("./custom-pages.server").ServicePageData;
+  bio?: import("./custom-pages.server").BioPageData;
 };
 
 export type ResolvedPost = {
