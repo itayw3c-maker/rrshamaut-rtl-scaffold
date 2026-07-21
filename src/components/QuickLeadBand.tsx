@@ -107,7 +107,7 @@ export function QuickLeadBand() {
             <button
               type="submit"
               disabled={submitting}
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-[hsl(var(--gold))] px-6 py-2.5 text-base font-bold text-white shadow-sm transition hover:brightness-95 disabled:opacity-70"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-[rgb(203,164,54)] px-6 text-base font-semibold text-white shadow-sm transition hover:brightness-95 disabled:opacity-70"
             >
               {submitting && <Loader2 className="h-4 w-4 animate-spin" />}
               חיזרו אלי!
