@@ -106,7 +106,11 @@ function SlugPage() {
   const data = Route.useLoaderData();
   return (
     <SiteChrome>
-      {data.kind === "page" ? <StaticPageView page={data} /> : <ArticleView post={data} />}
+      {data.kind === "page"
+        ? (data.slug === "damage-assessments-loss-adjusting"
+            ? <ServicePageContent page={data as any} />
+            : <StaticPageView page={data} />)
+        : <ArticleView post={data} />}
     </SiteChrome>
   );
 }
