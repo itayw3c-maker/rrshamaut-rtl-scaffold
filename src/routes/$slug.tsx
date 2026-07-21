@@ -19,7 +19,7 @@ import { resolveSlugFn } from "@/lib/content.functions";
 import { SITE_URL, siteConfig, canonicalUrl } from "@/lib/site-config";
 
 const RESERVED = new Set([
-  "admin", "login", "thank-you", "api", "about",
+  "admin", "login", "thank-you", "api",
   "favicon.ico", "og-image.png", "favicon.png", "favicon-done.svg", "notify.mp3",
   "robots.txt", "sitemap.xml",
 ]);
