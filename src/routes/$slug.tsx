@@ -112,13 +112,18 @@ export const Route = createFileRoute("/$slug")({
 
 function SlugPage() {
   const data = Route.useLoaderData();
+  const renderPage = () => {
+    if (data.slug === "damage-assessments-loss-adjusting")
+      return <ServicePageContent page={data as any} />;
+    if (data.slug === "תעודות")
+      return <CertificatesContent page={data as any} />;
+    if (BIO_SLUGS.has(data.slug))
+      return <BioPageContent page={data as any} />;
+    return <StaticPageView page={data} />;
+  };
   return (
     <SiteChrome>
-      {data.kind === "page"
-        ? (data.slug === "damage-assessments-loss-adjusting"
-            ? <ServicePageContent page={data as any} />
-            : <StaticPageView page={data} />)
-        : <ArticleView post={data} />}
+      {data.kind === "page" ? renderPage() : <ArticleView post={data} />}
     </SiteChrome>
   );
 }
