@@ -19,7 +19,7 @@ function decodeEntities(s: string): string {
     .replace(/&nbsp;/g, " ");
 }
 
-function parseFaq(html: string): { items: QA[]; disclaimer: string } {
+export function parseFaq(html: string): { items: QA[]; disclaimer: string } {
   const items: QA[] = [];
   const parts = html.split(/<div class="elementor-accordion-item">/);
   for (const p of parts.slice(1)) {

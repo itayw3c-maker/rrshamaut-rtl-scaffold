@@ -2,6 +2,7 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { SiteChrome } from "@/components/SiteChrome";
 import { ArticleView } from "@/components/ArticleView";
 import { StaticPageView } from "@/components/StaticPageView";
+import { ServicePageContent } from "@/components/ServicePageContent";
 import { resolveSlugFn } from "@/lib/content.functions";
 import { SITE_URL, siteConfig, canonicalUrl } from "@/lib/site-config";
 
@@ -105,7 +106,11 @@ function SlugPage() {
   const data = Route.useLoaderData();
   return (
     <SiteChrome>
-      {data.kind === "page" ? <StaticPageView page={data} /> : <ArticleView post={data} />}
+      {data.kind === "page"
+        ? (data.slug === "damage-assessments-loss-adjusting"
+            ? <ServicePageContent page={data as any} />
+            : <StaticPageView page={data} />)
+        : <ArticleView post={data} />}
     </SiteChrome>
   );
 }
