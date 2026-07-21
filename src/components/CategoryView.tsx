@@ -9,7 +9,9 @@ function decodeEntities(s: string): string {
 export function CategoryView({ category }: { category: CategoryPayload }) {
   return (
     <div dir="rtl">
-      <PageHero title={decodeEntities(category.name)} crumbs={[{ label: "קטגוריות" }]} />
+      <PageHero title="מאמרים" crumbs={[{ label: "קטגוריות" }, { label: decodeEntities(category.name) }]} />
+
+
 
       {category.description && (
         <section className="border-b border-border bg-card">
