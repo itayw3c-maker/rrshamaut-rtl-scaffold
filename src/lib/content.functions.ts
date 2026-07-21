@@ -142,17 +142,40 @@ export const resolveSlugFn = createServerFn({ method: "GET" })
         }));
       }
 
+      const {
+        extractServicePage,
+        extractBioPage,
+        CUSTOM_SERVICE_SLUG,
+        CUSTOM_CERT_SLUG,
+        CUSTOM_BIO_SLUGS,
+      } = await import("./custom-pages.server");
+
+      let service: import("./custom-pages.server").ServicePageData | undefined;
+      let bio: import("./custom-pages.server").BioPageData | undefined;
+      let outContent = content;
+      if (p.slug === CUSTOM_SERVICE_SLUG) {
+        service = extractServicePage(content);
+        outContent = "";
+      } else if (p.slug === CUSTOM_CERT_SLUG) {
+        outContent = "";
+      } else if (CUSTOM_BIO_SLUGS.has(p.slug)) {
+        bio = extractBioPage(content);
+        outContent = "";
+      }
+
       return {
         kind: "page",
         id: p.id,
         slug: p.slug,
         title: p.title,
-        content,
+        content: outContent,
         meta_title: p.meta_title,
         meta_description: p.meta_description,
         cover_url: p.cover?.url ?? null,
         archive,
         press,
+        service,
+        bio,
       };
     }
 
