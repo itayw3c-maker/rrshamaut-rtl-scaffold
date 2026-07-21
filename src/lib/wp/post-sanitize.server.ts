@@ -51,6 +51,36 @@ export function normalizeDashes(s: string | null | undefined): string {
     .replace(/&#8212;/g, "-").replace(/&#8211;/g, "-");
 }
 
+/** Decode common HTML entities that appear in Yoast/WP titles. */
+export function decodeEntities(s: string | null | undefined): string {
+  if (!s) return "";
+  return s
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&#039;/g, "'").replace(/&apos;/g, "'")
+    .replace(/&lt;/g, "<").replace(/&gt;/g, ">")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&#(\d+);/g, (_m, d) => String.fromCodePoint(parseInt(d, 10)))
+    .replace(/&#x([0-9a-f]+);/gi, (_m, h) => String.fromCodePoint(parseInt(h, 16)));
+}
+
+/** Collapse duplicated brand-name occurrences in a meta title to at most one.
+ *  e.g. "X | רפאל שמאות רכוש - רפאל שמאות רכוש | RR" -> "X | רפאל שמאות רכוש | RR" */
+export function dedupeBrandInTitle(s: string | null | undefined, brand = "רפאל שמאות רכוש"): string {
+  if (!s) return "";
+  let out = s;
+  const esc = brand.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  // Collapse two adjacent brand tokens separated by " - " / " | " / " – " / whitespace
+  const dupRe = new RegExp(`${esc}\\s*[-–|]\\s*${esc}`, "g");
+  let safety = 5;
+  while (dupRe.test(out) && safety-- > 0) out = out.replace(dupRe, brand);
+  // Also collapse doubled brand with just whitespace between
+  const wsRe = new RegExp(`${esc}\\s+${esc}`, "g");
+  safety = 5;
+  while (wsRe.test(out) && safety-- > 0) out = out.replace(wsRe, brand);
+  return out.replace(/\s{2,}/g, " ").trim();
+}
+
 /** Remove a <tag ...> ... </tag> block whose opening tag attributes match `attrRe`.
  *  Handles nested same-tag elements via a depth scan. */
 function stripBlockByOpenAttrs(html: string, tag: string, attrRe: RegExp): string {
