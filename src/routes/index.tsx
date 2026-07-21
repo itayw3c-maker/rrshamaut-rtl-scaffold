@@ -806,15 +806,23 @@ function HomePage() {
             {articles.map((a) => {
               const excerpt = a.excerpt ? decodeEntities(a.excerpt) : "";
               return (
-                <article key={a.slug} className="flex flex-col rounded-2xl bg-white p-6 text-right shadow-md ring-1 ring-black/5">
-                  <h3 className="text-lg font-bold leading-snug text-[hsl(var(--primary))]">
+                <article
+                  key={a.slug}
+                  className="flex flex-col bg-white p-6 text-right"
+                  style={{
+                    borderRadius: "8px",
+                    border: "1px solid rgb(229,231,235)",
+                    boxShadow: "0 1px 3px 0 rgba(0,0,0,0.06)",
+                  }}
+                >
+                  <h3 className="text-[20px] font-bold leading-snug text-[#056FC4]">
                     <a href={encHref(`/${a.slug}`)} className="hover:underline">{a.title}</a>
                   </h3>
                   {excerpt && (
-                    <p className="mt-3 line-clamp-3 flex-1 text-sm leading-relaxed text-[#4a4d55]">{excerpt}</p>
+                    <p className="mt-3 line-clamp-3 flex-1 text-[15px] leading-relaxed text-[#333333]">{excerpt}</p>
                   )}
                   <div className="mt-5">
-                    <a href={encHref(`/${a.slug}`)} className="inline-flex items-center gap-1 text-sm font-bold text-[hsl(var(--gold))] hover:underline">
+                    <a href={encHref(`/${a.slug}`)} className="inline-flex items-center gap-1 text-base font-bold text-[rgb(203,164,54)] hover:underline">
                       קרא עוד »
                     </a>
                   </div>
