@@ -2,10 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import {
-  Droplets, Flame, CloudRain, Home as HomeIcon, ShieldAlert, Scale,
-  Lock, Gem, HardHat, Landmark, Car, Armchair,
   HeartHandshake, Award, Network, TrendingUp, Users,
-  ChevronRight, ChevronLeft,
+  ChevronRight, ChevronLeft, ArrowLeft,
 } from "lucide-react";
 import { SiteChrome } from "@/components/SiteChrome";
 import { QuickLeadBand } from "@/components/QuickLeadBand";
@@ -35,44 +33,83 @@ export const Route = createFileRoute("/")({
 });
 
 // ==== Resolved Supabase asset URLs (from media table, legacy_url lookup) ====
-const IMG_HERO = "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/4097/media-4097.webp";
-const IMG_IGUD = "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/6072/igud.webp";
-const IMG_QUALITY = "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/6080/quality.webp";
+const SB = "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media";
+const IMG_HERO = `${SB}/wp/4097/media-4097.webp`;
+const IMG_IGUD = `${SB}/wp/6072/igud.webp`;
+const IMG_QUALITY = `${SB}/wp/6080/quality.webp`;
+const IMG_ABOUT = `${SB}/wp/4244/media-4244.webp`;
 
 const CLIENT_LOGOS: Array<{ src: string; alt: string }> = [
-  { src: "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/3440/media-3440.webp", alt: "דור אלון" },
-  { src: "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/3441/media-3441.webp", alt: "מיסים" },
-  { src: "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/3435/fridenson.webp", alt: "Fridenson" },
-  { src: "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/3436/g-city.webp", alt: "G-City" },
-  { src: "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/3442/media-3442.webp", alt: "עותף" },
-  { src: "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/3438/pit.webp", alt: "Pit" },
-  { src: "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/3439/media-3439.webp", alt: "בורקין" },
-  { src: "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/3437/icon.webp", alt: "Icon" },
-  { src: "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/3443/media-3443.webp", alt: "שטיין" },
-  { src: "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/4232/gderot.webp", alt: "Gderot" },
-  { src: "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/4234/media-4234.webp", alt: "מרחב מוגן" },
-  { src: "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/4238/media-4238.webp", alt: "דונה" },
+  { src: `${SB}/wp/3440/media-3440.webp`, alt: "דור אלון" },
+  { src: `${SB}/wp/3441/media-3441.webp`, alt: "מיסים" },
+  { src: `${SB}/wp/3435/fridenson.webp`, alt: "Fridenson" },
+  { src: `${SB}/wp/3436/g-city.webp`, alt: "G-City" },
+  { src: `${SB}/wp/3442/media-3442.webp`, alt: "עותף" },
+  { src: `${SB}/wp/3438/pit.webp`, alt: "Pit" },
+  { src: `${SB}/wp/3439/media-3439.webp`, alt: "בורקין" },
+  { src: `${SB}/wp/3437/icon.webp`, alt: "Icon" },
+  { src: `${SB}/wp/3443/media-3443.webp`, alt: "שטיין" },
+  { src: `${SB}/wp/4232/gderot.webp`, alt: "Gderot" },
+  { src: `${SB}/wp/4234/media-4234.webp`, alt: "מרחב מוגן" },
+  { src: `${SB}/wp/4238/media-4238.webp`, alt: "דונה" },
 ];
 
-const services: Array<{ title: string; href: string; Icon: any; gradient: string }> = [
-  { title: "ייעוץ וליווי תביעות ביטוח", href: "/ייעוץ-וליווי-תביעות-ביטוח", Icon: HeartHandshake, gradient: "from-[hsl(var(--primary))] to-[#063760]" },
-  { title: "נזקי מים הצפה ורטיבות", href: "/נזקי-מים-הצפה-ורטיבות", Icon: Droplets, gradient: "from-[#0891b2] to-[hsl(var(--primary))]" },
-  { title: "נזקי אש ופיח", href: "/נזקי-אש-ופיח", Icon: Flame, gradient: "from-[#dc2626] to-[hsl(var(--accent))]" },
-  { title: "נזקי טבע שיטפונות וסערה", href: "/נזקי-טבע-שיטפונות-וסערה", Icon: CloudRain, gradient: "from-[#0369a1] to-[#063760]" },
-  { title: "נזקי שוכרים", href: "/נזקי-שוכרים", Icon: HomeIcon, gradient: "from-[hsl(var(--primary))] to-[#144268]" },
-  { title: 'חו"ד קבילה משפטית', href: "/חוד-קבילה-משפטית", Icon: Scale, gradient: "from-[#063760] to-[hsl(var(--primary))]" },
-  { title: "נזקי פריצה", href: "/נזקי-פריצה", Icon: Lock, gradient: "from-[#1f2937] to-[#063760]" },
-  { title: "הערכת שווי רכוש", href: "/הערכת-שווי-רכוש", Icon: Gem, gradient: "from-[hsl(var(--gold))] to-[#a17a1f]" },
-  { title: "נזקי עבודות קבלניות", href: "/נזקי-עבודות-קבלניות", Icon: HardHat, gradient: "from-[#b45309] to-[hsl(var(--gold))]" },
-  { title: "הערכת רכוש לצורכי הזדכות במס שבח", href: "/הערכת-רכוש-לצורכי-הזדכות-במס-שבח", Icon: Landmark, gradient: "from-[#063760] to-[hsl(var(--accent))]" },
-  { title: "נזקי התנגשות", href: "/נזקי-התנגשות", Icon: Car, gradient: "from-[hsl(var(--accent))] to-[#7f1d3d]" },
-  { title: "הערכת שמאות לריהוט עתיק", href: "/הערכת-שמאות-לריהוט-עתיק", Icon: Armchair, gradient: "from-[#7c2d12] to-[hsl(var(--gold))]" },
+const services: Array<{ title: string; href: string; img: string }> = [
+  { title: "ייעוץ וליווי תביעות ביטוח", href: "/ייעוץ-וליווי-תביעות-ביטוח", img: `${SB}/wp/2253/1.webp` },
+  { title: "נזקי מים הצפה ורטיבות", href: "/נזקי-מים-הצפה-ורטיבות", img: `${SB}/wp/3317/media-3317.webp` },
+  { title: "נזקי אש ופיח", href: "/נזקי-אש-ופיח", img: `${SB}/wp/98/photo-2023-11-10-14-56-32-1.jpg` },
+  { title: "נזקי טבע שיטפונות וסערה", href: "/נזקי-טבע-שיטפונות-וסערה", img: `${SB}/wp/5511/600x800.jpg` },
+  { title: "נזקי שוכרים", href: "/נזקי-שוכרים", img: `${SB}/wp/3318/media-3318.webp` },
+  { title: 'חו"ד קבילה משפטית', href: "/חוד-קבילה-משפטית", img: `${SB}/wp/2250/7.webp` },
+  { title: "נזקי פריצה", href: "/נזקי-פריצה", img: `${SB}/wp/3712/media-3712.webp` },
+  { title: "הערכת שווי רכוש", href: "/הערכת-שווי-רכוש", img: `${SB}/wp/3315/media-3315.webp` },
+  { title: "נזקי עבודות קבלניות", href: "/נזקי-עבודות-קבלניות", img: `${SB}/wp/5126/media-5126.jpg` },
+  { title: "הערכת רכוש לצורכי הזדכות במס שבח", href: "/הערכת-רכוש-לצורכי-הזדכות-במס-שבח", img: `${SB}/wp/2042/385506.jpg` },
+  { title: "נזקי התנגשות", href: "/נזקי-התנגשות", img: `${SB}/wp/5515/2.jpg` },
+  { title: "הערכת שמאות לריהוט עתיק", href: "/הערכת-שמאות-לריהוט-עתיק", img: `${SB}/wp/3314/media-3314.webp` },
+];
+
+const PROCESS_STEPS = [
+  "שיחת ייעוץ וניתוח המקרה",
+  "העברת המסמכים",
+  "ביקור במקום האירוע",
+  'זימון מומחים נוספים ע"פ צורך',
+  "הגשת דרישה כספית",
+  "הסכם פשרה/הליך משפטי",
+  "אישור ההסכם ע\"י הלקוח/פסק דין",
+  "סילוק התביעה וקבלת תגמולים",
+];
+
+const ABOUT_PARAGRAPHS = [
+  "אני רפאל ריבוח, משנת 2019 פועל כשמאי רכוש, מייסד ובעלים של חברת רפאל שמאות רכוש RR.",
+  'לאורך השנים, רכשתי נסיון נרחב ומעמיק בתחום השמאות והביטוח. את תחילת דרכי עשיתי בחברת "מילגם", להסדר נזקי צנרת, שם התמחיתי בטיפול יומיומי בתיקי נזקי מים מורכבים, תוך היכרות מעמיקה עם נהלי העבודה והדרישות של חברות הביטוח והמבוטחים כאחד.',
+  'לאחר מכן עבדתי בצוות גמולב שמאות כללית בע"מ – משרד שמאות ותיק ומוכר בארץ, שם התמקדתי בביצוע שמאויות והערכות שווי עבור מכלול חברות הביטוח, בתחומים כגון מבנים, הגנות, תכולות ופריטי רכוש ואמנות.',
+  "היקף הפעילות שלי כולל: ביצוע אלפי הערכות שמאות לנזקי רכוש, סקרים שמאיים של תכולה ומבנים למטרות ביטוח, הערכת שווי של תכולות ביתיות, חפצי אמנות וריהוט עתיק שנפגעו כתוצאה משריפה, הצפה או נזק אחר, וכן ניהול והתנהלות מול חברות ביטוח בתביעות מורכבות.",
+  "כיום אני מעניק שירותי שמאות רכוש ללקוחות פרטיים וגופים מוסדיים נוספים.",
 ];
 
 const team = [
-  { name: "רפאל ריבוח", role: "שמאי רכוש · מייסד ובעלים", href: "/about/רפאל-ריבוח", initial: "ר" },
-  { name: "אינג׳ ארז אריה", role: "מהנדס ושמאי", href: "/about/ארז-אריה", initial: "א" },
-  { name: 'עו"ד קובי ליבוביץ׳', role: "יועץ משפטי", href: "/about/קובי-ליבוביץ", initial: "ק" },
+  {
+    name: "רפאל ריבוח",
+    role: "שמאי רכוש, בעלים",
+    bio: "שמאי רכוש בהכשרתו, סוקר סיכונים, ומאתר ליקויי בניה מורשה, בעל ניסיון בייצוג וניהול תביעות נזקי מים, אש, פריצה, רכוש, ושיקום נזקים. מספק חוות דעת מקצועיות לבתי משפט.",
+    photo: `${SB}/wp/3081/untitled-design-2025-09-17t110847-382.webp`,
+    href: "/about/השמאי-רפאל-ריבוח-מייסד-ובעלים-2",
+  },
+  {
+    name: "ארז אריה",
+    role: "מהנדס אזרחי ושמאי מקרקעין",
+    bio: "מהנדס אזרחי בהכשרתו, בוגר הטכניון בחיפה, בעל 26 שנות ניסיון, שמאי מקרקעין מוסמך, מפקח בניה, משמש כמומחה בתי משפט ומוכר בענף הביטוח.",
+    photo: `${SB}/wp/5105/media-5105.jpg`,
+    href: "/about/המהנדס-והשמאי-ארז-אריה-מומחה-הנדסי-ו",
+  },
+  {
+    name: "קובי ליבוביץ'",
+    role: "עורך דין",
+    bio: 'עורך דין, בעל ניסיון רב בטיפול וניהול תביעות רכוש מול כל חברות הביטוח, מומחה בהליכי מו"מ, גישור, ייצוג והופעות בבתי משפט. מעביר הרצאות רבות בתחום תביעות נזקי הרכוש.',
+    photo: `${SB}/wp/3092/untitled-design-2025-09-17t111247-317.webp`,
+    href: "/about/השמאי-רפאל-ריבוח-מייסד-ובעלים",
+  },
 ];
 
 const whyUs = [
@@ -107,7 +144,7 @@ function fmt(n: number) {
 }
 
 function Counter({ target }: { target: number }) {
-  const [val, setVal] = useState(target); // SSR renders final
+  const [val, setVal] = useState(target);
   const ref = useRef<HTMLSpanElement | null>(null);
   const started = useRef(false);
   useEffect(() => {
@@ -221,6 +258,18 @@ function ClientLogosCarousel() {
   );
 }
 
+function GoldOutlineBtn({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <a
+      href={href}
+      className="inline-flex items-center gap-2 rounded-full border-2 border-[hsl(var(--gold))] px-6 py-2 text-sm font-bold text-[hsl(var(--gold))] transition hover:bg-[hsl(var(--gold))] hover:text-white sm:text-base"
+    >
+      {children}
+      <ArrowLeft className="h-4 w-4" />
+    </a>
+  );
+}
+
 function HomePage() {
   const { data: videos = [] } = useQuery<HomeVideo[]>({
     queryKey: ["home-videos"],
@@ -230,7 +279,7 @@ function HomePage() {
 
   return (
     <SiteChrome>
-      {/* 1. HERO — photo left, content right */}
+      {/* 1. HERO */}
       <section className="relative overflow-hidden bg-[#F7F8FB]">
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-10 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:py-16 lg:px-8">
           <div className="order-2 text-right lg:order-2">
@@ -274,7 +323,7 @@ function HomePage() {
         </div>
       </section>
 
-      {/* 2. STATS COUNTERS */}
+      {/* 2. STATS */}
       <section className="bg-[hsl(var(--muted))] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
@@ -295,7 +344,7 @@ function HomePage() {
         </div>
       </section>
 
-      {/* 3. CLIENTS CAROUSEL */}
+      {/* 3. CLIENTS */}
       <section className="bg-background py-14 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
@@ -310,7 +359,7 @@ function HomePage() {
         </div>
       </section>
 
-      {/* 4. QUICK LEAD BAND (anchor target) */}
+      {/* 4. QUICK LEAD BAND */}
       <div id="contact-form">
         <QuickLeadBand />
       </div>
@@ -319,23 +368,33 @@ function HomePage() {
       {/* 5. SERVICES */}
       <section className="bg-background py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center text-3xl font-bold text-[hsl(var(--primary))] sm:text-4xl">
-            הנושאים בהם משרדנו עוסק
-          </h2>
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <h2 className="order-1 text-right text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-4xl">
+              הנושאים בהם משרדנו עוסק
+            </h2>
+            <div className="order-2">
+              <GoldOutlineBtn href="#contact-band">לייעוץ חינם</GoldOutlineBtn>
+            </div>
+          </div>
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {services.map((s) => (
               <a
                 key={s.title}
                 href={encHref(s.href)}
-                className="group overflow-hidden rounded-xl border border-border bg-card shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+                className="group overflow-hidden rounded-xl bg-card shadow-sm ring-1 ring-black/5 transition hover:-translate-y-1 hover:shadow-xl"
               >
-                <div className={`flex h-40 w-full items-center justify-center bg-gradient-to-bl ${s.gradient}`}>
-                  <s.Icon className="h-16 w-16 text-white/95" strokeWidth={1.5} />
-                </div>
-                <div className="p-5 text-right">
-                  <h3 className="text-lg font-bold text-foreground group-hover:text-[hsl(var(--primary))]">
-                    {s.title}
-                  </h3>
+                <div className="relative h-56 w-full overflow-hidden">
+                  <img
+                    src={s.img}
+                    alt={s.title}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 bg-[hsl(var(--primary))]/95 px-4 py-3 text-center">
+                    <h3 className="text-base font-bold text-white sm:text-lg">
+                      {s.title}
+                    </h3>
+                  </div>
                 </div>
               </a>
             ))}
@@ -343,31 +402,129 @@ function HomePage() {
         </div>
       </section>
 
-      {/* 6. TEAM */}
+      {/* 6. PROCESS */}
       <section className="bg-[hsl(var(--muted))] py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center text-3xl font-bold text-[hsl(var(--primary))] sm:text-4xl">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <h2 className="order-1 text-right text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-4xl">
+              הליך תביעת ביטוח
+            </h2>
+            <div className="order-2">
+              <GoldOutlineBtn href="#contact-band">לייעוץ חינם</GoldOutlineBtn>
+            </div>
+          </div>
+
+          <div className="mt-12 grid grid-cols-1 gap-x-4 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+            {PROCESS_STEPS.map((title, i) => {
+              const num = String(i + 1).padStart(2, "0");
+              const isLastCol = (i + 1) % 4 === 0;
+              return (
+                <div key={num} className="relative text-right">
+                  <div className="text-[44px] font-extrabold leading-none text-[hsl(var(--gold))]">
+                    {num}
+                  </div>
+                  <h3 className="mt-3 text-lg font-bold leading-snug text-[hsl(var(--primary))]">
+                    {title}
+                  </h3>
+                  {!isLastCol && (
+                    <div
+                      className="pointer-events-none absolute left-[-8px] top-6 hidden h-0 w-6 border-t-2 border-dashed border-[hsl(var(--gold))]/60 lg:block"
+                      aria-hidden="true"
+                    />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* 7. ABOUT */}
+      <section className="bg-background py-16 sm:py-20">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:px-8">
+          <div className="order-2 text-right lg:order-1">
+            <div className="relative">
+              <div
+                className="pointer-events-none absolute -top-4 right-[-16px] h-24 w-24 rounded-full opacity-30"
+                style={{
+                  backgroundImage:
+                    "radial-gradient(circle, hsl(var(--gold)) 1.5px, transparent 2px)",
+                  backgroundSize: "12px 12px",
+                }}
+                aria-hidden="true"
+              />
+              <div className="overflow-hidden rounded-[2rem] shadow-xl ring-1 ring-black/5">
+                <img
+                  src={IMG_ABOUT}
+                  alt="רפאל ריבוח - אודות"
+                  className="h-full w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <div
+                className="pointer-events-none absolute -bottom-4 left-[-16px] h-24 w-24 rounded-full opacity-30"
+                style={{
+                  backgroundImage:
+                    "radial-gradient(circle, hsl(var(--gold)) 1.5px, transparent 2px)",
+                  backgroundSize: "12px 12px",
+                }}
+                aria-hidden="true"
+              />
+            </div>
+          </div>
+
+          <div className="order-1 text-right lg:order-2">
+            <h2 className="text-3xl font-extrabold text-[hsl(var(--gold))] sm:text-4xl">
+              אודות רפאל שמאות רכוש
+            </h2>
+            <div className="mt-5 space-y-4 text-base leading-relaxed text-[#333333] sm:text-lg">
+              {ABOUT_PARAGRAPHS.map((p) => (
+                <p key={p.slice(0, 30)}>{p}</p>
+              ))}
+            </div>
+            <div className="mt-7">
+              <GoldOutlineBtn href="/about">קראו עוד</GoldOutlineBtn>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 8. TEAM */}
+      <section className="bg-[hsl(var(--muted))] py-16 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-center text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-4xl">
             צוות החברה
           </h2>
+          <div className="mx-auto mt-3 h-1 w-16 rounded bg-[hsl(var(--gold))]" />
           <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
             {team.map((m) => (
-              <a
+              <div
                 key={m.name}
-                href={encHref(m.href)}
-                className="flex flex-col items-center rounded-2xl bg-card p-8 text-center shadow-sm transition hover:shadow-lg"
+                className="flex flex-col items-center rounded-2xl border-b-4 border-[#063760] bg-card p-8 text-center shadow-md"
               >
-                <div className="flex h-32 w-32 items-center justify-center rounded-full bg-gradient-to-bl from-[hsl(var(--primary))] to-[#063760] text-4xl font-bold text-white shadow-md">
-                  {m.initial}
-                </div>
-                <h3 className="mt-5 text-xl font-bold text-foreground">{m.name}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">{m.role}</p>
-              </a>
+                <img
+                  src={m.photo}
+                  alt={m.name}
+                  loading="lazy"
+                  className="h-28 w-28 rounded-full object-cover shadow-md ring-4 ring-white"
+                />
+                <h3 className="mt-5 text-xl font-bold text-[hsl(var(--primary))]">{m.name}</h3>
+                <p className="mt-1 text-sm italic text-muted-foreground">{m.role}</p>
+                <p className="mt-4 text-sm leading-relaxed text-[#4a4d55]">{m.bio}</p>
+                <a
+                  href={encHref(m.href)}
+                  className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-[#dc2f5a] hover:underline"
+                >
+                  עוד
+                  <ArrowLeft className="h-3.5 w-3.5" />
+                </a>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 7. WHY US */}
+      {/* 9. WHY US */}
       <section className="bg-background py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-center text-3xl font-bold text-[hsl(var(--primary))] sm:text-4xl">
@@ -387,7 +544,7 @@ function HomePage() {
         </div>
       </section>
 
-      {/* 8. VIDEOS */}
+      {/* 10. VIDEOS */}
       <section className="bg-[hsl(var(--muted))] py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-center text-3xl font-bold text-[hsl(var(--primary))] sm:text-4xl">
@@ -429,7 +586,7 @@ function HomePage() {
         </div>
       </section>
 
-      {/* 9. CTA + LEAD FORM */}
+      {/* 11. CTA */}
       <section className="bg-gradient-to-bl from-[#042D50] via-[#063760] to-[#144268] py-16 text-white sm:py-20">
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
           <h2 className="text-2xl font-extrabold leading-tight sm:text-3xl">
@@ -444,6 +601,3 @@ function HomePage() {
     </SiteChrome>
   );
 }
-
-// Also unused ShieldAlert import safeguard (kept to avoid tree-shake removals affecting original layout options)
-export const _iconGuard = ShieldAlert;
