@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { Menu, X, ChevronDown, Phone } from "lucide-react";
 import { siteConfig } from "@/lib/site-config";
 
