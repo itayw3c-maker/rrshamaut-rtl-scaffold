@@ -28,7 +28,7 @@ export const Route = createFileRoute("/sitemap.xml")({
             .or(`published_at.is.null,published_at.lte.${nowIso}`),
           supabaseAdmin.from("pages")
             .select("slug, updated_at").eq("status", "publish"),
-          supabaseAdmin.from("categories").select("slug, updated_at"),
+          supabaseAdmin.from("categories").select("id, slug"),
           supabaseAdmin.from("posts")
             .select("slug, updated_at, published_at").eq("cpt_type", "movie").eq("status", "publish")
             .or(`published_at.is.null,published_at.lte.${nowIso}`),
@@ -40,18 +40,44 @@ export const Route = createFileRoute("/sitemap.xml")({
             .or(`published_at.is.null,published_at.lte.${nowIso}`),
         ]);
 
+        // Categories that actually have published, non-CPT posts.
+        const publishedPostIds = new Set<string>();
+        {
+          const { data: pubPosts } = await supabaseAdmin
+            .from("posts").select("id, published_at")
+            .is("cpt_type", null).eq("status", "publish")
+            .or(`published_at.is.null,published_at.lte.${nowIso}`);
+          for (const p of (pubPosts ?? []) as any[]) publishedPostIds.add(p.id);
+        }
+        const catIds = (cats.data ?? []).map((c: any) => c.id);
+        const nonEmptyCatIds = new Set<string>();
+        if (catIds.length && publishedPostIds.size) {
+          const { data: pc } = await supabaseAdmin
+            .from("post_categories").select("category_id, post_id").in("category_id", catIds);
+          for (const row of (pc ?? []) as any[]) {
+            if (publishedPostIds.has(row.post_id)) nonEmptyCatIds.add(row.category_id);
+          }
+        }
+        const activeCats = (cats.data ?? []).filter((c: any) => nonEmptyCatIds.has(c.id));
+
+        const seen = new Set<string>();
         const lines: string[] = [
           `<?xml version="1.0" encoding="UTF-8"?>`,
           `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`,
-          urlEntry("/", null),
         ];
+        const add = (path: string, lastmod?: string | null) => {
+          if (seen.has(path)) return;
+          seen.add(path);
+          lines.push(urlEntry(path, lastmod ?? null));
+        };
 
-        for (const p of posts.data ?? []) lines.push(urlEntry(`/${enc((p as any).slug)}/`, (p as any).updated_at));
-        for (const p of pages.data ?? []) lines.push(urlEntry(`/${enc((p as any).slug)}/`, (p as any).updated_at));
-        for (const c of cats.data ?? []) lines.push(urlEntry(`/category/${enc((c as any).slug)}/`, (c as any).updated_at));
-        for (const m of movies.data ?? []) lines.push(urlEntry(`/movie/${enc((m as any).slug)}/`, (m as any).updated_at));
-        for (const s of shorts.data ?? []) lines.push(urlEntry(`/shorts/${enc((s as any).slug)}/`, (s as any).updated_at));
-        for (const s of successes.data ?? []) lines.push(urlEntry(`/success/${enc((s as any).slug)}/`, (s as any).updated_at));
+        add("/", null);
+        for (const p of posts.data ?? []) add(`/${enc((p as any).slug)}/`, (p as any).updated_at);
+        for (const p of pages.data ?? []) add(`/${enc((p as any).slug)}/`, (p as any).updated_at);
+        for (const c of activeCats) add(`/category/${enc((c as any).slug)}/`, null);
+        for (const m of movies.data ?? []) add(`/movie/${enc((m as any).slug)}/`, (m as any).updated_at);
+        for (const s of shorts.data ?? []) add(`/shorts/${enc((s as any).slug)}/`, (s as any).updated_at);
+        for (const s of successes.data ?? []) add(`/success/${enc((s as any).slug)}/`, (s as any).updated_at);
 
         lines.push(`</urlset>`);
         return new Response(lines.join("\n"), {

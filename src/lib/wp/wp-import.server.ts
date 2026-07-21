@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { sanitizePostHtml } from "./post-sanitize.server";
+import { sanitizePostHtml, decodeEntities, dedupeBrandInTitle, normalizeDashes } from "./post-sanitize.server";
 
 const supabaseAdmin = createClient(
   process.env.SUPABASE_URL!,
@@ -290,9 +290,11 @@ async function upsertPostRow(p: any, cptType: string | null): Promise<void> {
 
   // Yoast meta (byte-exact SEO parity). yoast_head_json is present in the REST payload.
   const yoast = p.yoast_head_json ?? {};
-  const metaTitle = yoast.title ? sanitizePostHtml(String(yoast.title)).replace(/<[^>]+>/g, "") : null;
-  const metaDescription = (yoast.description || yoast.og_description)
+  const rawMetaTitle = yoast.title ? sanitizePostHtml(String(yoast.title)).replace(/<[^>]+>/g, "") : null;
+  const metaTitle = rawMetaTitle ? dedupeBrandInTitle(normalizeDashes(decodeEntities(rawMetaTitle))) : null;
+  const rawMetaDesc = (yoast.description || yoast.og_description)
     ? sanitizePostHtml(String(yoast.description || yoast.og_description)).replace(/<[^>]+>/g, "") : null;
+  const metaDescription = rawMetaDesc ? normalizeDashes(decodeEntities(rawMetaDesc)) : null;
 
   // Content + video handling.
   let rawContent = p.content?.rendered ?? "";
@@ -395,4 +397,24 @@ export async function getImportStats() {
     posts: posts.count ?? 0, pages: pages.count ?? 0, media: media.count ?? 0,
     categories: cats.count ?? 0, tags: tags.count ?? 0, postsMissingCover: missingCover.count ?? 0,
   };
+}
+
+/** Fetch Yoast meta for a single WP page id and update the pages row. Returns which fields were set. */
+export async function importPageMeta(wpId: number): Promise<{ wp_id: number; title_set: boolean; desc_set: boolean; skipped?: string }> {
+  const res = await wpFetch(`pages/${wpId}?_fields=yoast_head_json`);
+  if (!res.ok) return { wp_id: wpId, title_set: false, desc_set: false, skipped: `HTTP ${res.status}` };
+  const body = await res.json();
+  const yoast = body?.yoast_head_json ?? {};
+  const rawT = yoast.title ? sanitizePostHtml(String(yoast.title)).replace(/<[^>]+>/g, "") : null;
+  const rawD = (yoast.description || yoast.og_description)
+    ? sanitizePostHtml(String(yoast.description || yoast.og_description)).replace(/<[^>]+>/g, "") : null;
+  const metaTitle = rawT ? dedupeBrandInTitle(normalizeDashes(decodeEntities(rawT))) : null;
+  const metaDescription = rawD ? normalizeDashes(decodeEntities(rawD)) : null;
+  const patch: Record<string, string> = {};
+  if (metaTitle) patch.meta_title = metaTitle;
+  if (metaDescription) patch.meta_description = metaDescription;
+  if (Object.keys(patch).length === 0) return { wp_id: wpId, title_set: false, desc_set: false, skipped: "no yoast" };
+  const { error } = await supabaseAdmin.from("pages").update(patch).eq("wp_id", wpId);
+  if (error) return { wp_id: wpId, title_set: false, desc_set: false, skipped: error.message };
+  return { wp_id: wpId, title_set: !!metaTitle, desc_set: !!metaDescription };
 }
