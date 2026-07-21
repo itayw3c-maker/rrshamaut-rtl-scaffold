@@ -41,18 +41,21 @@ export const Route = createFileRoute("/sitemap.xml")({
         ]);
 
         // Categories that actually have published, non-CPT posts.
+        const publishedPostIds = new Set<string>();
+        {
+          const { data: pubPosts } = await supabaseAdmin
+            .from("posts").select("id, published_at")
+            .is("cpt_type", null).eq("status", "publish")
+            .or(`published_at.is.null,published_at.lte.${nowIso}`);
+          for (const p of (pubPosts ?? []) as any[]) publishedPostIds.add(p.id);
+        }
         const catIds = (cats.data ?? []).map((c: any) => c.id);
         const nonEmptyCatIds = new Set<string>();
-        if (catIds.length) {
+        if (catIds.length && publishedPostIds.size) {
           const { data: pc } = await supabaseAdmin
-            .from("post_categories")
-            .select("category_id, post:posts!inner(status, cpt_type, published_at)")
-            .in("category_id", catIds);
+            .from("post_categories").select("category_id, post_id").in("category_id", catIds);
           for (const row of (pc ?? []) as any[]) {
-            const p = row.post;
-            if (!p || p.status !== "publish" || p.cpt_type) continue;
-            if (p.published_at && new Date(p.published_at) > new Date(nowIso)) continue;
-            nonEmptyCatIds.add(row.category_id);
+            if (publishedPostIds.has(row.post_id)) nonEmptyCatIds.add(row.category_id);
           }
         }
         const activeCats = (cats.data ?? []).filter((c: any) => nonEmptyCatIds.has(c.id));
