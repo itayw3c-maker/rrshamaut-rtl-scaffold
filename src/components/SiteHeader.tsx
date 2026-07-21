@@ -141,12 +141,13 @@ export function SiteHeader() {
         <div className="hidden lg:flex">
           <a
             href={telHref}
-            className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
+            className="inline-flex items-center gap-2 rounded-full bg-[hsl(var(--gold))] px-5 py-2.5 text-sm font-bold text-white shadow-sm transition-colors hover:brightness-95"
           >
             <Phone className="h-4 w-4" />
-            חייגו עכשיו {siteConfig.phone}
+            {siteConfig.phone}
           </a>
         </div>
+
 
         {/* Mobile hamburger */}
         <button
