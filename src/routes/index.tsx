@@ -659,13 +659,22 @@ function HomePage() {
           <div className="mx-auto mt-3 h-1 w-[120px] rounded bg-[hsl(var(--gold))]" />
           <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
             {team.map((m) => (
-              <div key={m.name} className="flex flex-col items-center rounded-2xl border-b-4 border-[#063760] bg-card p-8 text-center shadow-md">
-                <img src={m.photo} alt={m.name} loading="lazy" className="h-28 w-28 rounded-full object-cover shadow-md ring-4 ring-white" />
-                <h3 className="mt-5 text-xl font-bold text-[hsl(var(--primary))]">{m.name}</h3>
-                <p className="mt-1 text-sm italic text-muted-foreground">{m.role}</p>
-                <p className="mt-4 text-sm leading-relaxed text-[#4a4d55]">{m.bio}</p>
-                <a href={encHref(m.href)} className="mt-5 inline-flex items-center gap-1 text-sm font-bold text-[#dc2f5a] hover:underline">
-                  עוד <ArrowLeft className="h-3.5 w-3.5" />
+              <div
+                key={m.name}
+                className="flex flex-col items-center bg-card p-8 text-center"
+                style={{
+                  borderRadius: "10px",
+                  border: "1px solid rgb(6,55,96)",
+                  borderBottomWidth: "11px",
+                  boxShadow: "0 0 10px 0 rgba(0,0,0,0.24)",
+                }}
+              >
+                <img src={m.photo} alt={m.name} loading="lazy" className="h-24 w-24 rounded-full object-cover ring-4 ring-white shadow" />
+                <h3 className="mt-5 text-[24px] font-bold text-[#056FC4]">{m.name}</h3>
+                <p className="mt-1 text-base text-[#333333]">{m.role}</p>
+                <p className="mt-4 text-[15px] leading-relaxed text-[#333333]">{m.bio}</p>
+                <a href={encHref(m.href)} className="mt-5 inline-flex items-center gap-1 text-[20px] font-bold text-[rgb(204,51,102)] hover:underline">
+                  עוד <ArrowLeft className="h-4 w-4" />
                 </a>
               </div>
             ))}
