@@ -20,6 +20,18 @@ function decodeEntities(s: string): string {
     .replace(/&nbsp;/g, " ");
 }
 
+const HERO_TITLE_OVERRIDES: Record<string, string> = {
+  "about": "הדרך שלנו",
+  "הסדרי-נגישות": "הסדרי נגישות חברת רפאל שמאות רכוש",
+};
+
+function stripLeadingHeading(html: string, text: string): string {
+  const escaped = text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const re = new RegExp(`^\\s*<(h[1-3])\\b[^>]*>\\s*${escaped}\\s*</\\1>\\s*`, "i");
+  return html.replace(re, "");
+}
+
+
 const SERVICE_SLUGS = new Set([
   "ייעוץ-וליווי-תביעות-ביטוח",
   "נזקי-מים-הצפה-ורטיבות",
