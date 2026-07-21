@@ -7,6 +7,7 @@ export type ArchiveItem = {
   title: string;
   cover_url: string | null;
   video_url: string | null;
+  cpt_type?: string;
 };
 
 export type ResolvedPage = {
@@ -18,7 +19,7 @@ export type ResolvedPage = {
   meta_title: string | null;
   meta_description: string | null;
   cover_url: string | null;
-  archive: null | { type: "movie" | "success"; items: ArchiveItem[] };
+  archive: null | { type: "movie" | "success" | "video"; items: ArchiveItem[] };
 };
 
 export type ResolvedPost = {
@@ -39,29 +40,32 @@ export type ResolvedPost = {
 
 export type ResolvedContent = ResolvedPage | ResolvedPost | null;
 
-const ARCHIVE_SLUGS: Record<string, "movie" | "success"> = {
-  "סרטונים": "movie",
+const ARCHIVE_SLUGS: Record<string, "movie" | "success" | "video"> = {
+  "סרטונים": "video",
   "ההצלחות-שלנו": "success",
 };
 
-async function fetchArchive(type: "movie" | "success"): Promise<ArchiveItem[]> {
+async function fetchArchive(type: "movie" | "success" | "video"): Promise<ArchiveItem[]> {
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
   const nowIso = new Date().toISOString();
+  const types = type === "video" ? ["movie", "shorts"] : [type];
   const { data } = await supabaseAdmin
     .from("posts")
-    .select("slug, title, video_url, cover:media!posts_cover_media_id_fkey(url)")
-    .eq("cpt_type", type)
+    .select("slug, title, video_url, cpt_type, cover:media!posts_cover_media_id_fkey(url)")
+    .in("cpt_type", types)
     .eq("status", "publish")
     .or(`published_at.is.null,published_at.lte.${nowIso}`)
     .order("published_at", { ascending: false, nullsFirst: false })
-    .limit(60);
+    .limit(120);
   return (data ?? []).map((r: any) => ({
     slug: r.slug,
     title: r.title,
     video_url: r.video_url ?? null,
     cover_url: r.cover?.url ?? null,
+    cpt_type: r.cpt_type ?? undefined,
   }));
 }
+
 
 export const resolveSlugFn = createServerFn({ method: "GET" })
   .inputValidator((d: unknown) => z.object({ slug: z.string().min(1).max(300) }).parse(d))
