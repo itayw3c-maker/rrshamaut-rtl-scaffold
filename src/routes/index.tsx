@@ -470,12 +470,21 @@ function HomePage() {
       >
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-10 pb-8 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:py-16 lg:pb-10 lg:px-8">
           <div className="order-2 text-right lg:order-1">
-            <h1 className="text-3xl font-extrabold leading-tight text-[hsl(var(--primary))] sm:text-4xl lg:text-[42px]">
+            <h1 className="text-3xl font-extrabold leading-tight text-[hsl(var(--primary))] sm:text-4xl lg:text-[39px]">
               שמאי רכוש לנזקי רכוש רפאל ריבוח
             </h1>
-            <div className="mt-3 border-t-2 border-dashed border-[hsl(var(--primary))]/60" aria-hidden="true" />
-            <p className="mt-4 text-xl font-bold text-[#1F2023] sm:text-2xl">אל תתמודדו לבד מול חברת הביטוח!</p>
-            <p className="mt-4 text-base leading-relaxed text-[#333333] sm:text-lg">
+            <div
+              aria-hidden="true"
+              className="mt-4 h-[3px] w-full max-w-[380px]"
+              style={{
+                backgroundImage:
+                  "repeating-linear-gradient(to left, #056FC4 0 10px, transparent 10px 20px)",
+              }}
+            />
+            <p className="mt-4 text-xl font-bold text-[rgb(50,66,64)] sm:text-[20px]">
+              אל תתמודדו לבד מול חברת הביטוח!
+            </p>
+            <p className="mt-4 text-[20px] leading-[30px] text-[rgb(50,66,64)]">
               שמאי הביטוח מטעם החברה פועל לקידום האינטרסים שלה, בעוד שבחירה בשמאי רכוש פרטי מעניקה לכם ייצוג אמיתי, הערכה מקצועית ומעמיקה, והבטחה למיצוי הפיצוי המקסימלי המגיע לכם.
             </p>
             <p className="mt-4 text-base font-semibold text-[hsl(var(--primary))]">משרדנו חבר באיגוד השמאים בישראל ומחזיק בתו איכות השירות.</p>
@@ -484,7 +493,16 @@ function HomePage() {
               <img src={IMG_QUALITY} alt="תו איכות השירות" className="h-16 w-auto" loading="lazy" />
             </div>
             <div className="mt-7">
-              <a href="#contact-band" className="inline-flex items-center justify-center rounded-full bg-[hsl(var(--gold))] px-8 py-3 text-base font-bold text-white shadow-md transition hover:brightness-95">
+              <a
+                href="#contact-band"
+                className="inline-flex items-center justify-center px-6 py-3 text-base font-bold transition hover:brightness-95"
+                style={{
+                  backgroundColor: "rgb(233,234,240)",
+                  color: "rgb(203,164,54)",
+                  border: "3px solid rgb(203,164,54)",
+                  borderRadius: "40px",
+                }}
+              >
                 לשיחת ייעוץ חינם
               </a>
             </div>
@@ -507,16 +525,26 @@ function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
             {STATS.map((s) => (
-              <div key={s.label} className="rounded-2xl bg-white/70 p-6 text-center shadow-lg ring-1 ring-white/60 backdrop-blur-md">
-                <div className="text-3xl font-extrabold tabular-nums text-[hsl(var(--primary))] sm:text-4xl lg:text-[40px]">
+              <div
+                key={s.label}
+                className="text-center"
+                style={{
+                  background: "rgba(255,255,255,0.81)",
+                  borderRadius: "8px",
+                  boxShadow: "0 0 10px 0 rgba(117,118,122,0.38)",
+                  padding: "24px 0",
+                }}
+              >
+                <div className="text-4xl tabular-nums text-[rgb(36,113,175)] sm:text-5xl lg:text-[62px]" style={{ fontWeight: 300, lineHeight: 1.1 }}>
                   <Counter target={s.value} />
                 </div>
-                <div className="mt-2 text-sm font-medium text-[#4a4d55] sm:text-base">{s.label}</div>
+                <div className="mt-2 text-[20px] font-normal text-[rgb(50,66,64)]">{s.label}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
+
 
       {/* 3. CLIENTS */}
       <section className="bg-background py-14 sm:py-16">
