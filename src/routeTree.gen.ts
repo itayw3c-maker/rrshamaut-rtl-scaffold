@@ -21,6 +21,7 @@ import { Route as SuccessSlugRouteImport } from './routes/success.$slug'
 import { Route as ShortsSlugRouteImport } from './routes/shorts.$slug'
 import { Route as MovieSlugRouteImport } from './routes/movie.$slug'
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
+import { Route as AdminLeadsRouteImport } from './routes/admin/leads'
 import { Route as AdminImportRouteImport } from './routes/admin/import'
 import { Route as AdminPostsIndexRouteImport } from './routes/admin/posts/index'
 import { Route as AdminPagesIndexRouteImport } from './routes/admin/pages/index'
@@ -87,6 +88,11 @@ const CategorySlugRoute = CategorySlugRouteImport.update({
   path: '/category/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminLeadsRoute = AdminLeadsRouteImport.update({
+  id: '/leads',
+  path: '/leads',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminImportRoute = AdminImportRouteImport.update({
   id: '/import',
   path: '/import',
@@ -122,6 +128,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/thank-you': typeof ThankYouRoute
   '/admin/import': typeof AdminImportRoute
+  '/admin/leads': typeof AdminLeadsRoute
   '/category/$slug': typeof CategorySlugRoute
   '/movie/$slug': typeof MovieSlugRoute
   '/shorts/$slug': typeof ShortsSlugRoute
@@ -140,6 +147,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/thank-you': typeof ThankYouRoute
   '/admin/import': typeof AdminImportRoute
+  '/admin/leads': typeof AdminLeadsRoute
   '/category/$slug': typeof CategorySlugRoute
   '/movie/$slug': typeof MovieSlugRoute
   '/shorts/$slug': typeof ShortsSlugRoute
@@ -160,6 +168,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/thank-you': typeof ThankYouRoute
   '/admin/import': typeof AdminImportRoute
+  '/admin/leads': typeof AdminLeadsRoute
   '/category/$slug': typeof CategorySlugRoute
   '/movie/$slug': typeof MovieSlugRoute
   '/shorts/$slug': typeof ShortsSlugRoute
@@ -181,6 +190,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/thank-you'
     | '/admin/import'
+    | '/admin/leads'
     | '/category/$slug'
     | '/movie/$slug'
     | '/shorts/$slug'
@@ -199,6 +209,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/thank-you'
     | '/admin/import'
+    | '/admin/leads'
     | '/category/$slug'
     | '/movie/$slug'
     | '/shorts/$slug'
@@ -218,6 +229,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/thank-you'
     | '/admin/import'
+    | '/admin/leads'
     | '/category/$slug'
     | '/movie/$slug'
     | '/shorts/$slug'
@@ -329,6 +341,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CategorySlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/leads': {
+      id: '/admin/leads'
+      path: '/leads'
+      fullPath: '/admin/leads'
+      preLoaderRoute: typeof AdminLeadsRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/import': {
       id: '/admin/import'
       path: '/import'
@@ -369,6 +388,7 @@ declare module '@tanstack/react-router' {
 
 interface AdminRouteRouteChildren {
   AdminImportRoute: typeof AdminImportRoute
+  AdminLeadsRoute: typeof AdminLeadsRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminPagesIdRoute: typeof AdminPagesIdRoute
   AdminPostsIdRoute: typeof AdminPostsIdRoute
@@ -378,6 +398,7 @@ interface AdminRouteRouteChildren {
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminImportRoute: AdminImportRoute,
+  AdminLeadsRoute: AdminLeadsRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminPagesIdRoute: AdminPagesIdRoute,
   AdminPostsIdRoute: AdminPostsIdRoute,

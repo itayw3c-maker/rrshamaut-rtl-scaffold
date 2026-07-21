@@ -53,10 +53,14 @@ function AdminLayout() {
           <Link to="/admin" className="text-lg font-bold text-foreground">
             רפאל שמאות רכוש · ניהול
           </Link>
-          <nav className="flex items-center gap-4 text-sm">
+          <nav className="flex flex-wrap items-center gap-4 text-sm">
             <Link to="/admin" activeOptions={{ exact: true }} className={navCls}>לוח בקרה</Link>
             <Link to="/admin/posts" className={navCls}>פוסטים</Link>
             <Link to="/admin/pages" className={navCls}>עמודים</Link>
+            <Link to="/admin/leads" className={navCls}>פניות</Link>
+            <Link to="/admin/webhooks" className={navCls}>Webhooks</Link>
+            <Link to="/admin/redirects" className={navCls}>הפניות</Link>
+            <Link to="/admin/users" className={navCls}>משתמשים</Link>
             <Link to="/admin/import" className={navCls}>ייבוא</Link>
             <button
               onClick={handleSignOut}
