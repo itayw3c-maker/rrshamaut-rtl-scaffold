@@ -21,6 +21,10 @@ import { Route as SuccessSlugRouteImport } from './routes/success.$slug'
 import { Route as ShortsSlugRouteImport } from './routes/shorts.$slug'
 import { Route as MovieSlugRouteImport } from './routes/movie.$slug'
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
+import { Route as AdminWebhooksRouteImport } from './routes/admin/webhooks'
+import { Route as AdminUsersRouteImport } from './routes/admin/users'
+import { Route as AdminRedirectsRouteImport } from './routes/admin/redirects'
+import { Route as AdminLeadsRouteImport } from './routes/admin/leads'
 import { Route as AdminImportRouteImport } from './routes/admin/import'
 import { Route as AdminPostsIndexRouteImport } from './routes/admin/posts/index'
 import { Route as AdminPagesIndexRouteImport } from './routes/admin/pages/index'
@@ -87,6 +91,26 @@ const CategorySlugRoute = CategorySlugRouteImport.update({
   path: '/category/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminWebhooksRoute = AdminWebhooksRouteImport.update({
+  id: '/webhooks',
+  path: '/webhooks',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminRedirectsRoute = AdminRedirectsRouteImport.update({
+  id: '/redirects',
+  path: '/redirects',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminLeadsRoute = AdminLeadsRouteImport.update({
+  id: '/leads',
+  path: '/leads',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminImportRoute = AdminImportRouteImport.update({
   id: '/import',
   path: '/import',
@@ -122,6 +146,10 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/thank-you': typeof ThankYouRoute
   '/admin/import': typeof AdminImportRoute
+  '/admin/leads': typeof AdminLeadsRoute
+  '/admin/redirects': typeof AdminRedirectsRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/admin/webhooks': typeof AdminWebhooksRoute
   '/category/$slug': typeof CategorySlugRoute
   '/movie/$slug': typeof MovieSlugRoute
   '/shorts/$slug': typeof ShortsSlugRoute
@@ -140,6 +168,10 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/thank-you': typeof ThankYouRoute
   '/admin/import': typeof AdminImportRoute
+  '/admin/leads': typeof AdminLeadsRoute
+  '/admin/redirects': typeof AdminRedirectsRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/admin/webhooks': typeof AdminWebhooksRoute
   '/category/$slug': typeof CategorySlugRoute
   '/movie/$slug': typeof MovieSlugRoute
   '/shorts/$slug': typeof ShortsSlugRoute
@@ -160,6 +192,10 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/thank-you': typeof ThankYouRoute
   '/admin/import': typeof AdminImportRoute
+  '/admin/leads': typeof AdminLeadsRoute
+  '/admin/redirects': typeof AdminRedirectsRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/admin/webhooks': typeof AdminWebhooksRoute
   '/category/$slug': typeof CategorySlugRoute
   '/movie/$slug': typeof MovieSlugRoute
   '/shorts/$slug': typeof ShortsSlugRoute
@@ -181,6 +217,10 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/thank-you'
     | '/admin/import'
+    | '/admin/leads'
+    | '/admin/redirects'
+    | '/admin/users'
+    | '/admin/webhooks'
     | '/category/$slug'
     | '/movie/$slug'
     | '/shorts/$slug'
@@ -199,6 +239,10 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/thank-you'
     | '/admin/import'
+    | '/admin/leads'
+    | '/admin/redirects'
+    | '/admin/users'
+    | '/admin/webhooks'
     | '/category/$slug'
     | '/movie/$slug'
     | '/shorts/$slug'
@@ -218,6 +262,10 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/thank-you'
     | '/admin/import'
+    | '/admin/leads'
+    | '/admin/redirects'
+    | '/admin/users'
+    | '/admin/webhooks'
     | '/category/$slug'
     | '/movie/$slug'
     | '/shorts/$slug'
@@ -329,6 +377,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CategorySlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/webhooks': {
+      id: '/admin/webhooks'
+      path: '/webhooks'
+      fullPath: '/admin/webhooks'
+      preLoaderRoute: typeof AdminWebhooksRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/redirects': {
+      id: '/admin/redirects'
+      path: '/redirects'
+      fullPath: '/admin/redirects'
+      preLoaderRoute: typeof AdminRedirectsRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/leads': {
+      id: '/admin/leads'
+      path: '/leads'
+      fullPath: '/admin/leads'
+      preLoaderRoute: typeof AdminLeadsRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/import': {
       id: '/admin/import'
       path: '/import'
@@ -369,6 +445,10 @@ declare module '@tanstack/react-router' {
 
 interface AdminRouteRouteChildren {
   AdminImportRoute: typeof AdminImportRoute
+  AdminLeadsRoute: typeof AdminLeadsRoute
+  AdminRedirectsRoute: typeof AdminRedirectsRoute
+  AdminUsersRoute: typeof AdminUsersRoute
+  AdminWebhooksRoute: typeof AdminWebhooksRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminPagesIdRoute: typeof AdminPagesIdRoute
   AdminPostsIdRoute: typeof AdminPostsIdRoute
@@ -378,6 +458,10 @@ interface AdminRouteRouteChildren {
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminImportRoute: AdminImportRoute,
+  AdminLeadsRoute: AdminLeadsRoute,
+  AdminRedirectsRoute: AdminRedirectsRoute,
+  AdminUsersRoute: AdminUsersRoute,
+  AdminWebhooksRoute: AdminWebhooksRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminPagesIdRoute: AdminPagesIdRoute,
   AdminPostsIdRoute: AdminPostsIdRoute,
