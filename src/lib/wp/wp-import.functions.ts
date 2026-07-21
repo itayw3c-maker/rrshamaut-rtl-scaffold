@@ -178,3 +178,13 @@ export const importPageMetaFn = createServerFn({ method: "POST" })
     if (!isAdmin) throw new Error("Forbidden: admin role required");
     return importPageMeta(data.wpId);
   });
+
+export const importCategoryMetaFn = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data) => wpIdSchema.parse(data))
+  .handler(async ({ context, data }) => {
+    const { data: isAdmin, error } = await context.supabase.rpc("current_user_is_admin");
+    if (error) { console.error("current_user_is_admin failed:", error); throw new Error("Forbidden: admin role required"); }
+    if (!isAdmin) throw new Error("Forbidden: admin role required");
+    return importCategoryMeta(data.wpId);
+  });
