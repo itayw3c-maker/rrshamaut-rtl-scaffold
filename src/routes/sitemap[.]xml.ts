@@ -28,7 +28,7 @@ export const Route = createFileRoute("/sitemap.xml")({
             .or(`published_at.is.null,published_at.lte.${nowIso}`),
           supabaseAdmin.from("pages")
             .select("slug, updated_at").eq("status", "publish"),
-          supabaseAdmin.from("categories").select("id, slug, updated_at"),
+          supabaseAdmin.from("categories").select("id, slug"),
           supabaseAdmin.from("posts")
             .select("slug, updated_at, published_at").eq("cpt_type", "movie").eq("status", "publish")
             .or(`published_at.is.null,published_at.lte.${nowIso}`),
