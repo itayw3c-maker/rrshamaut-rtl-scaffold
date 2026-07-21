@@ -28,8 +28,8 @@ const HERO_TITLE_OVERRIDES: Record<string, string> = {
 function stripLeadingHeading(html: string, text: string): string {
   const escaped = text
     .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-    .replace(/ +/g, "(?:\\s|&nbsp;)+");
-  const re = new RegExp(`^\\s*<(h[1-3])\\b[^>]*>\\s*${escaped}\\s*</\\1>\\s*`, "i");
+    .replace(/ +/g, "(?:\\s|&nbsp;|\\u00a0)+");
+  const re = new RegExp(`^\\s*<(h[1-3])\\b[^>]*>[\\s\\u00a0]*${escaped}[\\s\\u00a0]*</\\1>\\s*`, "i");
   return html.replace(re, "");
 }
 
