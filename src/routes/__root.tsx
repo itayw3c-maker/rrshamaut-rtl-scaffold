@@ -105,18 +105,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { name: "theme-color", content: "#056FC4" },
       { name: "robots", content: "index,follow,max-image-preview:large" },
-      { title: "רפאל שמאות רכוש | RR" },
+      { title: "רפאל שמאות רכוש - שמאי ביטוח פרטי לתביעות רכוש" },
       {
         name: "description",
         content:
-          "רפאל שמאות רכוש - שמאות ביטוח, הערכת נזקי רכוש וייצוג מבוטחים מול חברות הביטוח.",
+          "משרד שמאי רכוש פרטי המייצג מבוטחים מול חברות הביטוח. ייעוץ ראשוני חינם, טיפול בנזקי מים, אש, טבע, פריצה והערכות שווי. עבודה על בסיס הצלחה.",
       },
       { name: "author", content: "רפאל שמאות רכוש" },
-      { property: "og:title", content: "רפאל שמאות רכוש | RR" },
+      { property: "og:title", content: "רפאל שמאות רכוש - שמאי ביטוח פרטי לתביעות רכוש" },
       {
         property: "og:description",
         content:
-          "רפאל שמאות רכוש - שמאות ביטוח, הערכת נזקי רכוש וייצוג מבוטחים מול חברות הביטוח.",
+          "משרד שמאי רכוש פרטי המייצג מבוטחים מול חברות הביטוח. ייעוץ ראשוני חינם, טיפול בנזקי מים, אש, טבע, פריצה והערכות שווי. עבודה על בסיס הצלחה.",
       },
       { property: "og:type", content: "website" },
       { property: "og:image", content: `${SITE_URL}/og-image.png` },
@@ -124,6 +124,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:locale", content: "he_IL" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:image", content: `${SITE_URL}/og-image.png` },
+      { name: "twitter:title", content: "רפאל שמאות רכוש - שמאי ביטוח פרטי לתביעות רכוש" },
+      { name: "twitter:description", content: "משרד שמאי רכוש פרטי המייצג מבוטחים מול חברות הביטוח. ייעוץ ראשוני חינם, טיפול בנזקי מים, אש, טבע, פריצה והערכות שווי. עבודה על בסיס הצלחה." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/dc9a98f0-15a6-4e5d-8653-40d39239557b/id-preview-0b88fd36--30168f1f-77dd-43b7-87c9-422811492dab.lovable.app-1784628382228.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/dc9a98f0-15a6-4e5d-8653-40d39239557b/id-preview-0b88fd36--30168f1f-77dd-43b7-87c9-422811492dab.lovable.app-1784628382228.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
