@@ -80,7 +80,7 @@ export function SiteHeader() {
   };
 
   const navLinkBase =
-    "inline-flex items-center gap-1 rounded-md px-5 py-[13px] text-[clamp(15px,1.1vw,22px)] font-normal transition-colors hover:text-[#056FC4]";
+    "inline-flex items-center gap-1 rounded-md px-2 py-[13px] xl:px-5 text-[clamp(15px,1.1vw,22px)] font-normal transition-colors hover:text-[#056FC4]";
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-black/5 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80" dir="rtl">
