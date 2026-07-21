@@ -3,6 +3,14 @@ import { SiteChrome } from "@/components/SiteChrome";
 import { ArticleView } from "@/components/ArticleView";
 import { StaticPageView } from "@/components/StaticPageView";
 import { ServicePageContent } from "@/components/ServicePageContent";
+import { CertificatesContent } from "@/components/CertificatesContent";
+import { BioPageContent } from "@/components/BioPageContent";
+
+const BIO_SLUGS = new Set([
+  "השמאי-רפאל-ריבוח-מייסד-ובעלים",
+  "השמאי-רפאל-ריבוח-מייסד-ובעלים-2",
+  "המהנדס-והשמאי-ארז-אריה-מומחה-הנדסי-ו",
+]);
 import { resolveSlugFn } from "@/lib/content.functions";
 import { SITE_URL, siteConfig, canonicalUrl } from "@/lib/site-config";
 
@@ -104,13 +112,18 @@ export const Route = createFileRoute("/$slug")({
 
 function SlugPage() {
   const data = Route.useLoaderData();
+  const renderPage = () => {
+    if (data.slug === "damage-assessments-loss-adjusting")
+      return <ServicePageContent page={data as any} />;
+    if (data.slug === "תעודות")
+      return <CertificatesContent page={data as any} />;
+    if (BIO_SLUGS.has(data.slug))
+      return <BioPageContent page={data as any} />;
+    return <StaticPageView page={data} />;
+  };
   return (
     <SiteChrome>
-      {data.kind === "page"
-        ? (data.slug === "damage-assessments-loss-adjusting"
-            ? <ServicePageContent page={data as any} />
-            : <StaticPageView page={data} />)
-        : <ArticleView post={data} />}
+      {data.kind === "page" ? renderPage() : <ArticleView post={data} />}
     </SiteChrome>
   );
 }
