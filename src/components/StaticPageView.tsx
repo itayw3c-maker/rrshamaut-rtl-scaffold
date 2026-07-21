@@ -20,6 +20,18 @@ function decodeEntities(s: string): string {
     .replace(/&nbsp;/g, " ");
 }
 
+const HERO_TITLE_OVERRIDES: Record<string, string> = {
+  "about": "הדרך שלנו",
+  "הסדרי-נגישות": "הסדרי נגישות חברת רפאל שמאות רכוש",
+};
+
+function stripLeadingHeading(html: string, text: string): string {
+  const escaped = text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const re = new RegExp(`^\\s*<(h[1-3])\\b[^>]*>\\s*${escaped}\\s*</\\1>\\s*`, "i");
+  return html.replace(re, "");
+}
+
+
 const SERVICE_SLUGS = new Set([
   "ייעוץ-וליווי-תביעות-ביטוח",
   "נזקי-מים-הצפה-ורטיבות",
@@ -99,17 +111,22 @@ export function StaticPageView({ page }: { page: ResolvedPage }) {
   const isLong = page.content.length > 3000 && !NON_SERVICE_SPECIAL.has(slug);
   const withSidebar = isService || isLong;
 
+  const heroTitle = HERO_TITLE_OVERRIDES[slug] ?? title;
+  const content = HERO_TITLE_OVERRIDES[slug]
+    ? stripLeadingHeading(page.content, HERO_TITLE_OVERRIDES[slug])
+    : page.content;
+
   return (
     <article dir="rtl">
-      <PageHero title={title} />
-      {page.content && (
+      <PageHero title={heroTitle} />
+      {content && (
         <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
           {withSidebar ? (
             <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
               <div className="lg:col-span-8">
                 <div
                   className="prose prose-article max-w-none text-right"
-                  dangerouslySetInnerHTML={{ __html: page.content }}
+                  dangerouslySetInnerHTML={{ __html: content }}
                 />
               </div>
               <aside className="lg:col-span-4">
@@ -123,7 +140,7 @@ export function StaticPageView({ page }: { page: ResolvedPage }) {
             <div className="mx-auto max-w-3xl">
               <div
                 className="prose prose-article max-w-none text-right"
-                dangerouslySetInnerHTML={{ __html: page.content }}
+                dangerouslySetInnerHTML={{ __html: content }}
               />
             </div>
           )}
@@ -132,3 +149,4 @@ export function StaticPageView({ page }: { page: ResolvedPage }) {
     </article>
   );
 }
+
