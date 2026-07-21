@@ -932,14 +932,16 @@ function HelpBand() {
   }
 
   const inputCls =
-    "block w-full min-h-11 rounded-md border border-white/20 bg-[#D6E9FA] px-3 py-2 text-base text-[#0B2B4B] placeholder:text-[#4a5b6d] focus:outline-none focus:ring-2 focus:ring-[hsl(var(--gold))]";
+    "block h-10 w-full rounded-[10px] border-0 px-3 text-[15px] text-[#0B2B4B] placeholder:text-[#4a5b6d] focus:outline-none focus:ring-2 focus:ring-[hsl(var(--gold))]";
 
   return (
     <section id="contact-band" dir="rtl" className="bg-background py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div
-          className="relative overflow-hidden rounded-[2rem] bg-[#1470CE] px-6 py-12 sm:px-12 sm:py-16"
+          className="relative overflow-hidden px-6 py-12 sm:px-12 sm:py-16"
           style={{
+            backgroundColor: "rgb(5,111,196)",
+            borderRadius: "16px 200px 16px 16px",
             backgroundImage:
               "radial-gradient(rgba(203,164,54,0.28) 1.2px, transparent 1.4px)",
             backgroundSize: "18px 18px",
@@ -947,7 +949,7 @@ function HelpBand() {
         >
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-14">
             <div className="text-right text-white">
-              <h2 className="text-4xl font-extrabold leading-tight sm:text-5xl">
+              <h2 className="text-4xl font-extrabold leading-tight sm:text-[48px]">
                 אנו כאן<br />כדי לעזור
               </h2>
               <p className="mt-6 text-lg leading-relaxed text-white/95 sm:text-xl">
@@ -967,6 +969,7 @@ function HelpBand() {
                   onChange={(e) => setName(e.target.value)}
                   aria-invalid={!!errs.name}
                   className={inputCls}
+                  style={{ backgroundColor: "rgb(207,224,242)" }}
                 />
                 {errs.name && <p className="mt-1 text-xs text-white">{errs.name}</p>}
               </div>
@@ -978,6 +981,7 @@ function HelpBand() {
                   onChange={(e) => setPhone(e.target.value)}
                   aria-invalid={!!errs.phone}
                   className={inputCls}
+                  style={{ backgroundColor: "rgb(207,224,242)" }}
                 />
                 {errs.phone && <p className="mt-1 text-xs text-white">{errs.phone}</p>}
               </div>
@@ -989,6 +993,7 @@ function HelpBand() {
                   onChange={(e) => setEmail(e.target.value)}
                   aria-invalid={!!errs.email}
                   className={inputCls}
+                  style={{ backgroundColor: "rgb(207,224,242)" }}
                 />
                 {errs.email && <p className="mt-1 text-xs text-white">{errs.email}</p>}
               </div>
@@ -997,6 +1002,7 @@ function HelpBand() {
                   value={damage}
                   onChange={(e) => setDamage(e.target.value)}
                   className={inputCls}
+                  style={{ backgroundColor: "rgb(207,224,242)" }}
                 >
                   <option value="">באיזה נזק מדובר?</option>
                   {HELP_DAMAGE.map((d) => (
@@ -1021,7 +1027,12 @@ function HelpBand() {
                 <button
                   type="submit"
                   disabled={busy}
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[hsl(var(--gold))] px-8 py-3 text-base font-bold text-white shadow-md transition hover:brightness-95 disabled:opacity-70"
+                  className="inline-flex items-center justify-center gap-2 px-8 text-base font-semibold text-white transition hover:brightness-95 disabled:opacity-70"
+                  style={{
+                    backgroundColor: "rgb(203,164,54)",
+                    borderRadius: "40px",
+                    height: "44px",
+                  }}
                 >
                   {busy ? "שולח…" : "חיזרו אלי!"}
                 </button>
