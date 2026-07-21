@@ -239,12 +239,13 @@ export function SiteHeader() {
               <div className="p-3">
                 <a
                   href={telHref}
-                  className="flex w-full items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-bold text-primary-foreground"
+                  className="flex w-full items-center justify-center gap-2 rounded-full bg-[hsl(var(--gold))] px-5 py-3 text-sm font-bold text-white"
                 >
                   <Phone className="h-4 w-4" />
-                  חייגו עכשיו {siteConfig.phone}
+                  {siteConfig.phone}
                 </a>
               </div>
+
             </nav>
           </div>
         </div>
