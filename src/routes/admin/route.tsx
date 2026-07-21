@@ -1,10 +1,4 @@
-import {
-  createFileRoute,
-  Link,
-  Outlet,
-  redirect,
-  useNavigate,
-} from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, redirect, useNavigate } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { checkIsAdmin } from "@/lib/admin.functions";
 
@@ -32,11 +26,7 @@ function AdminLayout() {
 
   if (!isAdmin) {
     return (
-      <main
-        dir="rtl"
-        lang="he"
-        className="flex min-h-screen items-center justify-center bg-background px-6"
-      >
+      <main dir="rtl" lang="he" className="flex min-h-screen items-center justify-center bg-background px-6">
         <div className="max-w-md text-center">
           <h1 className="text-2xl font-bold text-foreground">אין לך הרשאות גישה</h1>
           <p className="mt-3 text-sm text-muted-foreground">
@@ -53,29 +43,21 @@ function AdminLayout() {
     );
   }
 
+  const navCls =
+    "text-muted-foreground hover:text-foreground [&.active]:font-semibold [&.active]:text-foreground";
+
   return (
     <div dir="rtl" lang="he" className="min-h-screen bg-background">
       <header className="border-b border-border bg-card">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <div>
-            <Link to="/admin" className="text-lg font-bold text-foreground">
-              רפאל שמאות רכוש · ניהול
-            </Link>
-          </div>
+          <Link to="/admin" className="text-lg font-bold text-foreground">
+            רפאל שמאות רכוש · ניהול
+          </Link>
           <nav className="flex items-center gap-4 text-sm">
-            <Link
-              to="/admin"
-              activeOptions={{ exact: true }}
-              className="text-muted-foreground hover:text-foreground [&.active]:font-semibold [&.active]:text-foreground"
-            >
-              לוח בקרה
-            </Link>
-            <Link
-              to="/admin/import"
-              className="text-muted-foreground hover:text-foreground [&.active]:font-semibold [&.active]:text-foreground"
-            >
-              ייבוא
-            </Link>
+            <Link to="/admin" activeOptions={{ exact: true }} className={navCls}>לוח בקרה</Link>
+            <Link to="/admin/posts" className={navCls}>פוסטים</Link>
+            <Link to="/admin/pages" className={navCls}>עמודים</Link>
+            <Link to="/admin/import" className={navCls}>ייבוא</Link>
             <button
               onClick={handleSignOut}
               className="rounded-md border border-input bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:bg-accent"
