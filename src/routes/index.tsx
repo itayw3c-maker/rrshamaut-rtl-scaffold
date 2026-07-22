@@ -640,14 +640,14 @@ function HomePage() {
 
       {/* 7. ABOUT */}
       <section className="bg-background py-16 sm:py-20">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:px-8">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 items-stretch gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:px-8">
           <div className="order-2 text-right lg:order-1">
-            <div className="relative">
-              <div className="pointer-events-none absolute -top-4 right-[-16px] h-24 w-24 rounded-full opacity-30" style={{ backgroundImage: "radial-gradient(circle, hsl(var(--gold)) 1.5px, transparent 2px)", backgroundSize: "12px 12px" }} aria-hidden="true" />
-              <div className="overflow-hidden shadow-xl ring-1 ring-black/5" style={{ borderRadius: "8px 100px 8px 8px" }}>
-                <img src={IMG_ABOUT} alt="רפאל ריבוח - אודות" className="h-full w-full object-cover" loading="lazy" />
+            <div className="relative h-full min-h-[420px]">
+              <div className="pointer-events-none absolute -top-4 right-[-16px] z-10 h-24 w-24 rounded-full opacity-30" style={{ backgroundImage: "radial-gradient(circle, hsl(var(--gold)) 1.5px, transparent 2px)", backgroundSize: "12px 12px" }} aria-hidden="true" />
+              <div className="h-full overflow-hidden shadow-xl ring-1 ring-black/5" style={{ borderRadius: "8px 100px 8px 8px" }}>
+                <img src={IMG_ABOUT} alt="רפאל ריבוח - אודות" className="h-full min-h-[420px] w-full object-cover" loading="lazy" />
               </div>
-              <div className="pointer-events-none absolute -bottom-4 left-[-16px] h-24 w-24 rounded-full opacity-30" style={{ backgroundImage: "radial-gradient(circle, hsl(var(--gold)) 1.5px, transparent 2px)", backgroundSize: "12px 12px" }} aria-hidden="true" />
+              <div className="pointer-events-none absolute -bottom-4 left-[-16px] z-10 h-24 w-24 rounded-full opacity-30" style={{ backgroundImage: "radial-gradient(circle, hsl(var(--gold)) 1.5px, transparent 2px)", backgroundSize: "12px 12px" }} aria-hidden="true" />
             </div>
           </div>
           <div className="order-1 text-right lg:order-2">
