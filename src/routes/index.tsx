@@ -536,7 +536,7 @@ function HomePage() {
                   padding: "24px 0",
                 }}
               >
-                <div className="text-4xl tabular-nums text-[rgb(36,113,175)] sm:text-5xl lg:text-[62px]" style={{ fontWeight: 300, lineHeight: 1.1 }}>
+                <div className="text-4xl text-[rgb(36,113,175)] sm:text-5xl lg:text-[62px]" style={{ fontWeight: 300, lineHeight: 1.1 }}>
                   <Counter target={s.value} />
                 </div>
                 <div className="mt-2 text-[20px] font-normal text-[rgb(50,66,64)]">{s.label}</div>
