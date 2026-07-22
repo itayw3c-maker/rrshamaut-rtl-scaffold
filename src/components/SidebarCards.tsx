@@ -118,7 +118,9 @@ export function SidebarLeadForm() {
             className="mt-0.5 h-4 w-4 shrink-0 accent-[hsl(var(--gold))]"
           />
           <span>
-            אני מאשר/ת כי קראתי את מדיניות הפרטיות ומסכימ/ה לשמירת הפרטים ליצירת קשר.
+            אני מאשר/ת כי קראתי את{" "}
+            <a href={`/${encodeURIComponent("מדיניות-פרטיות")}/`} className="underline hover:opacity-90">מדיניות הפרטיות</a>{" "}
+            ומסכימ/ה לשמירת הפרטים ליצירת קשר.
           </span>
         </label>
         {errors.consent && (
