@@ -55,9 +55,7 @@ const LEGAL = [
   { label: "מפת אתר", href: "/מפת-אתר/" },
 ];
 
-function encodeHref(href: string) {
-  return href.split("/").map((s) => (s ? encodeURIComponent(s) : s)).join("/");
-}
+import { appHref as encodeHref } from "@/lib/href";
 
 function MapCard({ q, caption }: { q: string; caption: string }) {
   const src = `https://www.google.com/maps?q=${encodeURIComponent(q)}&output=embed`;

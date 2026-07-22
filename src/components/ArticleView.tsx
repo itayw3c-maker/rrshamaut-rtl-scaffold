@@ -2,6 +2,7 @@ import { LeadForm as _lf } from "@/components/LeadForm";
 import { PageHero } from "@/components/PageHero";
 import { SidebarPhoneCard, SidebarLeadForm } from "@/components/SidebarCards";
 import { linkSlug } from "@/lib/slug";
+import { appHref } from "@/lib/href";
 import type { ResolvedPost } from "@/lib/content.functions";
 void _lf; // keep import removable-warning quiet
 
@@ -53,7 +54,7 @@ export function ArticleView({ post }: { post: ResolvedPost }) {
                     {post.related.map((r) => (
                       <li key={r.slug}>
                         <a
-                          href={`/${linkSlug(r.slug)}`}
+                          href={appHref(`/${linkSlug(r.slug)}`)}
                           className="group flex items-start gap-3"
                         >
                           {r.cover_url ? (

@@ -1,6 +1,7 @@
 import { PageHero } from "@/components/PageHero";
 import { SidebarPhoneCard, SidebarLeadForm } from "@/components/SidebarCards";
 import { linkSlug } from "@/lib/slug";
+import { appHref } from "@/lib/href";
 import { toYouTubeEmbed, youTubeThumb } from "@/lib/video";
 import type { CptItem } from "@/lib/content.functions";
 
@@ -66,7 +67,7 @@ export function CptItemView({ item }: { item: CptItem }) {
                       const thumb = r.cover_url || youTubeThumb(r.video_url);
                       return (
                         <li key={r.slug}>
-                          <a href={`${relBase}${linkSlug(r.slug)}`} className="group flex items-start gap-3">
+                          <a href={appHref(`${relBase}${linkSlug(r.slug)}`)} className="group flex items-start gap-3">
                             {thumb ? (
                               <img
                                 src={thumb}

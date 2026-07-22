@@ -1,4 +1,5 @@
 import { linkSlug } from "@/lib/slug";
+import { appHref } from "@/lib/href";
 import { toYouTubeEmbed } from "@/lib/video";
 import type { ArchiveItem } from "@/lib/content.functions";
 
@@ -33,7 +34,7 @@ export function VideoArchiveGrid({ items }: { items: (ArchiveItem & { cpt_type?:
                   <div className="flex h-full w-full items-center justify-center text-white">אין תצוגה</div>
                 )}
               </div>
-              <a href={`${base}${linkSlug(it.slug)}`} className="block bg-white p-3 text-center">
+              <a href={appHref(`${base}${linkSlug(it.slug)}`)} className="block bg-white p-3 text-center">
                 <h3 className="line-clamp-2 text-sm font-bold text-[hsl(var(--primary))] hover:underline">
                   {decodeEntities(it.title)}
                 </h3>
@@ -57,7 +58,7 @@ export function SuccessArchiveGrid({ items }: { items: ArchiveItem[] }) {
         {items.map((it) => (
           <a
             key={it.slug}
-            href={`/success/${linkSlug(it.slug)}`}
+            href={appHref(`/success/${linkSlug(it.slug)}`)}
             className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-sm transition hover:shadow-md"
           >
             <div className="flex h-72 items-center justify-center overflow-hidden bg-white">

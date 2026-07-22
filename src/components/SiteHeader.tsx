@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Menu, X, ChevronDown, Phone } from "lucide-react";
 import { siteConfig } from "@/lib/site-config";
+import { appHref } from "@/lib/href";
 
 type NavChild = { label: string; href: string };
 type NavItem = { label: string; href?: string; children?: NavChild[]; mobileOnly?: boolean };
@@ -45,13 +46,7 @@ const NAV: NavItem[] = [
   { label: "צור קשר", href: "/צור-קשר" },
 ];
 
-function encodeHref(href: string) {
-  // Encode Hebrew segments while preserving slashes.
-  return href
-    .split("/")
-    .map((seg) => (seg ? encodeURIComponent(seg) : seg))
-    .join("/");
-}
+const encodeHref = appHref;
 
 export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);

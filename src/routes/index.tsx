@@ -164,10 +164,7 @@ const PRESS = [
   },
 ];
 
-function encHref(h: string) {
-  const [path, ...rest] = h.split("#");
-  return encodeURI(path) + (rest.length ? "#" + rest.join("#") : "");
-}
+import { appHref as encHref } from "@/lib/href";
 
 function youtubeIdFrom(url: string | null): string | null {
   if (!url) return null;
@@ -638,7 +635,7 @@ function HomePage() {
             </div>
             <div className="mt-7">
               <a
-                href="/about"
+                href={encHref("/about")}
                 className="inline-flex items-center justify-center px-6 py-3 text-[20px] font-bold transition hover:brightness-95"
                 style={{
                   backgroundColor: "rgb(239,241,241)",
@@ -1155,9 +1152,9 @@ function SeoSections() {
           <div className="prose-article mt-6 space-y-4 text-base leading-relaxed text-[#333333] sm:text-lg [&_a]:font-bold [&_a]:text-[#dc2f5a] [&_a:hover]:underline [&_strong>a]:text-[hsl(var(--gold))]">
             <p>
               שמאות רכוש היא הערכה מקצועית של רכוש קיים או הערכת נזקים לרכוש הנגרמים כתוצאה מאירועים ביטוחיים שונים. תחום השמאות כולל קטגוריות מגוונות:{" "}
-              שמאות רכוש כללית, <strong><a href="/נזקי-אש-ופיח">שמאות נזקי אש</a></strong>,{" "}
-              <strong><a href="/נזקי-מים-הצפה-ורטיבות">נזקי מים</a></strong>, נזקי ביוב, הצפות, נזקי מזג אוויר קשה ו
-              <strong><a href="/הערכת-שווי-רכוש">אובדן רכוש</a></strong>.
+              שמאות רכוש כללית, <strong><a href={encHref("/נזקי-אש-ופיח")}>שמאות נזקי אש</a></strong>,{" "}
+              <strong><a href={encHref("/נזקי-מים-הצפה-ורטיבות")}>נזקי מים</a></strong>, נזקי ביוב, הצפות, נזקי מזג אוויר קשה ו
+              <strong><a href={encHref("/הערכת-שווי-רכוש")}>אובדן רכוש</a></strong>.
             </p>
             <p>
               תפקידו של שמאי הרכוש הוא ביצוע הערכה מדויקת של הנזק שנגרם, הכנת חוות דעת מפורטת וסיוע למבוטח במימוש זכויות הפיצוי מול חברות הביטוח, בהתאם ל

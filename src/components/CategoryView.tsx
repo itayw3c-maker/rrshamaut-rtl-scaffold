@@ -1,5 +1,6 @@
 import { PageHero } from "@/components/PageHero";
 import { linkSlug } from "@/lib/slug";
+import { appHref } from "@/lib/href";
 import type { CategoryPayload } from "@/lib/content.functions";
 
 function decodeEntities(s: string): string {
@@ -32,7 +33,7 @@ export function CategoryView({ category }: { category: CategoryPayload }) {
             {category.posts.map((p) => (
               <a
                 key={p.slug}
-                href={`/${linkSlug(p.slug)}`}
+                href={appHref(`/${linkSlug(p.slug)}`)}
                 className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-sm transition hover:shadow-md"
               >
                 <div className="relative aspect-video w-full overflow-hidden bg-[hsl(var(--muted))]">
