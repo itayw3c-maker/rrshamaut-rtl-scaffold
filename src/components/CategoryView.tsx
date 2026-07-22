@@ -33,7 +33,7 @@ export function CategoryView({ category }: { category: CategoryPayload }) {
             {category.posts.map((p) => (
               <a
                 key={p.slug}
-                href={`/${linkSlug(p.slug)}`}
+                href={appHref(`/${linkSlug(p.slug)}`)}
                 className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-sm transition hover:shadow-md"
               >
                 <div className="relative aspect-video w-full overflow-hidden bg-[hsl(var(--muted))]">
