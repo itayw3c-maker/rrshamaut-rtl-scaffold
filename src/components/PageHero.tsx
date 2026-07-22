@@ -4,6 +4,9 @@ import { appHref } from "@/lib/href";
 const PUZZLE_ICON =
   "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/306/vector-2.png";
 
+const HERO_BG =
+  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/281/rectangle-48-7.png";
+
 interface PageHeroProps {
   title: string;
   crumbs?: Array<{ label: string; to?: string }>;
@@ -14,29 +17,38 @@ export function PageHero({ title, crumbs }: PageHeroProps) {
     <section
       dir="rtl"
       className="relative overflow-hidden border-b border-border"
-      style={{
-        background:
-          "linear-gradient(180deg,#EEF4FB 0%, #F7FAFD 60%, #FFFFFF 100%)",
-      }}
     >
-      <div className="pointer-events-none absolute inset-0 opacity-[0.08]">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `url(${PUZZLE_ICON})`,
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center 20%",
-            backgroundSize: "180px auto",
-          }}
-        />
-      </div>
+      {/* Background photo band */}
+      <div
+        aria-hidden
+        className="absolute inset-0"
+        style={{
+          backgroundImage: `url(${HERO_BG})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      />
+      {/* Light overlay to keep text readable */}
+      <div
+        aria-hidden
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(238,244,251,0.88) 0%, rgba(247,250,253,0.86) 60%, rgba(255,255,255,0.92) 100%)",
+        }}
+      />
 
       <div className="relative mx-auto max-w-7xl px-4 py-10 text-center sm:px-6 sm:py-14 lg:px-8">
         <img
           src={PUZZLE_ICON}
           alt=""
           aria-hidden
-          className="mx-auto mb-3 h-8 w-8 opacity-80"
+          className="mx-auto mb-3 h-10 w-10"
+          style={{
+            filter:
+              "brightness(0) saturate(100%) invert(70%) sepia(35%) saturate(700%) hue-rotate(5deg) brightness(95%) contrast(92%)",
+          }}
         />
         <nav className="text-xs text-[#7a7a7a] sm:text-sm">
           <Link to="/" className="text-[hsl(var(--primary))] hover:underline">
