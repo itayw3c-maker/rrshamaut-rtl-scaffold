@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as Char1492Char1505Char1491Char1512Char1497Char1504Char1490Char1497Char1513Char1493Char1514RouteImport } from './routes/הסדרי-נגישות'
 import { Route as ThankYouRouteImport } from './routes/thank-you'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
@@ -33,6 +34,14 @@ import { Route as AdminPagesIndexRouteImport } from './routes/admin/pages/index'
 import { Route as AdminPostsIdRouteImport } from './routes/admin/posts/$id'
 import { Route as AdminPagesIdRouteImport } from './routes/admin/pages/$id'
 
+const Char1492Char1505Char1491Char1512Char1497Char1504Char1490Char1497Char1513Char1493Char1514Route =
+  Char1492Char1505Char1491Char1512Char1497Char1504Char1490Char1497Char1513Char1493Char1514RouteImport.update(
+    {
+      id: '/הסדרי-נגישות',
+      path: '/הסדרי-נגישות',
+      getParentRoute: () => rootRouteImport,
+    } as any,
+  )
 const ThankYouRoute = ThankYouRouteImport.update({
   id: '/thank-you',
   path: '/thank-you',
@@ -158,6 +167,7 @@ export interface FileRoutesByFullPath {
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/thank-you': typeof ThankYouRoute
+  '/הסדרי-נגישות': typeof Char1492Char1505Char1491Char1512Char1497Char1504Char1490Char1497Char1513Char1493Char1514Route
   '/about/$child': typeof AboutChildRoute
   '/admin/import': typeof AdminImportRoute
   '/admin/leads': typeof AdminLeadsRoute
@@ -182,6 +192,7 @@ export interface FileRoutesByTo {
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/thank-you': typeof ThankYouRoute
+  '/הסדרי-נגישות': typeof Char1492Char1505Char1491Char1512Char1497Char1504Char1490Char1497Char1513Char1493Char1514Route
   '/about/$child': typeof AboutChildRoute
   '/admin/import': typeof AdminImportRoute
   '/admin/leads': typeof AdminLeadsRoute
@@ -208,6 +219,7 @@ export interface FileRoutesById {
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/thank-you': typeof ThankYouRoute
+  '/הסדרי-נגישות': typeof Char1492Char1505Char1491Char1512Char1497Char1504Char1490Char1497Char1513Char1493Char1514Route
   '/about/$child': typeof AboutChildRoute
   '/admin/import': typeof AdminImportRoute
   '/admin/leads': typeof AdminLeadsRoute
@@ -235,6 +247,7 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/sitemap.xml'
     | '/thank-you'
+    | '/הסדרי-נגישות'
     | '/about/$child'
     | '/admin/import'
     | '/admin/leads'
@@ -259,6 +272,7 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/sitemap.xml'
     | '/thank-you'
+    | '/הסדרי-נגישות'
     | '/about/$child'
     | '/admin/import'
     | '/admin/leads'
@@ -284,6 +298,7 @@ export interface FileRouteTypes {
     | '/robots.txt'
     | '/sitemap.xml'
     | '/thank-you'
+    | '/הסדרי-נגישות'
     | '/about/$child'
     | '/admin/import'
     | '/admin/leads'
@@ -310,6 +325,7 @@ export interface RootRouteChildren {
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ThankYouRoute: typeof ThankYouRoute
+  Char1492Char1505Char1491Char1512Char1497Char1504Char1490Char1497Char1513Char1493Char1514Route: typeof Char1492Char1505Char1491Char1512Char1497Char1504Char1490Char1497Char1513Char1493Char1514Route
   AboutChildRoute: typeof AboutChildRoute
   CategorySlugRoute: typeof CategorySlugRoute
   MovieSlugRoute: typeof MovieSlugRoute
@@ -319,6 +335,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/הסדרי-נגישות': {
+      id: '/הסדרי-נגישות'
+      path: '/הסדרי-נגישות'
+      fullPath: '/הסדרי-נגישות'
+      preLoaderRoute: typeof Char1492Char1505Char1491Char1512Char1497Char1504Char1490Char1497Char1513Char1493Char1514RouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/thank-you': {
       id: '/thank-you'
       path: '/thank-you'
@@ -522,6 +545,8 @@ const rootRouteChildren: RootRouteChildren = {
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ThankYouRoute: ThankYouRoute,
+  Char1492Char1505Char1491Char1512Char1497Char1504Char1490Char1497Char1513Char1493Char1514Route:
+    Char1492Char1505Char1491Char1512Char1497Char1504Char1490Char1497Char1513Char1493Char1514Route,
   AboutChildRoute: AboutChildRoute,
   CategorySlugRoute: CategorySlugRoute,
   MovieSlugRoute: MovieSlugRoute,

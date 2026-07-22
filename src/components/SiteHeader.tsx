@@ -111,9 +111,11 @@ export function SiteHeader() {
                     <a
                       href={encodeHref(item.href)}
                       className={`${navLinkBase} ${colorCls}`}
+                      aria-current={active ? "page" : undefined}
+                      {...(hasChildren ? { "aria-haspopup": "menu" as const, "aria-expanded": isOpen } : {})}
                     >
                       {item.label}
-                      {hasChildren && <ChevronDown className="h-4 w-4 opacity-70" />}
+                      {hasChildren && <ChevronDown className="h-4 w-4 opacity-70" aria-hidden="true" />}
                     </a>
                   ) : (
                     <button
@@ -121,10 +123,10 @@ export function SiteHeader() {
                       onClick={() => setOpenMenu(isOpen ? null : item.label)}
                       className={`${navLinkBase} ${colorCls}`}
                       aria-expanded={isOpen}
-                      aria-haspopup="true"
+                      aria-haspopup="menu"
                     >
                       {item.label}
-                      <ChevronDown className="h-4 w-4 opacity-70" />
+                      <ChevronDown className="h-4 w-4 opacity-70" aria-hidden="true" />
                     </button>
                   )}
 
@@ -169,14 +171,16 @@ export function SiteHeader() {
           onClick={() => setMobileOpen(true)}
           className="inline-flex h-11 w-11 items-center justify-center rounded-md text-foreground lg:hidden"
           aria-label="פתח תפריט"
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-nav"
         >
-          <Menu className="h-6 w-6" />
+          <Menu className="h-6 w-6" aria-hidden="true" />
         </button>
       </div>
 
       {/* Mobile drawer */}
       {mobileOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden" dir="rtl">
+        <div className="fixed inset-0 z-50 lg:hidden" dir="rtl" id="mobile-nav" role="dialog" aria-modal="true" aria-label="ניווט נייד">
           <div
             className="absolute inset-0 bg-black/50"
             onClick={() => setMobileOpen(false)}
@@ -191,7 +195,7 @@ export function SiteHeader() {
                 className="inline-flex h-11 w-11 items-center justify-center rounded-md"
                 aria-label="סגור תפריט"
               >
-                <X className="h-6 w-6" />
+                <X className="h-6 w-6" aria-hidden="true" />
               </button>
             </div>
             <nav aria-label="ניווט נייד" className="flex-1 overflow-y-auto px-2 py-3">

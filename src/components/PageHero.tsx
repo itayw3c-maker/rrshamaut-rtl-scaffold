@@ -50,13 +50,13 @@ export function PageHero({ title, crumbs }: PageHeroProps) {
               "brightness(0) saturate(100%) invert(70%) sepia(35%) saturate(700%) hue-rotate(5deg) brightness(95%) contrast(92%)",
           }}
         />
-        <nav className="text-xs text-[#7a7a7a] sm:text-sm">
+        <nav aria-label="פירורי לחם" className="text-xs text-[#7a7a7a] sm:text-sm">
           <Link to="/" className="text-[hsl(var(--primary))] hover:underline">
             דף הבית
           </Link>
           {crumbs?.map((c) => (
             <span key={c.label}>
-              <span className="mx-1">»</span>
+              <span className="mx-1" aria-hidden="true">»</span>
               {c.to ? (
                 <a
                   href={appHref(c.to)}
@@ -69,8 +69,8 @@ export function PageHero({ title, crumbs }: PageHeroProps) {
               )}
             </span>
           ))}
-          <span className="mx-1">»</span>
-          <span className="text-[#7a7a7a]">{title}</span>
+          <span className="mx-1" aria-hidden="true">»</span>
+          <span className="text-[#7a7a7a]" aria-current="page">{title}</span>
         </nav>
         <h1
           className="mt-3 text-3xl font-extrabold leading-tight text-[hsl(var(--primary))] sm:text-4xl lg:text-5xl"
