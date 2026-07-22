@@ -67,43 +67,77 @@ function decodeHtmlEntities(s: string): string {
     .replace(/&gt;/g, ">");
 }
 
+// Authoritative title overrides where the stored source HTML has a duplicate
+// or wrong heading widget for a given outbound article link.
+const PRESS_TITLE_OVERRIDES: Record<string, string> = {
+  "https://www.inn.co.il/news/701435":
+    "מאחורי הקלעים: מה באמת קורה כשתובעים את חברת הביטוח?",
+};
+
 function parsePressCardsFromHtml(html: string): PressCard[] {
   const cards: PressCard[] = [];
   // Each press card lives in an `e-con-full e-flex e-con e-child` container.
-  const containerRe =
-    /<div\b[^>]*class="[^"]*\be-con-full\b[^"]*\be-flex\b[^"]*\be-con\b[^"]*\be-child\b[^"]*"[^>]*>([\s\S]*?)(?=<div\b[^>]*class="[^"]*\be-con-full\b[^"]*\be-flex\b[^"]*\be-con\b[^"]*\be-child\b|<\/div>\s*<\/div>\s*<\/div>\s*<footer)/g;
-  // Simpler: split on the container opening tag and process each chunk.
+  // Anchor each card on its outbound BUTTON link, then walk backward within
+  // that card's own container to collect the two images and heading that
+  // belong to it. This avoids off-by-one issues when Elementor emits a
+  // duplicated heading widget elsewhere in the flow.
+  const buttonRe =
+    /<a\b[^>]*class="[^"]*\belementor-button\b[^"]*"[^>]*href="([^"]+)"/g;
+
+  // Split the document into per-card scopes using the card container tag.
+  // Each `part[i]` (i>=1) is the inner HTML of card i up to the start of card i+1.
   const parts = html.split(
     /<div\b[^>]*class="[^"]*\be-con-full\b[^"]*\be-flex\b[^"]*\be-con\b[^"]*\be-child\b[^"]*"[^>]*>/,
   );
-  // parts[0] is preamble; each subsequent part is one card's inner HTML + trailing siblings.
+
   for (let i = 1; i < parts.length; i++) {
     const chunk = parts[i];
-    const imgs = Array.from(chunk.matchAll(/<img\b[^>]*\bsrc="([^"]+)"[^>]*>/g)).map(
-      (m) => m[1],
-    );
-    const titleMatch = chunk.match(
-      /<p class="elementor-heading-title[^"]*"[^>]*>([\s\S]*?)<\/p>/,
-    );
-    const linkMatch = chunk.match(
+    // Only accept a chunk that actually contains a "לקריאת המאמר" button —
+    // this filters out non-card containers that share the same class.
+    const linkMatch = buttonRe.exec(chunk) || chunk.match(
       /<a\b[^>]*class="[^"]*\belementor-button\b[^"]*"[^>]*href="([^"]+)"/,
     );
-    if (!linkMatch || imgs.length < 1) continue;
-    const title = titleMatch
-      ? decodeHtmlEntities(titleMatch[1].replace(/<[^>]+>/g, "").trim())
+    if (!linkMatch) continue;
+    // Reset stateful regex so the next iteration starts fresh.
+    buttonRe.lastIndex = 0;
+
+    // Restrict the scope to text BEFORE the button link — everything after
+    // the button belongs to the next card.
+    const buttonIdx = chunk.indexOf(linkMatch[0]);
+    const scope = buttonIdx >= 0 ? chunk.slice(0, buttonIdx) : chunk;
+
+    const imgs = Array.from(scope.matchAll(/<img\b[^>]*\bsrc="([^"]+)"[^>]*>/g)).map(
+      (m) => m[1],
+    );
+    const titleMatches = Array.from(
+      scope.matchAll(/<p class="elementor-heading-title[^"]*"[^>]*>([\s\S]*?)<\/p>/g),
+    );
+    if (imgs.length < 1) continue;
+
+    // The heading that belongs to this card is the LAST heading in the
+    // pre-button scope (headings from the previous card sit further back and
+    // are filtered by the container split; if any leaks in, "last" wins).
+    const rawTitle = titleMatches.length
+      ? titleMatches[titleMatches.length - 1][1]
       : "";
+    const href = linkMatch[1];
+    const parsedTitle = decodeHtmlEntities(
+      rawTitle.replace(/<[^>]+>/g, "").trim(),
+    );
+    const title = PRESS_TITLE_OVERRIDES[href] ?? parsedTitle;
+
     cards.push({
-      href: linkMatch[1],
+      href,
       img: imgs[0] ?? null,
       logo: imgs[1] ?? null,
       title,
       excerpt: null,
     });
   }
-  // Suppress void containerRe warning by referencing it once.
-  void containerRe;
   return cards;
 }
+
+
 
 
 async function fetchArchive(type: "movie" | "success" | "video"): Promise<ArchiveItem[]> {
