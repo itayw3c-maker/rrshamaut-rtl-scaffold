@@ -354,13 +354,13 @@ export function AccessibilityMenu() {
             {/* קישורים חובה */}
             <Section title="מידע ותמיכה">
               <div className="grid gap-2">
-                <a href="/accessibility" className="block rounded-lg border-2 border-[#1a3a5c] bg-white px-3 py-2 text-center text-sm font-semibold text-[#1a3a5c] hover:bg-[#1a3a5c] hover:text-white focus-visible:outline-2 focus-visible:outline-yellow-400">
+                <a href="/הסדרי-נגישות/" className="block rounded-lg border-2 border-[#1a3a5c] bg-white px-3 py-2 text-center text-sm font-semibold text-[#1a3a5c] hover:bg-[#1a3a5c] hover:text-white focus-visible:outline-2 focus-visible:outline-yellow-400">
                   הצהרת נגישות מלאה
                 </a>
                 <a href="/מפת-אתר/" className="block rounded-lg border-2 border-[#1a3a5c] bg-white px-3 py-2 text-center text-sm font-semibold text-[#1a3a5c] hover:bg-[#1a3a5c] hover:text-white focus-visible:outline-2 focus-visible:outline-yellow-400">
                   מפת האתר
                 </a>
-                <a href="/accessibility#coordinator" className="block rounded-lg border-2 border-[#1a3a5c] bg-white px-3 py-2 text-center text-sm font-semibold text-[#1a3a5c] hover:bg-[#1a3a5c] hover:text-white focus-visible:outline-2 focus-visible:outline-yellow-400">
+                <a href="/הסדרי-נגישות/#coordinator" className="block rounded-lg border-2 border-[#1a3a5c] bg-white px-3 py-2 text-center text-sm font-semibold text-[#1a3a5c] hover:bg-[#1a3a5c] hover:text-white focus-visible:outline-2 focus-visible:outline-yellow-400">
                   דיווח על תקלת נגישות
                 </a>
               </div>

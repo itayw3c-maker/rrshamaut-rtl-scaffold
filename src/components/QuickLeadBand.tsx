@@ -64,36 +64,49 @@ export function QuickLeadBand() {
       }}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <h3 className="text-center text-xl font-extrabold text-white sm:text-2xl">
+        <h3 id="quicklead-title" className="text-center text-xl font-extrabold text-white sm:text-2xl">
           השאירו פרטים לשיחת ייעוץ אישית איתי ללא התחייבות!
         </h3>
 
-        <form onSubmit={onSubmit} noValidate className="mt-6">
+        <form onSubmit={onSubmit} noValidate className="mt-6" aria-labelledby="quicklead-title">
           <div className="grid grid-cols-1 gap-3 md:grid-cols-[1fr_1fr_1fr_auto]">
             <div>
+              <label htmlFor="ql-name" className="sr-only">שם מלא</label>
               <input
+                id="ql-name"
                 type="text"
                 placeholder="שם מלא"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                aria-required="true"
                 aria-invalid={!!errors.name}
+                aria-describedby={errors.name ? "ql-name-err" : undefined}
+                autoComplete="name"
                 className={INPUT}
               />
-              {errors.name && <p className="mt-1 text-xs text-white">{errors.name}</p>}
+              {errors.name && <p id="ql-name-err" className="mt-1 text-xs text-white">{errors.name}</p>}
             </div>
             <div>
+              <label htmlFor="ql-phone" className="sr-only">טלפון</label>
               <input
+                id="ql-phone"
                 type="tel"
+                inputMode="tel"
                 placeholder="טלפון"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
+                aria-required="true"
                 aria-invalid={!!errors.phone}
+                aria-describedby={errors.phone ? "ql-phone-err" : undefined}
+                autoComplete="tel"
                 className={INPUT}
               />
-              {errors.phone && <p className="mt-1 text-xs text-white">{errors.phone}</p>}
+              {errors.phone && <p id="ql-phone-err" className="mt-1 text-xs text-white">{errors.phone}</p>}
             </div>
             <div>
+              <label htmlFor="ql-damage" className="sr-only">סוג נזק</label>
               <select
+                id="ql-damage"
                 value={damageType}
                 onChange={(e) => setDamageType(e.target.value)}
                 className={INPUT}
@@ -109,7 +122,7 @@ export function QuickLeadBand() {
               disabled={submitting}
               className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-[rgb(203,164,54)] px-6 text-base font-semibold text-white shadow-sm transition hover:brightness-95 disabled:opacity-70"
             >
-              {submitting && <Loader2 className="h-4 w-4 animate-spin" />}
+              {submitting && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}
               חיזרו אלי!
             </button>
           </div>
