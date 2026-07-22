@@ -66,12 +66,12 @@ const services: Array<{ title: string; href: string; img: string }> = [
   { title: "נזקי אש ופיח", href: "/נזקי-אש-ופיח", img: `${SB}/wp/98/photo-2023-11-10-14-56-32-1.jpg` },
   { title: "נזקי טבע שיטפונות וסערה", href: "/נזקי-טבע-שיטפונות-וסערה", img: `${SB}/wp/5511/600x800.jpg` },
   { title: "נזקי שוכרים", href: "/נזקי-שוכרים", img: `${SB}/wp/3318/media-3318.webp` },
-  { title: 'חו"ד קבילה משפטית', href: "/חוד-קבילה-משפטית", img: `${SB}/wp/2250/7.webp` },
-  { title: "נזקי פריצה", href: "/נזקי-פריצה", img: `${SB}/wp/3712/media-3712.webp` },
+  { title: 'חו"ד קבילה משפטית', href: "/חווד-קבילה-משפטית", img: `${SB}/wp/2250/7.webp` },
+  { title: "נזקי פריצה", href: "/שמאי-נזקי-פריצה", img: `${SB}/wp/3712/media-3712.webp` },
   { title: "הערכת שווי רכוש", href: "/הערכת-שווי-רכוש", img: `${SB}/wp/3315/media-3315.webp` },
-  { title: "נזקי עבודות קבלניות", href: "/נזקי-עבודות-קבלניות", img: `${SB}/wp/5126/media-5126.jpg` },
+  { title: "נזקי עבודות קבלניות", href: "/שמאי-נזקי-עבודות-קבלניות", img: `${SB}/wp/5126/media-5126.jpg` },
   { title: "הערכת רכוש לצורכי הזדכות במס שבח", href: "/הערכת-רכוש-לצורכי-הזדכות-במס-שבח", img: `${SB}/wp/2042/385506.jpg` },
-  { title: "נזקי התנגשות", href: "/נזקי-התנגשות", img: `${SB}/wp/5515/2.jpg` },
+  { title: "נזקי התנגשות", href: "/שמאי-נזקי-התנגשות", img: `${SB}/wp/5515/2.jpg` },
   { title: "הערכת שמאות לריהוט עתיק", href: "/הערכת-שמאות-לריהוט-עתיק", img: `${SB}/wp/3314/media-3314.webp` },
 ];
 
@@ -421,7 +421,9 @@ function VideoCarousel({ items }: { items: HomeVideo[] }) {
                   </div>
                   <div className="bg-white px-4 py-3 text-right">
                     <h3 className="line-clamp-2 text-base font-semibold text-[hsl(var(--primary))]">
-                      {v.title}
+                      <a href={encHref(`/movie/${v.slug}`)} className="hover:underline">
+                        {v.title}
+                      </a>
                     </h3>
                   </div>
                 </div>
@@ -1018,7 +1020,9 @@ function HelpBand() {
                   className="mt-1 h-4 w-4 shrink-0 accent-[hsl(var(--gold))]"
                 />
                 <span>
-                  אני מאשר/ת כי קראתי את מדיניות הפרטיות ואני מסכימ/ה לשמירת הפרטים לצורך יצירת קשר.
+                  אני מאשר/ת כי קראתי את{" "}
+                  <a href={`/${encodeURIComponent("מדיניות-פרטיות")}/`} className="underline hover:opacity-90">מדיניות הפרטיות</a>{" "}
+                  ואני מסכימ/ה לשמירת הפרטים לצורך יצירת קשר.
                 </span>
               </label>
               {errs.consent && <p className="text-sm font-semibold text-[#FFD6D6]">{errs.consent}</p>}

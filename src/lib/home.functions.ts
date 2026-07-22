@@ -20,6 +20,22 @@ export type HomeArticle = {
   published_at: string | null;
 };
 
+const HOME_VIDEO_SLUGS = [
+  "סרטון-בנושא-נזקי-התנגשות-ברכוש-איך-מתמ",
+  "צפו-בסרטון-נזקי-מים-בביטוח-דירה-איך-למ",
+  "סרטון-בנושא-נזקי-שוכרים-בנכס-איך-לזהות",
+  "סרטון-בנושא-נזקי-אש-בביטוח-דירה-איך-לנ",
+];
+
+const HOME_SUCCESS_SLUGS = [
+  "plumbing-damage-insurance-claim-success",
+  "trapped-water-insurance-claim-success",
+  "clal-insurance-plumbing-damage-settlement",
+  "בלילה-אחד-הכל-נשרף-ובזכות-ליווי-צמוד",
+  "תשלום-ע״ס-306638-בגין-נזק-בדירה",
+  "payment-290000-nis-water-damage-luxury-home-ashdod",
+];
+
 export const getHomeVideosFn = createServerFn({ method: "GET" }).handler(
   async (): Promise<HomeVideo[]> => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
@@ -28,15 +44,18 @@ export const getHomeVideosFn = createServerFn({ method: "GET" }).handler(
       .select("slug, title, video_url, cover:media!posts_cover_media_id_fkey(url)")
       .eq("cpt_type", "movie")
       .eq("status", "publish")
-      .order("published_at", { ascending: false, nullsFirst: false })
-      .limit(6);
+      .in("slug", HOME_VIDEO_SLUGS);
     if (error) throw new Error(error.message);
-    return (data ?? []).map((row: any) => ({
-      slug: row.slug,
-      title: row.title,
-      video_url: row.video_url ?? null,
-      cover_url: row.cover?.url ?? null,
-    }));
+    const bySlug = new Map((data ?? []).map((row: any) => [row.slug, row]));
+    return HOME_VIDEO_SLUGS
+      .map((slug) => bySlug.get(slug))
+      .filter(Boolean)
+      .map((row: any) => ({
+        slug: row.slug,
+        title: row.title,
+        video_url: row.video_url ?? null,
+        cover_url: row.cover?.url ?? null,
+      }));
   },
 );
 
@@ -48,14 +67,17 @@ export const getHomeSuccessesFn = createServerFn({ method: "GET" }).handler(
       .select("slug, title, cover:media!posts_cover_media_id_fkey(url)")
       .eq("cpt_type", "success")
       .eq("status", "publish")
-      .order("published_at", { ascending: false, nullsFirst: false })
-      .limit(8);
+      .in("slug", HOME_SUCCESS_SLUGS);
     if (error) throw new Error(error.message);
-    return (data ?? []).map((row: any) => ({
-      slug: row.slug,
-      title: row.title,
-      cover_url: row.cover?.url ?? null,
-    }));
+    const bySlug = new Map((data ?? []).map((row: any) => [row.slug, row]));
+    return HOME_SUCCESS_SLUGS
+      .map((slug) => bySlug.get(slug))
+      .filter(Boolean)
+      .map((row: any) => ({
+        slug: row.slug,
+        title: row.title,
+        cover_url: row.cover?.url ?? null,
+      }));
   },
 );
 
