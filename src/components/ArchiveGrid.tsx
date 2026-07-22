@@ -24,7 +24,7 @@ export function ArchiveGrid({
           return (
             <a
               key={it.slug}
-              href={`${base}${linkSlug(it.slug)}`}
+              href={appHref(`${base}${linkSlug(it.slug)}`)}
               className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-sm transition hover:shadow-md"
             >
               <div className="relative aspect-video w-full overflow-hidden bg-[hsl(var(--muted))]">
