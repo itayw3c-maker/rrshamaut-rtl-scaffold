@@ -838,9 +838,10 @@ function HomePage() {
                 rel="noopener noreferrer"
                 className="group flex flex-col overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-black/5 transition hover:-translate-y-1 hover:shadow-xl"
               >
-                <div className="h-72 w-full overflow-hidden bg-[#F7F8FB]">
-                  <img src={p.img} alt={p.title} loading="lazy" className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+                <div className="aspect-square w-full overflow-hidden bg-[#F7F8FB]">
+                  <img src={p.img} alt={p.title} loading="lazy" className="h-full w-full object-cover object-top transition duration-500 group-hover:scale-105" />
                 </div>
+
                 <div className="flex flex-1 flex-col p-6 text-right">
                   <h3 className="line-clamp-3 flex-1 text-base font-bold leading-snug text-[hsl(var(--primary))]">{p.title}</h3>
                   <div className="mt-5 flex justify-end">
