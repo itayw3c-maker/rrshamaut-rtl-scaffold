@@ -1,5 +1,6 @@
 import { PageHero } from "@/components/PageHero";
 import { linkSlug } from "@/lib/slug";
+import { appHref } from "@/lib/href";
 import type { CategoryPayload } from "@/lib/content.functions";
 
 function decodeEntities(s: string): string {
