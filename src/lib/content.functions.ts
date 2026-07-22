@@ -15,7 +15,9 @@ export type PressCard = {
   img: string | null;
   logo: string | null;
   title: string;
+  excerpt?: string | null;
 };
+
 
 export type ResolvedPage = {
   kind: "page";
