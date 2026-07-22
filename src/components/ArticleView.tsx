@@ -54,7 +54,7 @@ export function ArticleView({ post }: { post: ResolvedPost }) {
                     {post.related.map((r) => (
                       <li key={r.slug}>
                         <a
-                          href={`/${linkSlug(r.slug)}`}
+                          href={appHref(`/${linkSlug(r.slug)}`)}
                           className="group flex items-start gap-3"
                         >
                           {r.cover_url ? (
