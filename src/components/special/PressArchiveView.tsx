@@ -18,17 +18,18 @@ export function PressArchiveView({ cards }: { cards: PressCard[] }) {
                 rel="noopener nofollow"
                 className="group flex flex-col overflow-hidden rounded-md border border-border bg-white shadow-sm transition hover:shadow-lg"
               >
-                {/* Portrait screenshot area */}
-                <div className="w-full overflow-hidden bg-[hsl(var(--muted))]">
+                {/* Square screenshot area (source: 360×360 cover, top-anchored) */}
+                <div className="aspect-square w-full overflow-hidden bg-[hsl(var(--muted))]">
                   {c.img && (
                     <img
                       src={c.img}
                       alt={c.title}
                       loading="lazy"
-                      className="block h-auto w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                      className="block h-full w-full object-cover object-top transition duration-500 group-hover:scale-[1.03]"
                     />
                   )}
                 </div>
+
                 {/* Title */}
                 <div className="flex flex-col items-center gap-3 px-4 pt-5 pb-3 text-center">
                   <h3 className="text-[15px] font-bold leading-snug text-[hsl(var(--primary))] sm:text-base">
