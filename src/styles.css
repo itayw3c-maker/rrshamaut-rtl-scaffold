@@ -169,45 +169,140 @@
   overflow: hidden;
 }
 
-/* ---------- Accessibility widget global effects ---------- */
-:root { --a11y-font-scale: 1; }
-html { font-size: calc(16px * var(--a11y-font-scale)); }
+/* ============================================================
+   נגישות — Accessibility (ת"י 5568 / WCAG 2.0 AA + 2.1 AA)
+   ============================================================ */
 
-html.a11y-high-contrast {
-  --background: 0 0% 100%;
-  --foreground: 0 0% 0%;
-  --card: 0 0% 100%;
-  --card-foreground: 0 0% 0%;
-  --muted: 0 0% 95%;
-  --muted-foreground: 0 0% 10%;
-  --border: 0 0% 0%;
-  --primary: 220 100% 25%;
-  --primary-foreground: 0 0% 100%;
-  --accent: 340 100% 30%;
-  --accent-foreground: 0 0% 100%;
+/* Skip-to-content link */
+.skip-link {
+  position: fixed;
+  top: 8px;
+  inset-inline-start: 8px;
+  z-index: 10000;
+  background: #1a1a1a;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transform: translateY(-200%);
+  transition: transform 0.15s ease;
 }
-html.a11y-high-contrast body,
-html.a11y-high-contrast * { text-shadow: none !important; }
-html.a11y-high-contrast img { filter: contrast(1.15); }
-
-html.a11y-highlight-links a {
-  text-decoration: underline !important;
-  text-underline-offset: 3px !important;
-  outline: 1px dashed currentColor;
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(0);
+  outline: 3px solid #ffeb3b;
   outline-offset: 2px;
 }
 
-html.a11y-readable-font,
-html.a11y-readable-font * {
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
-  letter-spacing: 0.02em;
+/* Global visible focus */
+*:focus-visible {
+  outline: 3px solid hsl(var(--ring, 207 95% 40%));
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+*:focus:not(:focus-visible) { outline: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
-html.a11y-paused *,
-html.a11y-paused *::before,
-html.a11y-paused *::after {
-  animation-duration: 0s !important;
-  animation-iteration-count: 1 !important;
-  transition-duration: 0s !important;
-  scroll-behavior: auto !important;
+/* ---- Contrast modes (mutually exclusive) ---- */
+html.a11y-c-high, html.a11y-c-high body { background: #fff !important; color: #000 !important; }
+html.a11y-c-high * {
+  background-color: #fff !important; color: #000 !important;
+  border-color: #000 !important; box-shadow: none !important; text-shadow: none !important;
 }
+html.a11y-c-high a, html.a11y-c-high a * { color: #0000ee !important; text-decoration: underline !important; }
+html.a11y-c-high button, html.a11y-c-high [role="button"] { border: 2px solid #000 !important; }
+html.a11y-c-high img, html.a11y-c-high video, html.a11y-c-high svg { filter: grayscale(100%) contrast(1.2); }
+
+html.a11y-c-inverted, html.a11y-c-inverted body { background: #000 !important; color: #fff !important; }
+html.a11y-c-inverted * {
+  background-color: #000 !important; color: #fff !important;
+  border-color: #fff !important; box-shadow: none !important; text-shadow: none !important;
+}
+html.a11y-c-inverted a, html.a11y-c-inverted a * { color: #ffff00 !important; text-decoration: underline !important; }
+html.a11y-c-inverted button, html.a11y-c-inverted [role="button"] { border: 2px solid #fff !important; }
+html.a11y-c-inverted img, html.a11y-c-inverted video { filter: invert(1) hue-rotate(180deg); }
+
+html.a11y-c-monochrome { filter: grayscale(100%) contrast(1.1); }
+html.a11y-c-lowsat { filter: saturate(0.4); }
+
+/* ---- Line height / letter spacing / alignment ---- */
+html.a11y-lh-medium * { line-height: 1.8 !important; }
+html.a11y-lh-large * { line-height: 2.2 !important; }
+html.a11y-ls-medium * { letter-spacing: 0.05em !important; word-spacing: 0.1em !important; }
+html.a11y-ls-large * { letter-spacing: 0.12em !important; word-spacing: 0.18em !important; }
+html.a11y-align-right p, html.a11y-align-right li, html.a11y-align-right h1, html.a11y-align-right h2, html.a11y-align-right h3, html.a11y-align-right h4 { text-align: right !important; }
+html.a11y-align-center p, html.a11y-align-center li, html.a11y-align-center h1, html.a11y-align-center h2, html.a11y-align-center h3, html.a11y-align-center h4 { text-align: center !important; }
+html.a11y-align-justify p, html.a11y-align-justify li { text-align: justify !important; }
+
+html.a11y-readable-font,
+html.a11y-readable-font * {
+  font-family: Arial, "Heebo", "Noto Sans Hebrew", sans-serif !important;
+  letter-spacing: 0.02em !important;
+  word-spacing: 0.05em !important;
+}
+
+html.a11y-highlight-links a {
+  background: #ffff00 !important; color: #000 !important;
+  text-decoration: underline !important; text-decoration-thickness: 2px !important;
+  text-underline-offset: 3px !important; padding: 0 2px;
+  border-radius: 2px; outline: 2px solid #000 !important;
+}
+html.a11y-highlight-headings h1,
+html.a11y-highlight-headings h2,
+html.a11y-highlight-headings h3,
+html.a11y-highlight-headings h4,
+html.a11y-highlight-headings h5,
+html.a11y-highlight-headings h6 {
+  outline: 2px dashed #1a3a5c !important; outline-offset: 4px !important;
+  background: #fffbe6 !important; padding: 4px 8px !important;
+}
+
+html.a11y-stop-animations *,
+html.a11y-stop-animations *::before,
+html.a11y-stop-animations *::after {
+  animation: none !important; transition: none !important; scroll-behavior: auto !important;
+}
+
+html.a11y-big-cursor,
+html.a11y-big-cursor * {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'><path d='M4 4 L4 40 L14 30 L20 44 L26 42 L20 28 L34 28 Z' fill='%23000' stroke='%23fff' stroke-width='2'/></svg>") 4 4, auto !important;
+}
+html.a11y-big-cursor a,
+html.a11y-big-cursor button,
+html.a11y-big-cursor [role="button"],
+html.a11y-big-cursor input {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'><path d='M14 4 L14 30 L22 24 L28 40 L34 38 L28 24 L38 24 Z' fill='%23fff' stroke='%23000' stroke-width='2'/></svg>") 14 4, pointer !important;
+}
+
+html.a11y-hide-images img,
+html.a11y-hide-images picture,
+html.a11y-hide-images video,
+html.a11y-hide-images [style*="background-image"] {
+  visibility: hidden !important; background-image: none !important;
+}
+
+html.a11y-keyboard-focus *:focus,
+html.a11y-keyboard-focus *:focus-visible {
+  outline: 4px solid #ffeb3b !important; outline-offset: 3px !important;
+  box-shadow: 0 0 0 6px #1a3a5c !important;
+}
+
+/* utility */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important; height: 1px !important;
+  padding: 0 !important; margin: -1px !important;
+  overflow: hidden !important; clip: rect(0,0,0,0) !important;
+  white-space: nowrap !important; border: 0 !important;
+}
+
