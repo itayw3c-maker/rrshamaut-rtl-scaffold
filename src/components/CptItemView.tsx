@@ -67,7 +67,7 @@ export function CptItemView({ item }: { item: CptItem }) {
                       const thumb = r.cover_url || youTubeThumb(r.video_url);
                       return (
                         <li key={r.slug}>
-                          <a href={`${relBase}${linkSlug(r.slug)}`} className="group flex items-start gap-3">
+                          <a href={appHref(`${relBase}${linkSlug(r.slug)}`)} className="group flex items-start gap-3">
                             {thumb ? (
                               <img
                                 src={thumb}
