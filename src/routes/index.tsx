@@ -386,6 +386,53 @@ function SuccessCarousel({ items }: { items: HomeSuccess[] }) {
   );
 }
 
+function VideoPlayer({ embed, ytId, title, coverUrl }: { embed: string; ytId: string | null; title: string; coverUrl: string | null }) {
+  const [playing, setPlaying] = useState(false);
+  const [posterSrc, setPosterSrc] = useState<string | null>(
+    ytId ? `https://i.ytimg.com/vi/${ytId}/maxresdefault.jpg` : coverUrl
+  );
+  if (playing) {
+    const sep = embed.includes("?") ? "&" : "?";
+    return (
+      <iframe
+        src={`${embed}${sep}autoplay=1`}
+        title={title}
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen
+        className="h-full w-full"
+      />
+    );
+  }
+  return (
+    <button
+      type="button"
+      onClick={() => setPlaying(true)}
+      className="group relative block h-full w-full overflow-hidden bg-black"
+      aria-label={`נגן וידאו: ${title}`}
+    >
+      {posterSrc ? (
+        <img
+          src={posterSrc}
+          alt={title}
+          className="h-full w-full object-cover"
+          loading="lazy"
+          onError={() => {
+            if (ytId && posterSrc?.includes("maxresdefault")) {
+              setPosterSrc(`https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`);
+            }
+          }}
+        />
+      ) : null}
+      <div className="absolute inset-0 flex items-center justify-center bg-black/20 transition group-hover:bg-black/30">
+        <span className="flex h-16 w-16 items-center justify-center rounded-full bg-white/95 text-[hsl(var(--primary))] shadow-lg transition group-hover:scale-110">
+          <svg viewBox="0 0 24 24" fill="currentColor" className="ml-1 h-7 w-7"><path d="M8 5v14l11-7z"/></svg>
+        </span>
+      </div>
+    </button>
+  );
+}
+
 function VideoCarousel({ items }: { items: HomeVideo[] }) {
   const { idx, setIdx, perView, maxIdx } = useCarousel(items, { mobile: 1, tablet: 2, desktop: 3 });
   if (items.length === 0) return null;
