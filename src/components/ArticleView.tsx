@@ -2,6 +2,7 @@ import { LeadForm as _lf } from "@/components/LeadForm";
 import { PageHero } from "@/components/PageHero";
 import { SidebarPhoneCard, SidebarLeadForm } from "@/components/SidebarCards";
 import { linkSlug } from "@/lib/slug";
+import { appHref } from "@/lib/href";
 import type { ResolvedPost } from "@/lib/content.functions";
 void _lf; // keep import removable-warning quiet
 
