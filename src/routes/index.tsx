@@ -75,16 +75,18 @@ const services: Array<{ title: string; href: string; img: string }> = [
   { title: "הערכת שמאות לריהוט עתיק", href: "/הערכת-שמאות-לריהוט-עתיק", img: `${SB}/wp/3314/media-3314.webp` },
 ];
 
-const PROCESS_STEPS = [
-  "שיחת ייעוץ וניתוח המקרה",
-  "העברת המסמכים",
-  "ביקור במקום האירוע",
-  'זימון מומחים נוספים ע"פ צורך',
-  "הגשת דרישה כספית",
-  "הסכם פשרה/הליך משפטי",
-  'אישור ההסכם ע"י הלקוח/פסק דין',
-  "סילוק התביעה וקבלת תגמולים",
+const PROCESS_STEPS: Array<[string, string]> = [
+  ["שיחת ייעוץ", "וניתוח המקרה"],
+  ["העברת", "המסמכים"],
+  ["ביקור במקום", "האירוע"],
+  ["זימון מומחים", 'נוספים ע"פ צורך'],
+  ["הגשת", "דרישה כספית"],
+  ["הסכם פשרה/", "הליך משפטי"],
+  ['אישור ההסכם ע"י', "הלקוח/פסק דין"],
+  ["סילוק התביעה", "וקבלת תגמולים"],
 ];
+const PROCESS_CURVE_URL = "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/72/vector-19.svg";
+
 
 const ABOUT_PARAGRAPHS = [
   "אני רפאל ריבוח, משנת 2019 פועל כשמאי רכוש, מייסד ובעלים של חברת רפאל שמאות רכוש RR.",
@@ -598,21 +600,41 @@ function HomePage() {
             <h2 className="order-1 text-right text-3xl font-extrabold text-[hsl(var(--primary))] sm:text-[48px]">הליך תביעת ביטוח</h2>
             <div className="order-2"><GoldOutlineBtn href="#contact-band">לייעוץ חינם</GoldOutlineBtn></div>
           </div>
-          <div className="mt-12 grid grid-cols-1 gap-x-4 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
-            {PROCESS_STEPS.map((title, i) => {
-              const num = String(i + 1).padStart(2, "0");
-              const isLastCol = (i + 1) % 4 === 0;
-              return (
-                <div key={num} className="relative text-right">
-                  <div className="text-[44px] font-extrabold leading-none text-[hsl(var(--gold))]">{num}</div>
-                  <h3 className="mt-3 text-xl font-semibold leading-snug text-[#056FC4]">{title}</h3>
-                  {!isLastCol && (
-                    <div className="pointer-events-none absolute left-[-8px] top-6 hidden h-0 w-6 border-t-2 border-dashed border-[hsl(var(--gold))]/60 lg:block" aria-hidden="true" />
-                  )}
-                </div>
-              );
-            })}
+          <div className="relative mt-12">
+            {[0, 1].map((row) => (
+              <div key={row} className="relative grid grid-cols-2 gap-y-8 sm:grid-cols-4" style={row === 1 ? { marginTop: "140px" } : undefined}>
+                {PROCESS_STEPS.slice(row * 4, row * 4 + 4).map(([l1, l2], idx) => {
+                  const num = String(row * 4 + idx + 1).padStart(2, "0");
+                  const isLastInRow = idx === 3;
+                  return (
+                    <div key={num} className="relative flex flex-col items-center px-4 text-center">
+                      <div className="text-[44px] font-extrabold leading-none text-[hsl(var(--gold))]">{num}</div>
+                      <h3 className="mt-3 text-[20px] font-semibold leading-snug text-[#056FC4]">
+                        <span className="block">{l1}</span>
+                        <span className="block">{l2}</span>
+                      </h3>
+                      {!isLastInRow && (
+                        <div className="pointer-events-none absolute top-[22px] hidden h-0 items-center sm:flex" style={{ left: "-12%", width: "24%" }} aria-hidden="true">
+                          <span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--gold))]" />
+                          <span className="flex-1 border-t-2 border-dashed border-[hsl(var(--gold))]/70" />
+                          <span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--gold))]" />
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
+            {/* Curved dashed connector from under step 04 (left) to above step 05 (right) */}
+            <img
+              src={PROCESS_CURVE_URL}
+              alt=""
+              aria-hidden="true"
+              className="pointer-events-none absolute hidden sm:block"
+              style={{ left: "12.5%", right: "12.5%", width: "75%", top: "calc(50% - 55px)", height: "110px" }}
+            />
           </div>
+
         </div>
       </section>
 
