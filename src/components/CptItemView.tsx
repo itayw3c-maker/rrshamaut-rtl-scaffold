@@ -1,6 +1,7 @@
 import { PageHero } from "@/components/PageHero";
 import { SidebarPhoneCard, SidebarLeadForm } from "@/components/SidebarCards";
 import { linkSlug } from "@/lib/slug";
+import { appHref } from "@/lib/href";
 import { toYouTubeEmbed, youTubeThumb } from "@/lib/video";
 import type { CptItem } from "@/lib/content.functions";
 
