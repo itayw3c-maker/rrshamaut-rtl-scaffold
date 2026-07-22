@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Menu, X, ChevronDown, Phone } from "lucide-react";
 import { siteConfig } from "@/lib/site-config";
+import { appHref } from "@/lib/href";
 
 type NavChild = { label: string; href: string };
 type NavItem = { label: string; href?: string; children?: NavChild[]; mobileOnly?: boolean };
