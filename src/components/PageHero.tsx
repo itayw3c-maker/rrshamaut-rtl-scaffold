@@ -47,7 +47,7 @@ export function PageHero({ title, crumbs }: PageHeroProps) {
               <span className="mx-1">»</span>
               {c.to ? (
                 <a
-                  href={c.to}
+                  href={appHref(c.to)}
                   className="text-[hsl(var(--primary))] hover:underline"
                 >
                   {c.label}
