@@ -19,10 +19,10 @@ import { getHomeSuccessesFn, type HomeSuccess } from "@/lib/home.functions";
 
 const SB = "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media";
 
-export function encHref(h: string) {
-  const [path, ...rest] = h.split("#");
-  return encodeURI(path) + (rest.length ? "#" + rest.join("#") : "");
-}
+export { appHref as encHref } from "@/lib/href";
+import { appHref } from "@/lib/href";
+const _encHref = appHref;
+void _encHref;
 
 export function GoldPill({ href, children, external }: { href: string; children: React.ReactNode; external?: boolean }) {
   return (
