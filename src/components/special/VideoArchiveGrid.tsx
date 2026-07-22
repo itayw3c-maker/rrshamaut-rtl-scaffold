@@ -58,7 +58,7 @@ export function SuccessArchiveGrid({ items }: { items: ArchiveItem[] }) {
         {items.map((it) => (
           <a
             key={it.slug}
-            href={`/success/${linkSlug(it.slug)}`}
+            href={appHref(`/success/${linkSlug(it.slug)}`)}
             className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-sm transition hover:shadow-md"
           >
             <div className="flex h-72 items-center justify-center overflow-hidden bg-white">
