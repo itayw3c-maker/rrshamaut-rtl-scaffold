@@ -164,10 +164,7 @@ const PRESS = [
   },
 ];
 
-function encHref(h: string) {
-  const [path, ...rest] = h.split("#");
-  return encodeURI(path) + (rest.length ? "#" + rest.join("#") : "");
-}
+import { appHref as encHref } from "@/lib/href";
 
 function youtubeIdFrom(url: string | null): string | null {
   if (!url) return null;
