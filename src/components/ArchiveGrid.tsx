@@ -1,4 +1,5 @@
 import { linkSlug } from "@/lib/slug";
+import { appHref } from "@/lib/href";
 import { youTubeThumb } from "@/lib/video";
 import type { ArchiveItem } from "@/lib/content.functions";
 
