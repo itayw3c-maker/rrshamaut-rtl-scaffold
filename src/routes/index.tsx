@@ -352,21 +352,21 @@ function SuccessCarousel({ items }: { items: HomeSuccess[] }) {
       <button type="button" onClick={() => setIdx((i) => (i >= maxIdx ? 0 : i + 1))} className="absolute left-0 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white p-2 text-[hsl(var(--primary))] shadow ring-1 ring-black/5 hover:bg-[hsl(var(--muted))] sm:-left-3" aria-label="הבא">
         <ChevronLeft className="h-5 w-5" />
       </button>
-      <div className="overflow-hidden px-8">
+      <div className="overflow-hidden px-8 pb-2">
         <div className="flex transition-transform duration-500 ease-out" style={{ transform: `translateX(${(idx * 100) / perView}%)` }}>
           {items.map((s) => (
             <div key={s.slug} className="shrink-0 px-3" style={{ width: `${100 / perView}%` }}>
-              <div className="flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-black/5">
-                <div className="flex h-56 items-center justify-center bg-[#F7F8FB] p-3">
+              <div className="flex h-full flex-col overflow-hidden bg-white shadow-md ring-1 ring-black/5" style={{ borderRadius: 0 }}>
+                <div className="w-full bg-white">
                   {s.cover_url ? (
-                    <img src={s.cover_url} alt={s.title} loading="lazy" className="h-full w-auto max-w-full object-contain" />
+                    <img src={s.cover_url} alt={decodeEntities(s.title)} loading="lazy" className="block h-auto w-full object-cover" />
                   ) : (
-                    <div className="text-muted-foreground">מסמך</div>
+                    <div className="flex h-56 items-center justify-center text-muted-foreground">מסמך</div>
                   )}
                 </div>
                 <div className="flex flex-1 flex-col p-5 text-right">
                   <h3 className="line-clamp-3 min-h-[3.75rem] text-base font-bold text-[hsl(var(--primary))]">
-                    {s.title}
+                    {decodeEntities(s.title)}
                   </h3>
                   <div className="mt-4">
                     <GoldPill href={encHref(`/success/${s.slug}`)}>לפרטים ←</GoldPill>
