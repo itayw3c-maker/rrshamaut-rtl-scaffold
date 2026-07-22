@@ -133,16 +133,14 @@ export const resolveSlugFn = createServerFn({ method: "GET" })
         }
       }
 
-      // Press cards: use verified source list, resolve images through media/rehost.
+      // Press cards: parse each card container directly from the source HTML
+      // (image → title → logo → button link). Source has no separate excerpt widget.
       if (p.slug === "כתבו-עלינו") {
-        const { resolveMany } = await import("@/lib/media/resolve.server");
-        const raw = PRESS_CARDS_RAW;
-        const map = await resolveMany(raw.map((c) => c.img).filter(Boolean) as string[]);
-        press = raw.map((c) => ({
-          ...c,
-          img: c.img ? (map[c.img] ?? c.img) : null,
-        }));
+        press = parsePressCardsFromHtml(content);
+        // Suppress the raw elementor content — the view renders cards itself.
+        content = "";
       }
+
 
       const {
         extractServicePage,
