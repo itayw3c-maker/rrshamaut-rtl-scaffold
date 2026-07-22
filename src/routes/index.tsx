@@ -352,21 +352,21 @@ function SuccessCarousel({ items }: { items: HomeSuccess[] }) {
       <button type="button" onClick={() => setIdx((i) => (i >= maxIdx ? 0 : i + 1))} className="absolute left-0 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white p-2 text-[hsl(var(--primary))] shadow ring-1 ring-black/5 hover:bg-[hsl(var(--muted))] sm:-left-3" aria-label="הבא">
         <ChevronLeft className="h-5 w-5" />
       </button>
-      <div className="overflow-hidden px-8">
+      <div className="overflow-hidden px-8 pb-2">
         <div className="flex transition-transform duration-500 ease-out" style={{ transform: `translateX(${(idx * 100) / perView}%)` }}>
           {items.map((s) => (
             <div key={s.slug} className="shrink-0 px-3" style={{ width: `${100 / perView}%` }}>
-              <div className="flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-black/5">
-                <div className="flex h-56 items-center justify-center bg-[#F7F8FB] p-3">
+              <div className="flex h-full flex-col overflow-hidden bg-white shadow-md ring-1 ring-black/5" style={{ borderRadius: 0 }}>
+                <div className="w-full bg-white">
                   {s.cover_url ? (
-                    <img src={s.cover_url} alt={s.title} loading="lazy" className="h-full w-auto max-w-full object-contain" />
+                    <img src={s.cover_url} alt={decodeEntities(s.title)} loading="lazy" className="block h-auto w-full object-cover" />
                   ) : (
-                    <div className="text-muted-foreground">מסמך</div>
+                    <div className="flex h-56 items-center justify-center text-muted-foreground">מסמך</div>
                   )}
                 </div>
                 <div className="flex flex-1 flex-col p-5 text-right">
                   <h3 className="line-clamp-3 min-h-[3.75rem] text-base font-bold text-[hsl(var(--primary))]">
-                    {s.title}
+                    {decodeEntities(s.title)}
                   </h3>
                   <div className="mt-4">
                     <GoldPill href={encHref(`/success/${s.slug}`)}>לפרטים ←</GoldPill>
@@ -386,6 +386,53 @@ function SuccessCarousel({ items }: { items: HomeSuccess[] }) {
   );
 }
 
+function VideoPlayer({ embed, ytId, title, coverUrl }: { embed: string; ytId: string | null; title: string; coverUrl: string | null }) {
+  const [playing, setPlaying] = useState(false);
+  const [posterSrc, setPosterSrc] = useState<string | null>(
+    ytId ? `https://i.ytimg.com/vi/${ytId}/maxresdefault.jpg` : coverUrl
+  );
+  if (playing) {
+    const sep = embed.includes("?") ? "&" : "?";
+    return (
+      <iframe
+        src={`${embed}${sep}autoplay=1`}
+        title={title}
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen
+        className="h-full w-full"
+      />
+    );
+  }
+  return (
+    <button
+      type="button"
+      onClick={() => setPlaying(true)}
+      className="group relative block h-full w-full overflow-hidden bg-black"
+      aria-label={`נגן וידאו: ${title}`}
+    >
+      {posterSrc ? (
+        <img
+          src={posterSrc}
+          alt={title}
+          className="h-full w-full object-cover"
+          loading="lazy"
+          onError={() => {
+            if (ytId && posterSrc?.includes("maxresdefault")) {
+              setPosterSrc(`https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`);
+            }
+          }}
+        />
+      ) : null}
+      <div className="absolute inset-0 flex items-center justify-center bg-black/20 transition group-hover:bg-black/30">
+        <span className="flex h-16 w-16 items-center justify-center rounded-full bg-white/95 text-[hsl(var(--primary))] shadow-lg transition group-hover:scale-110">
+          <svg viewBox="0 0 24 24" fill="currentColor" className="ml-1 h-7 w-7"><path d="M8 5v14l11-7z"/></svg>
+        </span>
+      </div>
+    </button>
+  );
+}
+
 function VideoCarousel({ items }: { items: HomeVideo[] }) {
   const { idx, setIdx, perView, maxIdx } = useCarousel(items, { mobile: 1, tablet: 2, desktop: 3 });
   if (items.length === 0) return null;
@@ -400,28 +447,22 @@ function VideoCarousel({ items }: { items: HomeVideo[] }) {
       <div className="overflow-hidden px-8">
         <div className="flex transition-transform duration-500 ease-out" style={{ transform: `translateX(${(idx * 100) / perView}%)` }}>
           {items.map((v) => {
+            const ytId = youtubeIdFrom(v.video_url);
             const embed = toEmbedUrl(v.video_url);
             return (
               <div key={v.slug} className="shrink-0 px-3" style={{ width: `${100 / perView}%` }}>
                 <div className="overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-black/5">
                   <div className="aspect-video w-full bg-black">
                     {embed ? (
-                      <iframe
-                        src={embed}
-                        title={v.title}
-                        loading="lazy"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowFullScreen
-                        className="h-full w-full"
-                      />
+                      <VideoPlayer embed={embed} ytId={ytId} title={decodeEntities(v.title)} coverUrl={v.cover_url} />
                     ) : v.cover_url ? (
-                      <img src={v.cover_url} alt={v.title} className="h-full w-full object-cover" />
+                      <img src={v.cover_url} alt={decodeEntities(v.title)} className="h-full w-full object-cover" />
                     ) : null}
                   </div>
                   <div className="bg-white px-4 py-3 text-right">
                     <h3 className="line-clamp-2 text-base font-semibold text-[hsl(var(--primary))]">
                       <a href={encHref(`/movie/${v.slug}`)} className="hover:underline">
-                        {v.title}
+                        {decodeEntities(v.title)}
                       </a>
                     </h3>
                   </div>
@@ -640,14 +681,14 @@ function HomePage() {
 
       {/* 7. ABOUT */}
       <section className="bg-background py-16 sm:py-20">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:px-8">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 items-stretch gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:px-8">
           <div className="order-2 text-right lg:order-1">
-            <div className="relative">
-              <div className="pointer-events-none absolute -top-4 right-[-16px] h-24 w-24 rounded-full opacity-30" style={{ backgroundImage: "radial-gradient(circle, hsl(var(--gold)) 1.5px, transparent 2px)", backgroundSize: "12px 12px" }} aria-hidden="true" />
-              <div className="overflow-hidden shadow-xl ring-1 ring-black/5" style={{ borderRadius: "8px 100px 8px 8px" }}>
-                <img src={IMG_ABOUT} alt="רפאל ריבוח - אודות" className="h-full w-full object-cover" loading="lazy" />
+            <div className="relative h-full min-h-[420px]">
+              <div className="pointer-events-none absolute -top-4 right-[-16px] z-10 h-24 w-24 rounded-full opacity-30" style={{ backgroundImage: "radial-gradient(circle, hsl(var(--gold)) 1.5px, transparent 2px)", backgroundSize: "12px 12px" }} aria-hidden="true" />
+              <div className="h-full overflow-hidden shadow-xl ring-1 ring-black/5" style={{ borderRadius: "8px 100px 8px 8px" }}>
+                <img src={IMG_ABOUT} alt="רפאל ריבוח - אודות" className="h-full min-h-[420px] w-full object-cover" loading="lazy" />
               </div>
-              <div className="pointer-events-none absolute -bottom-4 left-[-16px] h-24 w-24 rounded-full opacity-30" style={{ backgroundImage: "radial-gradient(circle, hsl(var(--gold)) 1.5px, transparent 2px)", backgroundSize: "12px 12px" }} aria-hidden="true" />
+              <div className="pointer-events-none absolute -bottom-4 left-[-16px] z-10 h-24 w-24 rounded-full opacity-30" style={{ backgroundImage: "radial-gradient(circle, hsl(var(--gold)) 1.5px, transparent 2px)", backgroundSize: "12px 12px" }} aria-hidden="true" />
             </div>
           </div>
           <div className="order-1 text-right lg:order-2">
