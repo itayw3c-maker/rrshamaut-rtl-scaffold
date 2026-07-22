@@ -51,7 +51,7 @@ const SERVICES = [
 
 const LEGAL = [
   { label: "מדיניות פרטיות", href: "/מדיניות-פרטיות/" },
-  { label: "הצהרת נגישות", href: "/accessibility" },
+  { label: "הצהרת נגישות", href: "/הסדרי-נגישות/" },
   { label: "מפת אתר", href: "/מפת-אתר/" },
 ];
 
