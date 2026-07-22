@@ -400,28 +400,22 @@ function VideoCarousel({ items }: { items: HomeVideo[] }) {
       <div className="overflow-hidden px-8">
         <div className="flex transition-transform duration-500 ease-out" style={{ transform: `translateX(${(idx * 100) / perView}%)` }}>
           {items.map((v) => {
+            const ytId = youtubeIdFrom(v.video_url);
             const embed = toEmbedUrl(v.video_url);
             return (
               <div key={v.slug} className="shrink-0 px-3" style={{ width: `${100 / perView}%` }}>
                 <div className="overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-black/5">
                   <div className="aspect-video w-full bg-black">
                     {embed ? (
-                      <iframe
-                        src={embed}
-                        title={v.title}
-                        loading="lazy"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowFullScreen
-                        className="h-full w-full"
-                      />
+                      <VideoPlayer embed={embed} ytId={ytId} title={decodeEntities(v.title)} coverUrl={v.cover_url} />
                     ) : v.cover_url ? (
-                      <img src={v.cover_url} alt={v.title} className="h-full w-full object-cover" />
+                      <img src={v.cover_url} alt={decodeEntities(v.title)} className="h-full w-full object-cover" />
                     ) : null}
                   </div>
                   <div className="bg-white px-4 py-3 text-right">
                     <h3 className="line-clamp-2 text-base font-semibold text-[hsl(var(--primary))]">
                       <a href={encHref(`/movie/${v.slug}`)} className="hover:underline">
-                        {v.title}
+                        {decodeEntities(v.title)}
                       </a>
                     </h3>
                   </div>
