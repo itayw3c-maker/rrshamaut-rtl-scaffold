@@ -112,7 +112,7 @@ export function LeadForm({ variant, submitLabel, className }: LeadFormProps) {
       <div className={gridClass}>
         <div>
           <label htmlFor={`lf-${variant}-name`} className="mb-1 block text-sm font-semibold text-foreground">
-            שם <span className="text-[#c92a2a]">*</span>
+            שם <span className="text-[#c92a2a]" aria-hidden="true">*</span>
           </label>
           <input
             id={`lf-${variant}-name`}
@@ -122,13 +122,17 @@ export function LeadForm({ variant, submitLabel, className }: LeadFormProps) {
             className={`${INPUT_CLASS} ${errors.name ? ERROR_BORDER : ""}`}
             placeholder="שם מלא"
             autoComplete="name"
+            required
+            aria-required="true"
+            aria-invalid={!!errors.name}
+            aria-describedby={errors.name ? `lf-${variant}-name-err` : undefined}
           />
-          {errors.name && <p className={ERROR_TEXT}>{errors.name}</p>}
+          {errors.name && <p id={`lf-${variant}-name-err`} className={ERROR_TEXT}>{errors.name}</p>}
         </div>
 
         <div>
           <label htmlFor={`lf-${variant}-phone`} className="mb-1 block text-sm font-semibold text-foreground">
-            טלפון <span className="text-[#c92a2a]">*</span>
+            טלפון <span className="text-[#c92a2a]" aria-hidden="true">*</span>
           </label>
           <input
             id={`lf-${variant}-phone`}
@@ -139,8 +143,12 @@ export function LeadForm({ variant, submitLabel, className }: LeadFormProps) {
             className={`${INPUT_CLASS} ${errors.phone ? ERROR_BORDER : ""}`}
             placeholder="050-0000000"
             autoComplete="tel"
+            required
+            aria-required="true"
+            aria-invalid={!!errors.phone}
+            aria-describedby={errors.phone ? `lf-${variant}-phone-err` : undefined}
           />
-          {errors.phone && <p className={ERROR_TEXT}>{errors.phone}</p>}
+          {errors.phone && <p id={`lf-${variant}-phone-err`} className={ERROR_TEXT}>{errors.phone}</p>}
         </div>
 
         <div>
@@ -156,8 +164,10 @@ export function LeadForm({ variant, submitLabel, className }: LeadFormProps) {
             placeholder="name@example.com"
             autoComplete="email"
             dir="ltr"
+            aria-invalid={!!errors.email}
+            aria-describedby={errors.email ? `lf-${variant}-email-err` : undefined}
           />
-          {errors.email && <p className={ERROR_TEXT}>{errors.email}</p>}
+          {errors.email && <p id={`lf-${variant}-email-err`} className={ERROR_TEXT}>{errors.email}</p>}
         </div>
 
         <div>
@@ -204,7 +214,7 @@ export function LeadForm({ variant, submitLabel, className }: LeadFormProps) {
       />
 
       {errors.submit && (
-        <p className="mt-3 rounded-md bg-[#fdecec] px-3 py-2 text-sm font-semibold text-[#c92a2a]">
+        <p role="alert" className="mt-3 rounded-md bg-[#fdecec] px-3 py-2 text-sm font-semibold text-[#c92a2a]">
           {errors.submit}
         </p>
       )}
@@ -212,9 +222,10 @@ export function LeadForm({ variant, submitLabel, className }: LeadFormProps) {
       <button
         type="submit"
         disabled={submitting}
+        aria-busy={submitting}
         className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-base font-bold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 sm:w-auto sm:min-w-[220px]"
       >
-        {submitting ? <Loader2 className="h-5 w-5 animate-spin" /> : null}
+        {submitting ? <Loader2 className="h-5 w-5 animate-spin" aria-hidden="true" /> : null}
         {submitting ? "שולח..." : label}
       </button>
     </form>
@@ -265,7 +276,7 @@ export function LeadFormConsent({
           ואני מסכימ/ה לשמירת הפרטים לצורך יצירת קשר.
         </span>
       </label>
-      {error && <p className={ERROR_TEXT}>{error}</p>}
+      {error && <p role="alert" className={ERROR_TEXT}>{error}</p>}
     </div>
   );
 }
