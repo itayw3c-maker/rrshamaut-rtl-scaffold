@@ -635,7 +635,7 @@ function HomePage() {
             </div>
             <div className="mt-7">
               <a
-                href="/about"
+                href={encHref("/about")}
                 className="inline-flex items-center justify-center px-6 py-3 text-[20px] font-bold transition hover:brightness-95"
                 style={{
                   backgroundColor: "rgb(239,241,241)",
