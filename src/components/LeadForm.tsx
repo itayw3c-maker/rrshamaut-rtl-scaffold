@@ -260,7 +260,9 @@ export function LeadFormConsent({
           className="mt-1 h-4 w-4 shrink-0 accent-[#056FC4]"
         />
         <span>
-          אני מאשר/ת כי קראתי את מדיניות הפרטיות ואני מסכימ/ה לשמירת הפרטים לצורך יצירת קשר.
+          אני מאשר/ת כי קראתי את{" "}
+          <a href={`/${encodeURIComponent("מדיניות-פרטיות")}/`} className="underline hover:opacity-90">מדיניות הפרטיות</a>{" "}
+          ואני מסכימ/ה לשמירת הפרטים לצורך יצירת קשר.
         </span>
       </label>
       {error && <p className={ERROR_TEXT}>{error}</p>}
