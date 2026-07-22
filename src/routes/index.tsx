@@ -421,7 +421,9 @@ function VideoCarousel({ items }: { items: HomeVideo[] }) {
                   </div>
                   <div className="bg-white px-4 py-3 text-right">
                     <h3 className="line-clamp-2 text-base font-semibold text-[hsl(var(--primary))]">
-                      {v.title}
+                      <a href={encHref(`/movie/${v.slug}`)} className="hover:underline">
+                        {v.title}
+                      </a>
                     </h3>
                   </div>
                 </div>
