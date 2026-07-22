@@ -46,13 +46,7 @@ const NAV: NavItem[] = [
   { label: "צור קשר", href: "/צור-קשר" },
 ];
 
-function encodeHref(href: string) {
-  // Encode Hebrew segments while preserving slashes.
-  return href
-    .split("/")
-    .map((seg) => (seg ? encodeURIComponent(seg) : seg))
-    .join("/");
-}
+const encodeHref = appHref;
 
 export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
