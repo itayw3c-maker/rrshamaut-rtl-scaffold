@@ -3,7 +3,7 @@
 // הנגישות הבסיסית של האתר מובנית ב-HTML/CSS; הסרגל מוסיף שכבת התאמות אישיות למשתמש.
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { Link } from "@tanstack/react-router";
+// Uses plain <a> tags to avoid coupling to typed route paths.
 
 type Contrast = "off" | "high" | "inverted" | "monochrome" | "low-saturation";
 type LineHeight = "off" | "medium" | "large";
@@ -354,12 +354,12 @@ export function AccessibilityMenu() {
             {/* קישורים חובה */}
             <Section title="מידע ותמיכה">
               <div className="grid gap-2">
-                <Link to="/accessibility" className="block rounded-lg border-2 border-[#1a3a5c] bg-white px-3 py-2 text-center text-sm font-semibold text-[#1a3a5c] hover:bg-[#1a3a5c] hover:text-white focus-visible:outline-2 focus-visible:outline-yellow-400">
+                <a href="/accessibility" className="block rounded-lg border-2 border-[#1a3a5c] bg-white px-3 py-2 text-center text-sm font-semibold text-[#1a3a5c] hover:bg-[#1a3a5c] hover:text-white focus-visible:outline-2 focus-visible:outline-yellow-400">
                   הצהרת נגישות מלאה
-                </Link>
-                <Link to="/sitemap" className="block rounded-lg border-2 border-[#1a3a5c] bg-white px-3 py-2 text-center text-sm font-semibold text-[#1a3a5c] hover:bg-[#1a3a5c] hover:text-white focus-visible:outline-2 focus-visible:outline-yellow-400">
+                </a>
+                <a href="/מפת-אתר/" className="block rounded-lg border-2 border-[#1a3a5c] bg-white px-3 py-2 text-center text-sm font-semibold text-[#1a3a5c] hover:bg-[#1a3a5c] hover:text-white focus-visible:outline-2 focus-visible:outline-yellow-400">
                   מפת האתר
-                </Link>
+                </a>
                 <a href="/accessibility#coordinator" className="block rounded-lg border-2 border-[#1a3a5c] bg-white px-3 py-2 text-center text-sm font-semibold text-[#1a3a5c] hover:bg-[#1a3a5c] hover:text-white focus-visible:outline-2 focus-visible:outline-yellow-400">
                   דיווח על תקלת נגישות
                 </a>
