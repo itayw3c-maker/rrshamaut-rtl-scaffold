@@ -303,7 +303,7 @@ export function HelpBand() {
               </div>
               <label className="mt-1 flex cursor-pointer items-start gap-2 text-sm text-white">
                 <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} className="mt-1 h-4 w-4 shrink-0 accent-[hsl(var(--gold))]" />
-                <span>אני מאשר/ת כי קראתי את מדיניות הפרטיות ואני מסכימ/ה לשמירת הפרטים לצורך יצירת קשר.</span>
+                <span>אני מאשר/ת כי קראתי את <a href={`/${encodeURIComponent("מדיניות-פרטיות")}/`} className="underline hover:opacity-90">מדיניות הפרטיות</a> ואני מסכימ/ה לשמירת הפרטים לצורך יצירת קשר.</span>
               </label>
               {errs.consent && <p className="text-sm font-semibold text-[#FFD6D6]">{errs.consent}</p>}
               {errs.submit && <p className="text-sm font-semibold text-[#FFD6D6]">{errs.submit}</p>}
