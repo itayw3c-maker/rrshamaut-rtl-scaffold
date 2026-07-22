@@ -57,19 +57,54 @@ const ARCHIVE_SLUGS: Record<string, "movie" | "success" | "video"> = {
   "ההצלחות-שלנו": "success",
 };
 
-const PRESS_CARDS_RAW: PressCard[] = [
-  { href: "https://www.inn.co.il/news/701435", img: "https://www.rrshamaut.co.il/wp-content/uploads/2026/07/מאחורי-הקלעים_-מה-באמת-קורה-כשתובעים-את-חברת-הביטוח_.webp", logo: null, title: "ערוץ 7" },
-  { href: "https://timeout.co.il/ppost/%d7%94%d7%a4%d7%a8%d7%93%d7%95%d7%a7%d7%a1-%d7%a9%d7%9c-%d7%aa%d7%91%d7%99%d7%a2%d7%95%d7%aa-%d7%94%d7%91%d7%99%d7%98%d7%95%d7%97/", img: "https://www.rrshamaut.co.il/wp-content/uploads/2026/06/הפרדוקס-של-תביעות-הביטוח.webp", logo: null, title: "Time Out" },
-  { href: "https://www.ashqelon.net/%d7%9e%d7%92%d7%96%d7%99%d7%9f-%d7%90%d7%a9%d7%a7%d7%9c%d7%95%d7%9f-%d7%a0%d7%98/%d7%90%d7%99%d7%9a-%d7%9c%d7%91%d7%97%d7%95%d7%a8-%d7%98%d7%99%d7%a1%d7%95%d7%aa-%d7%90%d7%9c-%d7%a2%d7%9c-%d7%9c%d7%97%d7%95%d7%a4%d7%a9%d7%94-%d7%91%d7%97%d7%95-%d7%9c-%d7%91%d7%a6%d7%95%d7%a8%d7%94-%d7%97%d7%9b%d7%9e%d7%94-%d7%95%d7%a0%d7%95%d7%97%d7%94-%d7%99%d7%95%d7%aa%d7%a8-789871", img: "https://www.rrshamaut.co.il/wp-content/uploads/2026/06/גם-כשהקירות-נראים-לבנים-ונקיים-המים-הכלואים-מתחת-לרצפה-ממשיכים-להרוס-את-הבית-שלכם_.webp", logo: null, title: "אשקלון נט" },
-  { href: "https://ashdodnet.com/%d7%a6%d7%a8%d7%9b%d7%a0%d7%95%d7%aa-%d7%95%d7%a2%d7%a1%d7%a7%d7%99%d7%9d/%d7%94%d7%a4%d7%99%d7%a6%d7%95%d7%a5-%d7%91%d7%a6%d7%a0%d7%a8%d7%aa-%d7%94%d7%95%d7%90-%d7%a8%d7%a7-%d7%94%d7%94%d7%aa%d7%97%d7%9c%d7%94-%d7%9b%d7%9a-%d7%aa%d7%91%d7%98%d7%99%d7%97%d7%95-%d7%a4%d7%99%d7%a6%d7%95%d7%99-%d7%9e%d7%9c%d7%90-%d7%95%d7%aa%d7%99%d7%9e%d7%a0%d7%a2%d7%95-%d7%9e%d7%94%d7%a4%d7%a1%d7%93%d7%99%d7%9d-%d7%9b%d7%a1%d7%a4%d7%99%d7%99%d7%9d-%d7%9b%d7%91%d7%93%d7%99%d7%9d-788285", img: "https://www.rrshamaut.co.il/wp-content/uploads/2026/05/הפיצוץ-בצנרת-הוא-רק-ההתחלה-כך-תבטיחו-פיצוי-מלא-ותימנעו-מהפסדים-כספיים-כבדים.webp", logo: null, title: "אשדוד נט" },
-  { href: "https://13tv.co.il/item/special/artices/promoted/lyqrn-904894446/", img: "https://www.rrshamaut.co.il/wp-content/uploads/2025/12/האויב-השקט__.webp", logo: null, title: "חדשות 13" },
-  { href: "https://www.maariv.co.il/economy/consumerism/article-1204138", img: "https://www.rrshamaut.co.il/wp-content/uploads/2026/03/כתבה-במעריב-שמאי-רכוש-רפאל-ריבוח.jpg", logo: null, title: "מעריב" },
-  { href: "https://www.israelhayom.co.il/mumlazim/article/19039227", img: "https://www.rrshamaut.co.il/wp-content/uploads/2025/10/רפאל-ריבוח.webp", logo: null, title: "ישראל היום" },
-  { href: "https://www.ynet.co.il/article/r1eu0i4mwe", img: "https://www.rrshamaut.co.il/wp-content/uploads/2025/12/שמאי-רכוש-מוביל-בענף.webp", logo: null, title: "ynet" },
-  { href: "https://aa.mcity.co.il/?id=3202512020929049", img: "https://www.rrshamaut.co.il/wp-content/uploads/2025/12/חוויתם-נזק-בבית_.webp", logo: null, title: "mcity" },
-  { href: "https://www.bizportal.co.il/bizpoint-sponsored/news/article/20026784", img: "https://www.rrshamaut.co.il/wp-content/uploads/2026/01/Screenshot-at-Jan-28-10-14-16.webp", logo: null, title: "ביזפורטל" },
-  { href: "https://www.kipa.co.il/%D7%9B%D7%93%D7%90%D7%99-%D7%9C%D7%93%D7%A2%D7%AA/1218611-0/", img: "https://www.rrshamaut.co.il/wp-content/uploads/2026/01/Screenshot-at-Jan-28-10-31-55.webp", logo: null, title: "כיפה" },
-];
+function decodeHtmlEntities(s: string): string {
+  return s
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&#039;/g, "'")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">");
+}
+
+function parsePressCardsFromHtml(html: string): PressCard[] {
+  const cards: PressCard[] = [];
+  // Each press card lives in an `e-con-full e-flex e-con e-child` container.
+  const containerRe =
+    /<div\b[^>]*class="[^"]*\be-con-full\b[^"]*\be-flex\b[^"]*\be-con\b[^"]*\be-child\b[^"]*"[^>]*>([\s\S]*?)(?=<div\b[^>]*class="[^"]*\be-con-full\b[^"]*\be-flex\b[^"]*\be-con\b[^"]*\be-child\b|<\/div>\s*<\/div>\s*<\/div>\s*<footer)/g;
+  // Simpler: split on the container opening tag and process each chunk.
+  const parts = html.split(
+    /<div\b[^>]*class="[^"]*\be-con-full\b[^"]*\be-flex\b[^"]*\be-con\b[^"]*\be-child\b[^"]*"[^>]*>/,
+  );
+  // parts[0] is preamble; each subsequent part is one card's inner HTML + trailing siblings.
+  for (let i = 1; i < parts.length; i++) {
+    const chunk = parts[i];
+    const imgs = Array.from(chunk.matchAll(/<img\b[^>]*\bsrc="([^"]+)"[^>]*>/g)).map(
+      (m) => m[1],
+    );
+    const titleMatch = chunk.match(
+      /<p class="elementor-heading-title[^"]*"[^>]*>([\s\S]*?)<\/p>/,
+    );
+    const linkMatch = chunk.match(
+      /<a\b[^>]*class="[^"]*\belementor-button\b[^"]*"[^>]*href="([^"]+)"/,
+    );
+    if (!linkMatch || imgs.length < 1) continue;
+    const title = titleMatch
+      ? decodeHtmlEntities(titleMatch[1].replace(/<[^>]+>/g, "").trim())
+      : "";
+    cards.push({
+      href: linkMatch[1],
+      img: imgs[0] ?? null,
+      logo: imgs[1] ?? null,
+      title,
+      excerpt: null,
+    });
+  }
+  // Suppress void containerRe warning by referencing it once.
+  void containerRe;
+  return cards;
+}
+
 
 async function fetchArchive(type: "movie" | "success" | "video"): Promise<ArchiveItem[]> {
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
