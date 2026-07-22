@@ -34,7 +34,7 @@ export function VideoArchiveGrid({ items }: { items: (ArchiveItem & { cpt_type?:
                   <div className="flex h-full w-full items-center justify-center text-white">אין תצוגה</div>
                 )}
               </div>
-              <a href={`${base}${linkSlug(it.slug)}`} className="block bg-white p-3 text-center">
+              <a href={appHref(`${base}${linkSlug(it.slug)}`)} className="block bg-white p-3 text-center">
                 <h3 className="line-clamp-2 text-sm font-bold text-[hsl(var(--primary))] hover:underline">
                   {decodeEntities(it.title)}
                 </h3>
