@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import {
   HeartHandshake, Award, Network, TrendingUp, Users,
-  ChevronRight, ChevronLeft, ArrowLeft,
+  ChevronRight, ChevronLeft, ArrowLeft, BadgeCheck,
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { submitLeadFn } from "@/lib/leads.functions";
@@ -318,18 +318,77 @@ export function HelpBand() {
   );
 }
 
-const REVIEW_SCREENSHOTS: string[] = [
-  `${SB}/wp/2385/2025-04-09-172208.png`,
-  `${SB}/wp/2386/2025-04-09-172214.png`,
-  `${SB}/wp/2387/2025-04-09-172237.png`,
-  `${SB}/wp/2388/2025-04-09-172246.png`,
-  `${SB}/wp/2389/2025-04-09-172252.png`,
-  `${SB}/wp/2390/2025-04-09-172307.png`,
-  `${SB}/wp/2391/2025-04-09-172316.png`,
-  `${SB}/wp/2392/2025-04-09-172323.png`,
-  `${SB}/wp/2393/2025-04-09-172340.png`,
-  `${SB}/wp/2394/2025-04-09-172352.png`,
+type GoogleReview = {
+  name: string;
+  initials: string;
+  color: string;
+  time: string;
+  text: string;
+  verified?: boolean;
+};
+
+export const GOOGLE_REVIEWS: GoogleReview[] = [
+  {
+    name: "ישראל מור",
+    initials: "י",
+    color: "bg-[#4285F4]",
+    time: "לפני 3 חודשים",
+    verified: true,
+    text: "הייתה לנו הצפה בדירה ורפאל ליווה אותנו מול חברת הביטוח בצורה מקצועית ויסודית. הוא היה זמין, הסביר כל שלב בתהליך ודאג שנקבל את מה שמגיע לנו בלי התעסקויות מיותרות. שירות אמין, מקצועי ואדיב — ממליצים מאוד.",
+  },
+  {
+    name: "Daniel Gerbi",
+    initials: "D",
+    color: "bg-[#34A853]",
+    time: "לפני 3 חודשים",
+    verified: true,
+    text: "רפאל תותח בתחום. בחור צדיק ויקר, תדברו איתו ולא תתחרטו - קצר וקולע, מי שרוצה לשמוע עליו שיפנה אליי בפרטי בשמחה 🙂",
+  },
+  {
+    name: "גיא גלנטי",
+    initials: "גג",
+    color: "bg-[#1F3B73]",
+    time: "לפני חודש",
+    verified: true,
+    text: "הגעתי לרפאל דרך המלצות באינטרנט והוא ייצג אותי בהתנהלות מול חברת ביטוח גדולה. נדיר לראות בעל מקצוע ישראלי כזה מקצועי ומתוקתק שלא מעגל פינות. הוא מכיר את החומר היטב, זמין והנחה אותי ביד בכל התהליך ועשה את הסיוט של ההתנהלות מול חברת...",
+  },
+  {
+    name: "משה אוחיון",
+    initials: "מ",
+    color: "bg-[#8E44AD]",
+    time: "לפני 3 חודשים",
+    text: "אחרי נזק בדירה בעקבות הצפה פנינו לרפאל שמאות, וקיבלנו שירות מקצועי ואמין לאורך כל הדרך. רפאל טיפל עבורנו בכל ההתנהלות מול חברת הביטוח, היה זמין לכל שאלה ודאג שנקבל פיצוי הוגן בלי כאבי ראש. ממליצים בחום על שירות מקצועי, יסודי ואנושי.",
+  },
 ];
+
+export function GoogleReviewCard({ review }: { review: GoogleReview }) {
+  return (
+    <div className="flex h-full flex-col rounded-2xl bg-white p-5 shadow-md ring-1 ring-black/5">
+      <div className="flex items-start justify-between gap-3">
+        <GoogleG className="mt-1 h-5 w-5 shrink-0" />
+        <div className="flex flex-1 items-center justify-end gap-3">
+          <div className="text-right">
+            <div className="text-sm font-bold text-[#1f2937]">{review.name}</div>
+            <div className="text-xs text-[#70757a]">{review.time}</div>
+          </div>
+          <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white ${review.color}`} aria-hidden="true">
+            {review.initials}
+          </div>
+        </div>
+      </div>
+      <div className="mt-3 flex items-center gap-1" aria-label="5 מתוך 5 כוכבים">
+        {[0, 1, 2, 3, 4].map((i) => (
+          <svg key={i} viewBox="0 0 24 24" className="h-4 w-4 fill-[hsl(var(--gold))]" aria-hidden="true">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+        ))}
+        {review.verified && <BadgeCheck className="h-4 w-4 text-[#4285F4]" aria-label="ביקורת מאומתת" />}
+      </div>
+      <p className="mt-3 line-clamp-6 text-sm leading-relaxed text-[#4a4d55]">{review.text}</p>
+    </div>
+  );
+}
+
 const MIDRAG_IMG = `${SB}/wp/2382/whatsapp-2025-03-11-18-16-20-cf0b428d.jpg`;
 
 function GoogleG({ className = "" }: { className?: string }) {
@@ -344,7 +403,7 @@ function GoogleG({ className = "" }: { className?: string }) {
 }
 
 export function ReviewsSection() {
-  const { idx, setIdx, perView, maxIdx } = useCarousel(REVIEW_SCREENSHOTS, { mobile: 1, tablet: 2, desktop: 3 });
+  const { idx, setIdx, perView, maxIdx } = useCarousel(GOOGLE_REVIEWS, { mobile: 1, tablet: 2, desktop: 3 });
   return (
     <section dir="rtl" className="bg-[hsl(var(--muted))] py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -374,11 +433,9 @@ export function ReviewsSection() {
           </button>
           <div className="overflow-hidden px-8">
             <div className="flex transition-transform duration-500 ease-out" style={{ transform: `translateX(${(idx * 100) / perView}%)` }}>
-              {REVIEW_SCREENSHOTS.map((src, i) => (
-                <div key={src} className="shrink-0 px-3" style={{ width: `${100 / perView}%` }}>
-                  <div className="flex h-72 items-center justify-center rounded-2xl bg-white p-3 shadow-md ring-1 ring-black/5">
-                    <img src={src} alt={`ביקורת לקוח ${i + 1}`} loading="lazy" className="h-64 w-auto max-w-full object-contain" />
-                  </div>
+              {GOOGLE_REVIEWS.map((review) => (
+                <div key={review.name} className="shrink-0 px-3" style={{ width: `${100 / perView}%` }}>
+                  <GoogleReviewCard review={review} />
                 </div>
               ))}
             </div>
