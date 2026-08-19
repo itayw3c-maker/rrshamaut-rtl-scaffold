@@ -62,6 +62,10 @@ export function SiteHeader() {
     };
   }, [mobileOpen]);
 
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
   const telHref = `tel:${siteConfig.phone.replace(/[^0-9+]/g, "")}`;
 
   const isActive = (href?: string) => {
