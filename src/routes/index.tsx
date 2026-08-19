@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { SiteChrome } from "@/components/SiteChrome";
 import { QuickLeadBand } from "@/components/QuickLeadBand";
+import { GOOGLE_REVIEWS, GoogleReviewCard } from "@/components/home-sections";
 
 import {
   getHomeVideosFn, type HomeVideo,
@@ -912,36 +913,6 @@ function HomePage() {
 
 /* ============ NEW SECTIONS ============ */
 
-const REVIEW_SCREENSHOTS: string[] = [
-  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2383/2025-04-09-172128.png",
-  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2384/2025-04-09-172200.png",
-  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2385/2025-04-09-172208.png",
-  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2386/2025-04-09-172214.png",
-  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2387/2025-04-09-172237.png",
-  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2388/2025-04-09-172246.png",
-  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2389/2025-04-09-172252.png",
-  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2390/2025-04-09-172307.png",
-  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2391/2025-04-09-172316.png",
-  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2392/2025-04-09-172323.png",
-  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2393/2025-04-09-172340.png",
-  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2394/2025-04-09-172352.png",
-  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2396/2025-04-09-172407.png",
-  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2397/2025-04-09-172413.png",
-  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2398/2025-04-09-172418.png",
-  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2399/2025-04-09-172425.png",
-  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2400/2025-04-09-172437.png",
-  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2401/2025-04-09-172444.png",
-  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2402/2025-04-09-172505.png",
-  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2403/2025-04-09-172511.png",
-  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2404/2025-04-09-172521.png",
-  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2405/2025-04-09-172542.png",
-  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2406/2025-04-09-172609.png",
-  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2407/2025-04-09-172616.png",
-  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2408/2025-04-09-172622.png",
-  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2409/2025-04-09-172640.png",
-  "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2410/2025-04-09-172649.png",
-];
-
 const MIDRAG_IMG =
   "https://bsfewufipprschijelmk.supabase.co/storage/v1/object/public/media/wp/2382/whatsapp-2025-03-11-18-16-20-cf0b428d.jpg";
 
@@ -1122,7 +1093,7 @@ function GoogleG({ className = "" }: { className?: string }) {
 }
 
 function ReviewsSection() {
-  const { idx, setIdx, perView, maxIdx } = useCarousel(REVIEW_SCREENSHOTS, {
+  const { idx, setIdx, perView, maxIdx } = useCarousel(GOOGLE_REVIEWS, {
     mobile: 1,
     tablet: 2,
     desktop: 3,
@@ -1178,16 +1149,9 @@ function ReviewsSection() {
               className="flex transition-transform duration-500 ease-out"
               style={{ transform: `translateX(${(idx * 100) / perView}%)` }}
             >
-              {REVIEW_SCREENSHOTS.map((src, i) => (
-                <div key={src} className="shrink-0 px-3" style={{ width: `${100 / perView}%` }}>
-                  <div className="flex h-72 items-center justify-center rounded-2xl bg-white p-3 shadow-md ring-1 ring-black/5">
-                    <img
-                      src={src}
-                      alt={`ביקורת לקוח ${i + 1}`}
-                      loading="lazy"
-                      className="h-64 w-auto max-w-full object-contain"
-                    />
-                  </div>
+              {GOOGLE_REVIEWS.map((review) => (
+                <div key={review.name} className="shrink-0 px-3" style={{ width: `${100 / perView}%` }}>
+                  <GoogleReviewCard review={review} />
                 </div>
               ))}
             </div>
